@@ -1,13 +1,58 @@
-.astro/
-.idea/
-.sanity/
-dist/
+# Dipendenze e build
 node_modules/
+dist/
+.astro/
+.sanity/
+.wrangler/
+*.tsbuildinfo
+
+# Segreti: nessun file .env entra in git, tranne il modello senza valori
 .env
 .env.*
 !.env.example
-Thumbs.db
-desktop.ini
+.dev.vars
+.dev.vars.*
+
+# Foto: originali, copia di lavoro, anteprime, provini, versioni preparate.
+# Tutto ciò che sta in src/photos resta fuori da git.
+src/photos/
+
+# Qualsiasi foto o immagine raster, ovunque si trovi
 *.jpg
 *.jpeg
-src/photos/
+*.JPG
+*.JPEG
+*.png
+*.webp
+*.avif
+*.heic
+*.heif
+*.tif
+*.tiff
+*.cr2
+*.cr3
+*.nef
+*.arw
+*.dng
+*.raf
+
+# Screenshot e file temporanei
+screenshots/
+.tmp/
+tmp/
+playwright-report/
+test-results/
+*.log
+
+# Sistema ed editor
+Thumbs.db
+desktop.ini
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Prototipo: foto e font copiati dallo script
+prototipo/foto/
+prototipo/font/
+prototipo/dati.js

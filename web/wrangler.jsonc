@@ -1,0 +1,8 @@
+// Configurazione Cloudflare Workers. Nessun deploy per ora: serve per lo sviluppo locale
+// e come base per il deploy (vedi docs/deploy.md). Nessun segreto qui dentro.
+{
+  "name": "ireneneri-photography",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true }
+}

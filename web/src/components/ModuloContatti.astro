@@ -1,0 +1,70 @@
+---
+// Modulo contatti. Funziona anche senza JavaScript (invio classico e pagina di risposta dal server);
+// con JavaScript l'invio avviene senza ricaricare e gli errori compaiono accanto ai campi.
+import { LIMITI, type Campi, type Errori } from '../lib/contatti/validazione.ts'
+import { CHIAVE_SITO_TURNSTILE } from '../lib/contatti/turnstile-chiavi.ts'
+
+interface Props {
+  categorie: { slug: string; titolo: string }[]
+  valori?: Partial<Campi>
+  errori?: Errori
+  messaggioGenerale?: string
+}
+const { categorie, valori = {}, errori = {}, messaggioGenerale } = Astro.props
+const tipi = [...categorie.map((c) => ({ valore: c.slug, testo: c.titolo })), { valore: 'altro', testo: 'Altro' }]
+const err = (campo: keyof Errori) => errori[campo]
+---
+
+<form class="modulo" method="post" action="/contatti/invia/" novalidate data-modulo>
+  <p class="esito-modulo" role="status" aria-live="polite" data-esito-modulo>{messaggioGenerale}</p>
+
+  <div class="campo">
+    <label for="nome">Nome</label>
+    <input id="nome" name="nome" type="text" autocomplete="name" required maxlength={LIMITI.nome} value={valori.nome} aria-invalid={err('nome') ? 'true' : undefined} aria-describedby="err-nome" />
+    <p class="errore" id="err-nome">{err('nome')}</p>
+  </div>
+
+  <div class="campo">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" autocomplete="email" required maxlength={LIMITI.email} value={valori.email} aria-invalid={err('email') ? 'true' : undefined} aria-describedby="err-email" />
+    <p class="errore" id="err-email">{err('email')}</p>
+  </div>
+
+  <div class="campo">
+    <label for="tipo">Tipo di richiesta</label>
+    <select id="tipo" name="tipo" required aria-invalid={err('tipo') ? 'true' : undefined} aria-describedby="err-tipo">
+      <option value="" selected={!valori.tipo}>Scegli</option>
+      {tipi.map((t) => <option value={t.valore} selected={valori.tipo === t.valore}>{t.testo}</option>)}
+    </select>
+    <p class="errore" id="err-tipo">{err('tipo')}</p>
+  </div>
+
+  <div class="campo">
+    <label for="messaggio">Messaggio</label>
+    <textarea id="messaggio" name="messaggio" rows="7" required maxlength={LIMITI.messaggio} aria-invalid={err('messaggio') ? 'true' : undefined} aria-describedby="err-messaggio">{valori.messaggio}</textarea>
+    <p class="errore" id="err-messaggio">{err('messaggio')}</p>
+  </div>
+
+  <!-- Campo trappola: invisibile alle persone, i programmi automatici tendono a compilarlo. -->
+  <div class="trappola" aria-hidden="true">
+    <label for="sito">Lascia vuoto questo campo</label>
+    <input id="sito" name="sito" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div class="campo consenso">
+    <input id="consenso" name="consenso" type="checkbox" value="si" required checked={valori.consenso} aria-invalid={err('consenso') ? 'true' : undefined} aria-describedby="err-consenso" />
+    <label for="consenso">Ho letto l’<a href="/privacy/">informativa privacy</a> e acconsento al trattamento dei dati per ricevere una risposta.</label>
+    <p class="errore" id="err-consenso">{err('consenso')}</p>
+  </div>
+
+  <div class="cf-turnstile" data-sitekey={CHIAVE_SITO_TURNSTILE} data-language="it" data-theme="dark"></div>
+  <p class="errore" id="err-verifica">{err('verifica')}</p>
+  <noscript><p class="nota">Per inviare il modulo serve JavaScript attivo (per la verifica anti-spam). In alternativa puoi scrivere all’indirizzo email qui accanto.</p></noscript>
+
+  <button type="submit" class="invia">Invia il messaggio</button>
+</form>
+
+<script>
+  import { avviaModulo } from '../scripts/modulo.ts'
+  avviaModulo()
+</script>

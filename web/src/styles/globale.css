@@ -1,0 +1,238 @@
+/* Stili comuni a tutte le pagine: token di design (docs/direzione-visiva.md), base, testata, piede, prosa. */
+
+:root {
+  --carbone: #1c1a18;
+  --grafite: #2a2724;
+  --gesso: #ece8e2;
+  --cenere: #a8a199;
+
+  --fondo: var(--carbone);
+  --testo: var(--gesso);
+  --secondario: var(--cenere);
+  --chiaro: #cfc8bf;
+
+  --f-titolo: 'Archivo Variable', system-ui, sans-serif;
+  --f-prosa: 'Literata Variable', Georgia, serif;
+  --margine: clamp(1rem, 4vw, 3.5rem);
+  --riga: 1px solid color-mix(in oklab, var(--testo) 18%, transparent);
+  color-scheme: dark;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--testo);
+  font-family: var(--f-titolo);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--testo);
+  outline-offset: 3px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+.testata {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem var(--margine);
+}
+
+.marchio {
+  font-stretch: 68%;
+  font-weight: 650;
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  gap: clamp(0.9rem, 2.5vw, 2.25rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.98rem;
+}
+
+.menu a {
+  text-decoration: none;
+}
+
+.menu a[aria-current='page'],
+.menu a:hover {
+  text-decoration: underline;
+}
+
+.voce {
+  font-family: var(--f-prosa);
+  font-size: clamp(1.1rem, 1.9vw, 1.45rem);
+  line-height: 1.5;
+  font-weight: 380;
+  margin: 0 0 1rem;
+}
+
+.titolo {
+  margin: 0;
+  font-stretch: 68%;
+  font-weight: 650;
+  font-size: clamp(2.5rem, 6.5vw, 5.75rem);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+}
+
+.titolo a {
+  text-decoration: none;
+}
+
+.dati {
+  margin: 0.6rem 0 0;
+  color: var(--secondario);
+}
+
+.piede {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  justify-content: space-between;
+  padding: 1.5rem var(--margine) 2rem;
+  border-top: var(--riga);
+  color: var(--secondario);
+  font-size: 0.92rem;
+}
+
+.piede ul {
+  display: flex;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.foto {
+  background-size: cover;
+  background-position: center;
+}
+
+.salta {
+  position: absolute;
+  left: var(--margine);
+  top: -3rem;
+  z-index: 10;
+  padding: 0.5rem 0.9rem;
+  background: var(--testo);
+  color: var(--fondo);
+  text-decoration: none;
+}
+
+.salta:focus {
+  top: 0.5rem;
+}
+
+main:focus {
+  outline: none;
+}
+
+.solo-lettori {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.pagina {
+  padding: clamp(1.5rem, 5vw, 4rem) var(--margine) clamp(4rem, 9vw, 7rem);
+}
+
+.pagina > .titolo {
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
+}
+
+.prosa {
+  font-family: var(--f-prosa);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  font-weight: 380;
+  max-width: 34em;
+}
+
+.prosa p {
+  margin: 0 0 0.9em;
+}
+
+.segnaposto {
+  color: var(--secondario);
+}
+
+@media (max-width: 760px) {
+  .prosa {
+    font-size: 1.0625rem;
+  }
+}
+
+.vie {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 1.5rem;
+  font-size: 1.05rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

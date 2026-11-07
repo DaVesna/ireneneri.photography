@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Irene Neri, fotografa</title>
+    <link rel="stylesheet" href="stile.css" />
+    <script src="dati.js"></script>
+  </head>
+  <body>
+    <header class="testata">
+      <a class="marchio" href="index.html">Irene Neri</a>
+      <nav aria-label="Principale">
+        <ul class="menu">
+          <li><a href="#">Album</a></li>
+          <li><a href="#">Chi sono</a></li>
+          <li><a href="#">Contatti</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section aria-label="Foto di benvenuto">
+        <div class="striscia benvenuto" id="benvenuto" tabindex="0"></div>
+        <div class="sotto-striscia">
+          <div class="comandi">
+            <button type="button" data-dir="-1" aria-label="Foto precedenti">‹</button>
+            <button type="button" data-dir="1" aria-label="Foto successive">›</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="presentazione" aria-labelledby="chi">
+        <div class="ritratto-segnaposto">Ritratto da sostituire</div>
+        <div>
+          <h2 id="chi" class="voce">
+            Sono Irene, fotografa. Lavoro soprattutto con lo sport: pole dance, palestra, boxe.
+            Scatto durante l’allenamento vero, senza fermare nessuno per la posa.
+          </h2>
+          <a href="#">Chi sono</a>
+        </div>
+      </section>
+
+      <div id="capitoli"></div>
+
+      <section class="invito">
+        <p>Per un servizio, una gara o anche solo una domanda, scrivimi.</p>
+        <a href="#">Contatti</a>
+      </section>
+    </main>
+    <footer class="piede">
+      <span>Irene Neri, fotografa</span>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Email</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+    </footer>
+    <script src="pagina.js"></script>
+  </body>
+</html>

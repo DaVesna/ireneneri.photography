@@ -1,0 +1,22 @@
+{
+  "name": "scripts",
+  "private": true,
+  "description": "Script di servizio per le foto: inventario, copia, anteprime, preparazione, import su Sanity.",
+  "type": "module",
+  "scripts": {
+    "inventario": "node --env-file-if-exists=../.env inventario.mjs",
+    "copia": "node --env-file-if-exists=../.env copia.mjs",
+    "anteprime": "node --env-file-if-exists=../.env anteprime.mjs",
+    "prepara": "node --env-file-if-exists=../.env prepara.mjs",
+    "importa": "node --env-file-if-exists=../.env importa.mjs",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@sanity/client": "^8.15.0",
+    "exifr": "^7.1.3",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6"
+  }
+}

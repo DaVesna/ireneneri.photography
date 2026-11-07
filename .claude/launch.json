@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "studio",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:studio"],
+      "port": 3333
+    },
+    {
+      "name": "web",
+      "runtimeExecutable": "C:\\Users\\dadev\\AppData\\Local\\nvm\\v26.13.0\\node.exe",
+      "runtimeArgs": ["node_modules/astro/bin/astro.mjs", "dev", "--root", "web", "--port", "4321"],
+      "port": 4321
+    }
+  ]
+}

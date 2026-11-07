@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro'
+import Immagine from '../components/Immagine.astro'
+import { leggiChiSono } from '../lib/sanity.ts'
+import { paragrafi, testoSemplice } from '../lib/testi.ts'
+import '../styles/chisono.css'
+
+const c = await leggiChiSono()
+const titolo = c?.titolo || 'Chi sono'
+---
+
+<Base titolo={titolo} descrizione={c?.presentazioneBreve || testoSemplice(c?.testo)} immagine={c?.ritratto}>
+  <div class="pagina chi-sono">
+    {
+      c?.ritratto && (
+        <Immagine
+          img={c.ritratto}
+          alt="Ritratto di Irene Neri"
+          sizes="(max-width: 760px) 92vw, 40vw"
+          priorita
+          larghezzaMassima={1600}
+          class="ritratto-grande"
+        />
+      )
+    }
+    <div class="testo-chi">
+      <h1 class="titolo">{titolo}</h1>
+      <div class="prosa" set:html={paragrafi(c?.testo)} />
+    </div>
+    {
+      c?.fotoAggiuntive?.length ? (
+        <ul class="foto-aggiuntive">
+          {c.fotoAggiuntive.map((f) => (
+            <li>
+              <Immagine img={f} sizes="(max-width: 760px) 45vw, 22vw" larghezzaMassima={1200} />
+            </li>
+          ))}
+        </ul>
+      ) : null
+    }
+  </div>
+</Base>

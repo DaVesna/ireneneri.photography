@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>No Border Village — Irene Neri</title>
+    <link rel="stylesheet" href="stile.css" />
+    <script src="dati.js"></script>
+  </head>
+  <body>
+    <header class="testata">
+      <a class="marchio" href="index.html">Irene Neri</a>
+      <nav aria-label="Principale">
+        <ul class="menu">
+          <li><a href="#" aria-current="page">Album</a></li>
+          <li><a href="#">Chi sono</a></li>
+          <li><a href="#">Contatti</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main id="album"></main>
+    <footer class="piede">
+      <span>Irene Neri, fotografa</span>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Email</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+    </footer>
+    <dialog class="visore" id="visore" aria-label="Visore foto">
+      <button class="chiudi" type="button">Chiudi</button>
+      <figure><img alt="" /></figure>
+      <div class="barra">
+        <span class="contatore"></span>
+        <div class="comandi">
+          <button type="button" data-v="-1" aria-label="Foto precedente">‹</button>
+          <button type="button" data-v="1" aria-label="Foto successiva">›</button>
+        </div>
+      </div>
+    </dialog>
+    <script src="pagina.js"></script>
+  </body>
+</html>

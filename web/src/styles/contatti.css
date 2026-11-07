@@ -1,0 +1,140 @@
+/* Pagina Contatti e modulo. */
+
+.contatti {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.contatti-intro .prosa {
+  margin-top: 1.5rem;
+}
+
+.recapiti {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 1.05rem;
+}
+
+.modulo {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 34rem;
+}
+
+.campo {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.campo label {
+  font-weight: 500;
+}
+
+.modulo input[type='text'],
+.modulo input[type='email'],
+.modulo select,
+.modulo textarea {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--testo);
+  background: var(--grafite);
+  border: 1px solid color-mix(in oklab, var(--testo) 28%, transparent);
+  border-radius: 4px;
+}
+
+.modulo textarea {
+  resize: vertical;
+  min-height: 9rem;
+  font-family: var(--f-prosa);
+}
+
+.modulo [aria-invalid='true'] {
+  border-color: #f2a48f;
+}
+
+.errore {
+  margin: 0;
+  color: #f2a48f;
+  font-size: 0.95rem;
+}
+
+.errore:empty {
+  display: none;
+}
+
+.consenso {
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  column-gap: 0.7rem;
+}
+
+.consenso input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.15rem;
+  accent-color: var(--gesso);
+}
+
+.consenso label {
+  font-weight: 400;
+}
+
+.consenso .errore {
+  grid-column: 1 / -1;
+}
+
+.trappola {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.esito-modulo:empty {
+  display: none;
+}
+
+.esito-modulo {
+  margin: 0;
+  font-family: var(--f-prosa);
+}
+
+.invia {
+  justify-self: start;
+  padding: 0.85rem 1.5rem;
+  border: 0;
+  border-radius: 2rem;
+  background: var(--testo);
+  color: var(--fondo);
+  font-weight: 550;
+  cursor: pointer;
+}
+
+.invia:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.nota {
+  color: var(--secondario);
+  font-size: 0.95rem;
+}
+
+.grazie:focus {
+  outline: none;
+}
+
+@media (max-width: 760px) {
+  .chi-sono,
+  .contatti {
+    grid-template-columns: 1fr;
+  }
+}

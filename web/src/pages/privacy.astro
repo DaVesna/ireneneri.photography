@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro'
+import { leggiPrivacy } from '../lib/sanity.ts'
+import { paragrafi } from '../lib/testi.ts'
+
+const p = await leggiPrivacy()
+const titolo = p?.titolo || 'Informativa privacy'
+---
+
+<Base titolo={titolo} descrizione="Come vengono trattati i dati inviati con il modulo contatti.">
+  <div class="pagina">
+    <h1 class="titolo">{titolo}</h1>
+    <div class="prosa" set:html={paragrafi(p?.testo) || '<p>[DA FORNIRE: informativa privacy]</p>'} />
+  </div>
+</Base>

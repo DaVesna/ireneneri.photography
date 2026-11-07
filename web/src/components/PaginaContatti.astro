@@ -1,0 +1,59 @@
+---
+// Corpo della pagina Contatti, usato dalla pagina statica e dalla risposta del server (senza JavaScript).
+import ModuloContatti from './ModuloContatti.astro'
+import { leggiCategorieUsate, leggiContatti } from '../lib/sanity.ts'
+import { daFornire } from '../lib/testi.ts'
+import type { Campi, Errori } from '../lib/contatti/validazione.ts'
+import '../styles/contatti.css'
+
+interface Props {
+  valori?: Partial<Campi>
+  errori?: Errori
+  messaggioGenerale?: string
+  inviato?: boolean
+}
+const { valori, errori, messaggioGenerale, inviato = false } = Astro.props
+const [c, categorie] = await Promise.all([leggiContatti(), leggiCategorieUsate()])
+const email = c?.emailPubblica
+const instagram = c?.instagram
+---
+
+<div class="pagina contatti">
+  <div class="contatti-intro">
+    <h1 class="titolo">Contatti</h1>
+    {c?.testoIntroduttivo && <p class="prosa">{c.testoIntroduttivo}</p>}
+    <ul class="recapiti">
+      {
+        email && (
+          <li>
+            {daFornire(email) ? <span class="segnaposto">{email}</span> : <a href={`mailto:${email}`}>{email}</a>}
+          </li>
+        )
+      }
+      {
+        instagram && (
+          <li>
+            {daFornire(instagram) ? (
+              <span class="segnaposto">{instagram}</span>
+            ) : (
+              <a href={instagram} rel="noopener">
+                Instagram
+              </a>
+            )}
+          </li>
+        )
+      }
+    </ul>
+  </div>
+  {
+    inviato ? (
+      <div class="grazie" role="status">
+        <p class="voce">Grazie, il messaggio è arrivato.</p>
+        <p>Ti risponderò all’indirizzo email che hai indicato.</p>
+        <a href="/">Torna alla home</a>
+      </div>
+    ) : (
+      <ModuloContatti categorie={categorie} valori={valori} errori={errori} messaggioGenerale={messaggioGenerale} />
+    )
+  }
+</div>
