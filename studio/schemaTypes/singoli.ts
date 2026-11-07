@@ -50,6 +50,14 @@ export const home = defineType({
         r.unique().error('Lo stesso album compare due volte.'),
       ],
     }),
+    defineField({
+      name: 'invito',
+      title: 'Invito a scrivere',
+      type: 'string',
+      description:
+        'La frase in fondo alla home, prima del link ai contatti. Esempio: "Per un servizio, una gara o anche solo una domanda, scrivimi."',
+      validation: (r) => r.max(160).warning('Basta una frase, sotto i 160 caratteri.'),
+    }),
   ],
   preview: { prepare: () => ({ title: 'Home' }) },
 })

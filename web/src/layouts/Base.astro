@@ -14,8 +14,10 @@ interface Props {
   /** Variabili CSS della tinta, applicate a tutta la pagina. */
   tinta?: string
   noindex?: boolean
+  /** Carica lo script di Cloudflare Turnstile (solo pagine con il modulo contatti). */
+  turnstile?: boolean
 }
-const { titolo, descrizione, immagine, tinta, noindex = false } = Astro.props
+const { titolo, descrizione, immagine, tinta, noindex = false, turnstile = false } = Astro.props
 const impostazioni = await leggiImpostazioni()
 const nomeSito = impostazioni?.nomeSito || 'Irene Neri, fotografa'
 const titoloPagina = titolo ? `${titolo} — ${nomeSito}` : nomeSito
@@ -48,6 +50,7 @@ const canonico = new URL(Astro.url.pathname, Astro.site).href
     {ogImg && <meta property="og:image:height" content="630" />}
     {condivisione?.alt && <meta property="og:image:alt" content={condivisione.alt} />}
     <meta name="twitter:card" content="summary_large_image" />
+    {turnstile && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
   </head>
   <body style={tinta}>
     <a class="salta" href="#contenuto">Vai al contenuto</a>

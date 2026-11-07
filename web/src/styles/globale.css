@@ -626,3 +626,352 @@ main:focus {
     max-height: 70vh;
   }
 }
+
+/* ---------- home (sito) ---------- */
+.frase-benvenuto {
+  margin: 0.9rem var(--margine) 0;
+  font-family: var(--f-prosa);
+  font-size: 1.05rem;
+}
+.presentazione .ritratto {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: var(--fx) var(--fy);
+}
+.invito a,
+.presentazione a {
+  font-size: 1.05rem;
+}
+
+/* ---------- elenco album ---------- */
+.filtri {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2.5rem;
+  margin: 0 0 2.5rem;
+}
+.filtri[hidden] {
+  display: none;
+}
+.filtri fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.filtri legend {
+  float: left;
+  margin-right: 0.6rem;
+  color: var(--secondario);
+}
+.filtri label {
+  position: relative;
+  cursor: pointer;
+}
+.filtri input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.filtri span {
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  border: var(--riga);
+  border-radius: 2rem;
+}
+.filtri input:checked + span {
+  background: var(--testo);
+  color: var(--fondo);
+  border-color: var(--testo);
+}
+.filtri input:focus-visible + span {
+  outline: 2px solid var(--testo);
+  outline-offset: 3px;
+}
+.esito:empty {
+  display: none;
+}
+.esito {
+  color: var(--secondario);
+  margin: -1.5rem 0 1.5rem;
+}
+.elenco-album .anno + .anno {
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+}
+.elenco-album h2 {
+  margin: 0 0 0.75rem;
+  font-weight: 450;
+  font-size: 1rem;
+  color: var(--secondario);
+  font-variant-numeric: tabular-nums;
+}
+.elenco-album ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--riga);
+}
+.elenco-album li {
+  border-bottom: var(--riga);
+  background: transparent;
+  transition: background-color 0.25s ease;
+}
+.elenco-album li:hover,
+.elenco-album li:focus-within {
+  background: var(--fondo);
+}
+.elenco-album li[hidden] {
+  display: none;
+}
+.elenco-album li a {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) auto auto;
+  grid-template-areas: 'foto nome cat quante' 'foto quando cat quante';
+  align-items: center;
+  column-gap: clamp(1rem, 3vw, 3rem);
+  padding: 1rem 0.75rem;
+  text-decoration: none;
+}
+.elenco-album li img {
+  grid-area: foto;
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  object-position: left center;
+  background: none !important;
+}
+.elenco-album .nome {
+  grid-area: nome;
+  align-self: end;
+  font-stretch: 68%;
+  font-weight: 650;
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+  line-height: 1;
+}
+.elenco-album li a:hover .nome {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
+}
+.elenco-album .quando {
+  grid-area: quando;
+  align-self: start;
+  margin-top: 0.4rem;
+  color: var(--secondario);
+}
+.elenco-album .cat {
+  grid-area: cat;
+  color: var(--secondario);
+}
+.elenco-album .quante {
+  grid-area: quante;
+  color: var(--secondario);
+  font-variant-numeric: tabular-nums;
+  min-width: 5ch;
+  text-align: right;
+}
+.vuoto p {
+  font-family: var(--f-prosa);
+  font-size: 1.15rem;
+}
+.vuoto button,
+.altri {
+  margin-top: 1rem;
+  padding: 0.7rem 1.2rem;
+  border: var(--riga);
+  border-radius: 2rem;
+  background: transparent;
+  cursor: pointer;
+}
+.vuoto[hidden],
+.altri[hidden] {
+  display: none;
+}
+
+/* ---------- chi sono ---------- */
+.chi-sono {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  align-items: start;
+}
+.ritratto-grande {
+  width: 100%;
+  height: auto;
+  max-height: 88vh;
+  object-fit: cover;
+  object-position: var(--fx) var(--fy);
+}
+.testo-chi .titolo {
+  margin-bottom: 1.5rem;
+}
+.foto-aggiuntive {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 45%), 1fr));
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0;
+}
+
+/* ---------- contatti ---------- */
+.contatti {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+.contatti-intro .prosa {
+  margin-top: 1.5rem;
+}
+.recapiti {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 1.05rem;
+}
+.modulo {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 34rem;
+}
+.campo {
+  display: grid;
+  gap: 0.4rem;
+}
+.campo label {
+  font-weight: 500;
+}
+.modulo input[type='text'],
+.modulo input[type='email'],
+.modulo select,
+.modulo textarea {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--testo);
+  background: var(--grafite);
+  border: 1px solid color-mix(in oklab, var(--testo) 28%, transparent);
+  border-radius: 4px;
+}
+.modulo textarea {
+  resize: vertical;
+  min-height: 9rem;
+  font-family: var(--f-prosa);
+}
+.modulo [aria-invalid='true'] {
+  border-color: #f2a48f;
+}
+.errore {
+  margin: 0;
+  color: #f2a48f;
+  font-size: 0.95rem;
+}
+.errore:empty {
+  display: none;
+}
+.consenso {
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  column-gap: 0.7rem;
+}
+.consenso input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.15rem;
+  accent-color: var(--gesso);
+}
+.consenso label {
+  font-weight: 400;
+}
+.consenso .errore {
+  grid-column: 1 / -1;
+}
+.trappola {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.esito-modulo:empty {
+  display: none;
+}
+.esito-modulo {
+  margin: 0;
+  font-family: var(--f-prosa);
+}
+.invia {
+  justify-self: start;
+  padding: 0.85rem 1.5rem;
+  border: 0;
+  border-radius: 2rem;
+  background: var(--testo);
+  color: var(--fondo);
+  font-weight: 550;
+  cursor: pointer;
+}
+.invia:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.nota {
+  color: var(--secondario);
+  font-size: 0.95rem;
+}
+.grazie:focus {
+  outline: none;
+}
+
+/* ---------- 404 ---------- */
+.vie {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 1.5rem;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 760px) {
+  .elenco-album li a {
+    grid-template-columns: 110px minmax(0, 1fr);
+    grid-template-areas: 'foto nome' 'foto quando' 'foto quante';
+    padding-inline: 0.25rem;
+  }
+  .elenco-album li img {
+    height: 120px;
+  }
+  .elenco-album .cat {
+    display: none;
+  }
+  .elenco-album .quante {
+    text-align: left;
+    align-self: start;
+  }
+  .chi-sono,
+  .contatti {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Striscia di benvenuto: altezza sempre costante. Se una foto orizzontale sarebbe più larga dello
+   schermo (tablet in verticale), si inquadra sul punto focale invece di rimpicciolirsi. */
+@media (min-width: 761px) {
+  .benvenuto img {
+    height: var(--altezza);
+    width: min(calc(var(--altezza) * var(--r, 0.667)), calc(100vw - 2 * var(--margine)));
+    object-fit: cover;
+    object-position: var(--fx, 50%) var(--fy, 50%);
+  }
+}

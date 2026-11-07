@@ -1,0 +1,73 @@
+---
+// Unico endpoint server del sito: riceve il modulo contatti.
+// Con JavaScript (Accept: application/json) risponde in JSON; senza, restituisce la pagina Contatti
+// con gli errori accanto ai campi oppure la conferma.
+export const prerender = false
+
+import { env } from 'cloudflare:workers'
+import Base from '../../layouts/Base.astro'
+import PaginaContatti from '../../components/PaginaContatti.astro'
+import { gestisciInvio, type Esito } from '../../lib/contatti/gestore.ts'
+import { creaVerificatoreTurnstile } from '../../lib/contatti/turnstile.ts'
+import { limitatoreCloudflare, limitatoreInMemoria, type BindingLimite } from '../../lib/contatti/limite.ts'
+import { invioLog } from '../../lib/contatti/email.ts'
+import { SEGRETO_PROVA_OK } from '../../lib/contatti/turnstile-chiavi.ts'
+import { leggiCategorieUsate } from '../../lib/sanity.ts'
+
+if (Astro.request.method !== 'POST') return Astro.redirect('/contatti/', 303)
+
+type Ambiente = {
+  TURNSTILE_SECRET_KEY?: string
+  CONTATTI_DESTINATARIO?: string
+  CONTATTI_MITTENTE?: string
+  LIMITE_CONTATTI?: BindingLimite
+}
+const e = env as unknown as Ambiente
+const sviluppo = import.meta.env.DEV
+
+// Fuori dallo sviluppo, senza segreto la verifica fallisce sempre (mai la chiave di prova in produzione).
+const segreto = e.TURNSTILE_SECRET_KEY || (sviluppo ? SEGRETO_PROVA_OK : '')
+const globale = globalThis as unknown as { __limiteContatti?: ReturnType<typeof limitatoreInMemoria> }
+globale.__limiteContatti ??= limitatoreInMemoria()
+
+const categorie = await leggiCategorieUsate().catch(() => [])
+let esito: Esito
+if (!e.CONTATTI_DESTINATARIO && !sviluppo) {
+  console.error('contatti: manca la variabile CONTATTI_DESTINATARIO')
+  esito = { stato: 'errore', http: 500, messaggio: 'Non è stato possibile inviare il messaggio. Riprova più tardi.', valori: {} }
+} else {
+  esito = await gestisciInvio(Astro.request, {
+    verifica: segreto ? creaVerificatoreTurnstile(segreto) : async () => false,
+    limite: e.LIMITE_CONTATTI ? limitatoreCloudflare(e.LIMITE_CONTATTI) : globale.__limiteContatti,
+    // Servizio email reale da collegare al deploy (docs/deploy.md): per ora l'invio finto nel log.
+    email: invioLog(),
+    destinatario: e.CONTATTI_DESTINATARIO || 'destinatario-di-prova@example.invalid',
+    mittente: e.CONTATTI_MITTENTE || 'sito@example.invalid',
+    tipi: Object.fromEntries(categorie.map((c) => [c.slug, c.titolo])),
+    registra: (s) => console.log(s),
+  })
+}
+
+Astro.response.status = esito.http
+Astro.response.headers.set('Cache-Control', 'no-store')
+
+if ((Astro.request.headers.get('accept') ?? '').includes('application/json')) {
+  const corpo =
+    esito.stato === 'inviato'
+      ? { ok: true }
+      : { ok: false, errori: 'errori' in esito ? esito.errori : {}, messaggio: 'messaggio' in esito ? esito.messaggio : '' }
+  return new Response(JSON.stringify(corpo), {
+    status: esito.http,
+    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' },
+  })
+}
+
+const errori = 'errori' in esito ? esito.errori : undefined
+const valori = 'valori' in esito ? esito.valori : undefined
+const messaggio =
+  'messaggio' in esito ? esito.messaggio : errori ? 'Controlla i campi segnati qui sotto.' : undefined
+---
+
+<Base titolo={esito.stato === 'inviato' ? 'Messaggio inviato' : 'Contatti'} noindex turnstile={esito.stato !== 'inviato'}>
+  <PaginaContatti inviato={esito.stato === 'inviato'} valori={valori} errori={errori} messaggioGenerale={messaggio} />
+</Base>

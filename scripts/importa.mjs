@@ -180,6 +180,7 @@ for (const [i, nome] of (piano.benvenuto ?? []).entries()) {
 documenti.push({
   _id: 'home',
   _type: 'home',
+  invito: 'Per un servizio, una gara o anche solo una domanda, scrivimi.',
   fotoBenvenuto: benvenuto,
   albumInEvidenza: (piano.inEvidenza ?? []).map((slug, i) => ({
     _key: `e${i + 1}`,

@@ -1,0 +1,97 @@
+---
+import Base from '../../layouts/Base.astro'
+import Immagine from '../../components/Immagine.astro'
+import { leggiAlbum, leggiCategorieUsate } from '../../lib/sanity.ts'
+import { anno, dataELuogo, quanteFoto } from '../../lib/testi.ts'
+import { stileTinta } from '../../lib/immagini.ts'
+
+const [album, categorie] = await Promise.all([leggiAlbum(), leggiCategorieUsate()])
+const anni = [...new Set(album.map((a) => anno(a.data)))].sort((a, b) => b.localeCompare(a))
+const conFiltri = categorie.length > 1 || anni.length > 1
+const perAnno = anni.map((y) => ({ anno: y, album: album.filter((a) => anno(a.data) === y) }))
+---
+
+<Base titolo="Album" descrizione={`Tutti gli album di Irene Neri: ${album.length} servizi, dal più recente.`}>
+  <div class="pagina elenco-album">
+    <h1 class="titolo">Album</h1>
+
+    {
+      conFiltri && (
+        <form class="filtri" hidden data-filtri aria-label="Filtra gli album">
+          {categorie.length > 1 && (
+            <fieldset>
+              <legend>Categoria</legend>
+              <label>
+                <input type="radio" name="categoria" value="" checked />
+                <span>Tutte</span>
+              </label>
+              {categorie.map((c) => (
+                <label>
+                  <input type="radio" name="categoria" value={c.slug} />
+                  <span>{c.titolo}</span>
+                </label>
+              ))}
+            </fieldset>
+          )}
+          {anni.length > 1 && (
+            <fieldset>
+              <legend>Anno</legend>
+              <label>
+                <input type="radio" name="anno" value="" checked />
+                <span>Tutti</span>
+              </label>
+              {anni.map((y) => (
+                <label>
+                  <input type="radio" name="anno" value={y} />
+                  <span>{y}</span>
+                </label>
+              ))}
+            </fieldset>
+          )}
+        </form>
+      )
+    }
+
+    <p class="esito" aria-live="polite" data-esito></p>
+
+    {
+      perAnno.map((g) => (
+        <section class="anno" data-anno={g.anno} aria-labelledby={`anno-${g.anno}`}>
+          <h2 id={`anno-${g.anno}`}>{g.anno}</h2>
+          <ul>
+            {g.album.map((a) => (
+              <li data-categoria={a.categoria?.slug ?? ''} data-anno={g.anno} style={stileTinta(a.copertina)}>
+                <a href={`/album/${a.slug}/`}>
+                  <Immagine
+                    img={a.copertina}
+                    alt=""
+                    sizes="(max-width: 760px) 120px, 200px"
+                    larghezzaMassima={640}
+                    vt={`copertina-${a.slug}`}
+                  />
+                  <span class="nome">{a.titolo}</span>
+                  <span class="quando">{dataELuogo(a.data, a.luogo)}</span>
+                  <span class="cat">{a.categoria?.titolo}</span>
+                  <span class="quante">{quanteFoto(a.numeroFoto)}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+
+    <div class="vuoto" hidden data-vuoto>
+      <p>Nessun album con questa combinazione di categoria e anno.</p>
+      <button type="button" data-azzera>Mostra tutti gli album</button>
+    </div>
+    <button type="button" class="altri" hidden data-altri>Mostra altri album</button>
+
+    {album.length === 0 && <p>Gli album arriveranno presto.</p>}
+  </div>
+</Base>
+
+<script>
+  import { avviaFiltro } from '../../scripts/filtro.ts'
+  avviaFiltro()
+</script>

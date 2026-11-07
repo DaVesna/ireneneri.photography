@@ -4,6 +4,7 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "allowJs": true,
+    "exactOptionalPropertyTypes": false,
     "checkJs": true,
     "allowImportingTsExtensions": true,
     "types": ["@cloudflare/workers-types"]

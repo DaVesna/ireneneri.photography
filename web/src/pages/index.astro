@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro'
+import Striscia from '../components/Striscia.astro'
+import Capitolo from '../components/Capitolo.astro'
+import Immagine from '../components/Immagine.astro'
+import { leggiAlbum, leggiChiSono, leggiHome } from '../lib/sanity.ts'
+
+const [home, chiSono, tutti] = await Promise.all([leggiHome(), leggiChiSono(), leggiAlbum()])
+// Se Irene non ha scelto album in evidenza, si mostrano i tre più recenti.
+const capitoli = home.albumInEvidenza.length ? home.albumInEvidenza : tutti.slice(0, 3)
+---
+
+<Base>
+  <h1 class="solo-lettori">Irene Neri, fotografa</h1>
+
+  {
+    home.fotoBenvenuto.length > 0 && (
+      <Striscia foto={home.fotoBenvenuto} tipo="benvenuto" etichetta="Foto di benvenuto" />
+    )
+  }
+  {home.fraseBenvenuto && <p class="frase-benvenuto">{home.fraseBenvenuto}</p>}
+
+  {
+    (chiSono?.presentazioneBreve || chiSono?.ritratto) && (
+      <section class="presentazione" aria-label="Chi sono">
+        {chiSono?.ritratto ? (
+          <Immagine img={chiSono.ritratto} alt="Ritratto di Irene Neri" sizes="(max-width: 760px) 112px, 260px" larghezzaMassima={800} class="ritratto" />
+        ) : (
+          <div />
+        )}
+        <div>
+          {chiSono?.presentazioneBreve && <p class="voce">{chiSono.presentazioneBreve}</p>}
+          <a href="/chi-sono/">Chi sono</a>
+        </div>
+      </section>
+    )
+  }
+
+  {capitoli.map((album) => <Capitolo album={album} />)}
+
+  <section class="invito" aria-label="Contatti">
+    {home.invito && <p>{home.invito}</p>}
+    <a href="/contatti/">Contatti</a>
+  </section>
+</Base>

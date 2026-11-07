@@ -83,6 +83,7 @@ export type Home = {
   fotoBenvenuto: Immagine[]
   fraseBenvenuto?: string | undefined
   albumInEvidenza: AlbumBreve[]
+  invito?: string | undefined
 }
 
 export type Privacy = { titolo?: string; testo?: PortableTextBlock[] }
@@ -140,13 +141,15 @@ export const leggiHome = async (): Promise<Home> => {
     `*[_id == "home"][0]{
       "fotoBenvenuto": fotoBenvenuto[defined(asset)]${IMMAGINE},
       fraseBenvenuto,
-      "albumInEvidenza": albumInEvidenza[]->[${ALBUM_VALIDO}]${ALBUM_BREVE}
+      invito,
+      "albumInEvidenza": albumInEvidenza[@->_type == "album" && defined(@->slug.current) && defined(@->copertina.asset) && defined(@->data)]->${ALBUM_BREVE}
     }`,
   )
   return {
     fotoBenvenuto: h?.fotoBenvenuto ?? [],
     fraseBenvenuto: h?.fraseBenvenuto,
     albumInEvidenza: h?.albumInEvidenza ?? [],
+    invito: h?.invito,
   }
 }
 
