@@ -1,0 +1,9 @@
+{
+  "name": "web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node -e \"console.log('Workspace web non ancora inizializzato: vedi ROADMAP.md')\"",
+    "build": "node -e \"console.log('Workspace web non ancora inizializzato: vedi ROADMAP.md')\""
+  }
+}

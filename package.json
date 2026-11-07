@@ -1,0 +1,33 @@
+{
+  "name": "ireneneri-photography",
+  "private": true,
+  "description": "Sito portfolio di Irene Neri, fotografa: sito Astro, Sanity Studio e script per le foto.",
+  "type": "module",
+  "workspaces": [
+    "web",
+    "studio",
+    "scripts"
+  ],
+  "engines": {
+    "node": ">=26.13.0",
+    "npm": ">=11"
+  },
+  "scripts": {
+    "dev:web": "npm run dev --workspace web",
+    "dev:studio": "npm run dev --workspace studio",
+    "build:web": "npm run build --workspace web",
+    "build:studio": "npm run build --workspace studio",
+    "foto:inventario": "npm run inventario --workspace scripts --",
+    "foto:copia": "npm run copia --workspace scripts --",
+    "foto:anteprime": "npm run anteprime --workspace scripts --",
+    "foto:prepara": "npm run prepara --workspace scripts --",
+    "foto:importa": "npm run importa --workspace scripts --",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.9.10",
+    "typescript": "~6.0.3"
+  }
+}
