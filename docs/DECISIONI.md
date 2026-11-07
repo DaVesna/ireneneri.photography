@@ -16,3 +16,13 @@ Una riga di motivazione per ogni scelta non ovvia.
 | 2026-11-07 | Le quattro categorie delle cartelle restano, anche se vuote | Irene fotografa anche persone, animali ed eventi: le categorie servono per i prossimi album; il sito mostra solo quelle con almeno un album. |
 | 2026-11-07 | Copia organizzata in backup/album/, la copia grezza già presente resta | Non si cancella nulla che Davide possa aver messo lì come salvataggio. |
 | 2026-11-07 | Luogo "WTA" e non il nome completo della palestra | Il nome completo si legge solo nelle foto, non nelle cartelle o nell'EXIF. |
+| 2026-11-07 | Fondo scuro caldo (Carbone #1c1a18), mai nero puro | Regge sia le foto di palco buie sia quelle di studio chiare; è l'opposto dei fondi bianchi scartati. |
+| 2026-11-07 | Nessun colore d'accento fisso | Il colore della pagina è la tinta della copertina; un accento fisso (ottone) rischiava il "lusso di default". |
+| 2026-11-07 | Tinta = colore più saturo della copertina, L 0,25, croma ≤ 0,07, contrasto ≥ 7:1 | Con darkMuted le tinte uscivano grigie e indistinguibili. Calcolo in `web/src/lib/tinta.js`. |
+| 2026-11-07 | Archivo (stretto per i titoli) + Literata (prosa), da Fontsource in locale | Due famiglie lontane per forma e funzione; licenza OFL; nessuna richiesta a Google Fonts. |
+| 2026-11-07 | Striscia orizzontale ad altezza fissa per benvenuto e carosello | Mostra insieme foto verticali e orizzontali senza ritagli e dà un solo modo di guardare in tutto il sito. |
+| 2026-11-07 | Unico movimento: View Transition tra capitolo/elenco e pagina album | Movimento con un significato (la copertina diventa l'apertura); nativo del browser; spento con reduced-motion. |
+| 2026-11-07 | Menu sempre visibile anche su mobile (tre voci), niente hamburger | Tre voci stanno in 390 px; un menu nascosto è un passaggio in più. |
+| 2026-11-07 | Su mobile le orizzontali della striscia di benvenuto si inquadrano in 4:5 sul punto focale | Altrimenti restano piccole in un riquadro vuoto; il ritaglio usa l'hotspot scelto da Irene. |
+| 2026-11-07 | Foto di benvenuto diverse dalle copertine degli album in evidenza; 3 album in evidenza | Evita di mostrare la stessa foto due volte nella home. |
+| 2026-11-07 | Frase di benvenuto lasciata vuota | Nel prototipo ripeteva la presentazione; è l'elemento tolto in chiusura della M3. |

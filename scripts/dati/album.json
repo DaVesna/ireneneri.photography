@@ -122,16 +122,15 @@
     }
   ],
   "benvenuto": [
-    "teatro-di-monfalcone-02.jpg",
     "piero-13.jpg",
-    "cata-e-alice-02.jpg",
-    "no-border-village-10.jpg",
+    "teatro-di-monfalcone-10.jpg",
+    "cata-e-alice-05.jpg",
     "elisa-07.jpg",
+    "no-border-village-10.jpg",
     "mika-05.jpg",
-    "boxe-01.jpg",
-    "teatro-di-monfalcone-10.jpg"
+    "boxe-01.jpg"
   ],
-  "inEvidenza": ["teatro-di-monfalcone", "no-border-village", "cata-e-alice", "piero"],
+  "inEvidenza": ["teatro-di-monfalcone", "cata-e-alice", "no-border-village"],
   "escluse": [
     {
       "cartella": "events/matrimonio-anna-e-luca",

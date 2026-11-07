@@ -30,23 +30,21 @@ Fonte per gli script: `scripts/dati/album.json`. Copia di lavoro: `src/photos/ba
 
 ## Foto di benvenuto per la home
 
-Otto foto, tre orizzontali e cinque verticali, da sei album diversi:
+Sette foto, due orizzontali e cinque verticali, da sette album diversi; nessuna è copertina di un album in evidenza (rivisto in M3):
 
-1. Teatro di Monfalcone, foto n. 2 (orizzontale)
 1. Piero, foto n. 13 (orizzontale)
-1. Cata e Alice, foto n. 2 (verticale)
-1. No Border Village, foto n. 10 (verticale)
+1. Teatro di Monfalcone, foto n. 10 (verticale)
+1. Cata e Alice, foto n. 5 (verticale)
 1. Elisa, foto n. 7 (orizzontale)
+1. No Border Village, foto n. 10 (verticale)
 1. Mika, foto n. 5 (verticale)
 1. Boxe, foto n. 1 (verticale)
-1. Teatro di Monfalcone, foto n. 10 (verticale)
 
 ## Album in evidenza nella home
 
 - Teatro di Monfalcone
-- No Border Village
 - Cata e Alice
-- Piero
+- No Border Village
 
 ## Testi degli album
 

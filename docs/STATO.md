@@ -8,7 +8,7 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 |---|---|
 | M1 — Fondamenta del repository | fatta |
 | M2 — Ricognizione e copia delle foto | fatta |
-| M3 — Direzione visiva | da fare |
+| M3 — Direzione visiva | fatta |
 | M4 — Modello dei contenuti e Studio | da fare |
 | M5 — Preparazione immagini e precaricamento | da fare |
 | M6 — Fondamenta del sito | da fare |
@@ -39,9 +39,17 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 - Copertine, 8 foto di benvenuto, 4 album in evidenza e testi degli album scelti e annotati nel piano.
 - Controllo finale: originale intatto (129 file identici all'impronta).
 
+### M3 — Direzione visiva (2026-11-07)
+
+- Screenshot dei riferimenti (Playwright per Pedron e Amelia Allen; Zielecki nel browser integrato, perché blocca i browser automatici) in `screenshots/riferimenti/`.
+- `docs/direzione-visiva.md`: analisi dei riferimenti, piano in prima passata, revisione critica, piano finale, due giri di correzioni sul prototipo.
+- Prototipo statico in `prototipo/` (home e pagina album No Border Village), immagini generate da `prototipo/prepara.mjs` e non versionate. Calcolo delle tinte in `web/src/lib/tinta.js`, riusato dal sito.
+- Piano album aggiornato: 7 foto di benvenuto, 3 album in evidenza (Teatro di Monfalcone, Cata e Alice, No Border Village).
+- Playwright installato alla radice; `scripts/screenshot.mjs` per gli screenshot alle quattro larghezze.
+
 ## Prossimo passo
 
-M3.1 — screenshot dei tre siti di riferimento e `docs/direzione-visiva.md`.
+M4.1 — inizializzare lo Studio in `/studio`.
 
 ## Azioni richieste a Davide
 

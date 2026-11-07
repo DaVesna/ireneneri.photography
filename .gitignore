@@ -51,3 +51,8 @@ desktop.ini
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Prototipo: foto e font copiati dallo script
+prototipo/foto/
+prototipo/font/
+prototipo/dati.js
