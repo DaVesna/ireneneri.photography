@@ -57,3 +57,9 @@ Una riga di motivazione per ogni scelta non ovvia.
 | 2026-11-07 | Header in un modulo unico + `_headers` controllato da un test | Pagine statiche e risposta del server devono avere gli stessi header; il test impedisce che divergano. |
 | 2026-11-07 | `overrides` mirati invece di `npm audit fix --force` | Il fix automatico riportava Sanity a una versione vecchia; gli override correggono solo le librerie vulnerabili. |
 | 2026-11-07 | minimatch 11 forzato per la CLI di Sanity | Unico override con salto di versione principale; riguarda solo la riga di comando ed è stato verificato. |
+| 2026-11-07 | Font solo latino e latino esteso, con `preload` | Sito solo in italiano; il resto dei caratteri pesava e bloccava il rendering. |
+| 2026-11-07 | CSS diviso per pagina | Ogni pagina scarica solo le proprie regole; LCP più basso. |
+| 2026-11-07 | Priorità alta solo alla foto principale della pagina | Più foto ad alta priorità si rubano la banda a vicenda. |
+| 2026-11-07 | Album con una sola foto uguale alla copertina: niente carosello | Evita la stessa foto ripetuta; la copertina apre il visore. |
+| 2026-11-07 | Tra 761 e 1100 px apertura e capitoli su una colonna | Sui tablet in verticale la copertina verticale lasciava al testo una colonna troppo stretta. |
+| 2026-11-07 | Richieste a Sanity con 4 tentativi | Un errore di rete momentaneo non deve far fallire il build. |

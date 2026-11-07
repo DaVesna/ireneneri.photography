@@ -54,8 +54,8 @@ function avvia(box: HTMLElement) {
   })
   // Il visore chiede di allineare la striscia alla foto che si stava guardando.
   box.addEventListener('vai-a', (e) => vaiA((e as CustomEvent<number>).detail))
-  new ResizeObserver(aggiorna).observe(fila)
-  aggiorna()
+  // Prima misura al fotogramma successivo: niente reflow forzato durante il caricamento.
+  requestAnimationFrame(() => new ResizeObserver(aggiorna).observe(fila))
 }
 
 export function avviaStrisce() {

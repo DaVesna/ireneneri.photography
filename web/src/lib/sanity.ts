@@ -117,8 +117,27 @@ const ALBUM_VALIDO = `_type == "album" && defined(slug.current) && defined(coper
 const cache = new Map<string, Promise<unknown>>()
 function query<T>(groq: string, params: QueryParams = {}): Promise<T> {
   const chiave = groq + JSON.stringify(params)
-  if (!cache.has(chiave)) cache.set(chiave, client.fetch<T>(groq, params))
+  if (!cache.has(chiave)) {
+    const p = conTentativi(() => client.fetch<T>(groq, params))
+    // Una richiesta fallita non resta in cache: la prossima pagina riprova.
+    p.catch(() => cache.delete(chiave))
+    cache.set(chiave, p)
+  }
   return cache.get(chiave) as Promise<T>
+}
+
+/** Ripete una richiesta in caso di errore di rete: 4 tentativi, attesa 0,5 / 1 / 2 s. */
+async function conTentativi<T>(fn: () => Promise<T>, tentativi = 4): Promise<T> {
+  for (let i = 1; ; i++) {
+    try {
+      return await fn()
+    } catch (e) {
+      const stato = (e as { statusCode?: number }).statusCode
+      // Gli errori della query (4xx) non migliorano riprovando.
+      if (i >= tentativi || (stato && stato >= 400 && stato < 500)) throw e
+      await new Promise((r) => setTimeout(r, 250 * 2 ** i))
+    }
+  }
 }
 
 export const leggiImpostazioni = () =>

@@ -1,6 +1,7 @@
 ---
-import '@fontsource-variable/archivo/wdth.css'
-import '@fontsource-variable/literata/wght.css'
+import '../styles/font.css'
+import archivoUrl from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url'
+import literataUrl from '@fontsource-variable/literata/files/literata-latin-wght-normal.woff2?url'
 import '../styles/globale.css'
 import Testata from '../components/Testata.astro'
 import Piede from '../components/Piede.astro'
@@ -16,8 +17,10 @@ interface Props {
   noindex?: boolean
   /** Carica lo script di Cloudflare Turnstile (solo pagine con il modulo contatti). */
   turnstile?: boolean
+  /** Foto principale della pagina, da precaricare (la più grande della prima schermata). */
+  precarica?: { srcset: string; sizes: string; src: string }
 }
-const { titolo, descrizione, immagine, tinta, noindex = false, turnstile = false } = Astro.props
+const { titolo, descrizione, immagine, tinta, noindex = false, turnstile = false, precarica } = Astro.props
 const impostazioni = await leggiImpostazioni()
 const nomeSito = impostazioni?.nomeSito || 'Irene Neri, fotografa'
 const titoloPagina = titolo ? `${titolo} — ${nomeSito}` : nomeSito
@@ -39,6 +42,9 @@ const canonico = new URL(Astro.url.pathname, Astro.site).href
     <meta name="theme-color" content="#1c1a18" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://cdn.sanity.io" />
+    <link rel="preload" href={archivoUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={literataUrl} as="font" type="font/woff2" crossorigin />
+    {precarica && <link rel="preload" as="image" href={precarica.src} imagesrcset={precarica.srcset} imagesizes={precarica.sizes} fetchpriority="high" />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:site_name" content={nomeSito} />

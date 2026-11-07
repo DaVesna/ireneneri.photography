@@ -14,9 +14,10 @@ interface Props {
   vt?: string
   id?: string
   larghezzaMassima?: number
+  scala?: readonly number[]
 }
-const { img, sizes, alt, class: classe, priorita = false, vt, id, larghezzaMassima } = Astro.props
-const s = sorgente(img, larghezzaMassima)
+const { img, sizes, alt, class: classe, priorita = false, vt, id, larghezzaMassima, scala } = Astro.props
+const s = sorgente(img, larghezzaMassima, scala)
 const testoAlt = (img.alt ?? alt ?? '').trim()
 const stile = [
   `--r:${(s.width / s.height).toFixed(4)}`,

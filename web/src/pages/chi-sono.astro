@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro'
 import Immagine from '../components/Immagine.astro'
 import { leggiChiSono } from '../lib/sanity.ts'
 import { paragrafi, testoSemplice } from '../lib/testi.ts'
+import '../styles/chisono.css'
 
 const c = await leggiChiSono()
 const titolo = c?.titolo || 'Chi sono'

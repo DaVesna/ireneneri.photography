@@ -3,6 +3,8 @@
 // Inizio/Fine, Esc), swipe, precaricamento delle foto vicine. Senza JavaScript i link #foto-N
 // portano semplicemente alla foto nella striscia.
 
+// Dati compatti: u = URL senza larghezza, l = larghezze disponibili, w/h = dimensioni, a = alt, d = didascalia.
+type Dato = { u: string; l: number[]; w: number; h: number; a: string; d?: string }
 type Voce = {
   src: string
   srcset: string
@@ -11,13 +13,21 @@ type Voce = {
   alt: string
   didascalia?: string
 }
+const espandi = (x: Dato): Voce => ({
+  srcset: x.l.map((l) => `${x.u}&w=${l} ${l}w`).join(', '),
+  src: `${x.u}&w=${x.l[Math.min(x.l.length - 1, 4)] ?? x.w}`,
+  width: x.w,
+  height: x.h,
+  alt: x.a,
+  didascalia: x.d,
+})
 
 export function avviaVisore() {
   const dialogo = document.querySelector<HTMLDialogElement>('dialog.visore')
   const datiEl = document.getElementById('dati-visore')
   if (!dialogo || !datiEl || dialogo.dataset.pronto) return
   dialogo.dataset.pronto = '1'
-  const foto: Voce[] = JSON.parse(datiEl.textContent || '[]')
+  const foto: Voce[] = (JSON.parse(datiEl.textContent || '[]') as Dato[]).map(espandi)
   const n = foto.length
   if (!n) return
 

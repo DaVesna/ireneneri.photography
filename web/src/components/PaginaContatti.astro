@@ -4,6 +4,7 @@ import ModuloContatti from './ModuloContatti.astro'
 import { leggiCategorieUsate, leggiContatti } from '../lib/sanity.ts'
 import { daFornire } from '../lib/testi.ts'
 import type { Campi, Errori } from '../lib/contatti/validazione.ts'
+import '../styles/contatti.css'
 
 interface Props {
   valori?: Partial<Campi>

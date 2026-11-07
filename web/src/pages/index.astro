@@ -4,13 +4,16 @@ import Striscia from '../components/Striscia.astro'
 import Capitolo from '../components/Capitolo.astro'
 import Immagine from '../components/Immagine.astro'
 import { leggiAlbum, leggiChiSono, leggiHome } from '../lib/sanity.ts'
+import { LARGHEZZE_STRISCIA, precarica, sizesStriscia } from '../lib/immagini.ts'
+import '../styles/home.css'
 
 const [home, chiSono, tutti] = await Promise.all([leggiHome(), leggiChiSono(), leggiAlbum()])
 // Se Irene non ha scelto album in evidenza, si mostrano i tre più recenti.
 const capitoli = home.albumInEvidenza.length ? home.albumInEvidenza : tutti.slice(0, 3)
+const prima = home.fotoBenvenuto[0]
 ---
 
-<Base>
+<Base precarica={prima && precarica(prima, sizesStriscia(prima, 'benvenuto'), LARGHEZZE_STRISCIA)}>
   <h1 class="solo-lettori">Irene Neri, fotografa</h1>
 
   {

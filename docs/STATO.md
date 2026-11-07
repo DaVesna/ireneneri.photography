@@ -15,7 +15,7 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 | M7 — Pagine | fatta |
 | M8 — Form contatti | fatta |
 | M9 — Sicurezza | fatta |
-| M10 — Responsive, accessibilità, prestazioni | da fare |
+| M10 — Responsive, accessibilità, prestazioni | fatta |
 | M11 — Consegna | da fare |
 
 ## Registro
@@ -104,9 +104,41 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 - `npm audit`: da 20 vulnerabilità (tutte nella CLI di Sanity) a 0, con `overrides` mirati; lockfile rigenerato; verificati Studio (schema, build, CLI), sito (check, build), test.
 - `docs/sicurezza.md` con lo stato e l'elenco di cosa fare al deploy.
 
+### M10 — Responsive, accessibilità, prestazioni (2026-11-07)
+
+Strumenti: `npm run qualita` (axe, tastiera, reduced-motion, console) e `npm run lighthouse` contro il build servito da `astro preview` (porta 4322).
+
+**Responsive.** Screenshot di tutte le pagine a 390, 768, 1440, 1920 in `screenshots/m10/`. Difetti trovati e corretti:
+- a 768 px le copertine verticali (apertura album e capitoli della home) schiacciavano il testo in una colonna di una parola per riga, e il titolo "Teatro di Monfalcone" andava su tre righe: tra 761 e 1100 px una sola colonna, copertina alta al massimo il 70% dello schermo;
+- album con una sola foto (Boxe): la foto compariva due volte, come copertina e nel carosello; ora c'è solo la copertina, che apre il visore.
+
+**Tastiera.** Primo Tab su "Vai al contenuto", focus visibile, menu raggiungibile, carosello con le frecce, visore aperto con Invio e con il focus dentro, frecce nel visore, Esc che chiude e riporta il focus sulla foto, modulo compilabile interamente da tastiera: tutto superato.
+
+**Accessibilità (axe, WCAG 2.2 A/AA).** 0 errori gravi su 9 pagine, a 390 e 1440 px. Il widget Turnstile (iframe di terze parti) è escluso dall'analisi.
+
+**prefers-reduced-motion.** View Transition spenta, scorrimenti immediati, nessuna transizione o animazione (regola globale aggiunta: prima restava la transizione di sfondo delle righe dell'elenco album).
+
+**Console.** Nessun errore su nessuna pagina (a parte il 404 voluto sulla pagina inesistente).
+
+**Lighthouse, modalità mobile (4G simulato).**
+
+| Pagina | Prestazioni | Accessibilità | Buone pratiche | SEO | LCP | CLS | TBT |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Home | 99 | 100 | 100 | 100 | 2,3 s | 0 | 0 ms |
+| Album Teatro di Monfalcone | 99 | 100 | 100 | 100 | 2,1 s | 0 | 0 ms |
+| Album Piero (23 foto) | 98 | 100 | 100 | 100 | 2,4 s | 0 | 0 ms |
+| Album Boxe | 98 | 100 | 100 | 100 | 2,3 s | 0 | 0 ms |
+| Elenco album | 99 | 100 | 100 | 100 | 2,3 s | 0 | 0 ms |
+
+Misure fatte servendo il build con compressione gzip, come farà Cloudflare. Con `astro preview`, che non comprime l'HTML, le pagine album misurano 0,2–0,4 s in più (prestazioni 95–98).
+
+Interventi per arrivarci (prima: home 2,5 s, album 2,7–2,9 s): font ridotti a latino e latino esteso con `preload` (il CSS di Fontsource dichiarava anche cirillico, greco e vietnamita); `preload` della foto principale di ogni pagina; priorità alta solo alla foto principale (le prime foto del carosello competevano con la copertina); CSS diviso per pagina (prima un unico file con 12 KB inutilizzati per pagina); dati del visore compatti; `srcset` a 5 larghezze nelle strisce; prima misura della striscia rimandata al fotogramma successivo (niente reflow forzato). Tentativo scartato: togliere il `preload` dei font peggiorava LCP e introduceva spostamenti del layout.
+
+**Robustezza del build.** Due build su molti sono falliti durante il pre-rendering per errori di rete momentanei (la stessa instabilità DNS vista con GitHub): le richieste a Sanity ora fanno fino a 4 tentativi e un errore non resta in cache; tre build consecutivi riusciti.
+
 ## Prossimo passo
 
-M10 — responsive, accessibilità (axe), tastiera, reduced-motion, Lighthouse.
+M11 — README, guida per Irene, deploy, MANCANTI, REPORT, push finale.
 
 ## Azioni richieste a Davide
 

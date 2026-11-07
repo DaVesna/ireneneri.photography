@@ -1,0 +1,174 @@
+/* Home: presentazione, capitoli degli album in evidenza, invito, striscia di benvenuto. */
+
+.frase {
+  margin: 0;
+  font-family: var(--f-prosa);
+  font-size: 1.05rem;
+  color: var(--testo);
+}
+
+.presentazione {
+  display: grid;
+  grid-template-columns: minmax(110px, 260px) minmax(0, 34rem);
+  gap: clamp(1.25rem, 4vw, 3.5rem);
+  align-items: end;
+  padding: clamp(4rem, 10vw, 8rem) var(--margine);
+}
+
+.ritratto-segnaposto {
+  aspect-ratio: 4 / 5;
+  background: var(--grafite);
+  display: grid;
+  place-items: center;
+  color: var(--secondario);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.capitolo {
+  background: var(--fondo);
+  color: var(--testo);
+  padding-block: clamp(2.5rem, 7vw, 6rem);
+}
+
+.capitolo.orizzontale {
+  padding-top: 0;
+}
+
+.capitolo .foto-link {
+  display: block;
+}
+
+.capitolo.verticale .dentro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(1.5rem, 5vw, 5rem);
+  align-items: end;
+  padding-inline: var(--margine);
+}
+
+.capitolo.verticale img {
+  height: min(86vh, 920px);
+  width: auto;
+}
+
+.capitolo.orizzontale img {
+  width: 100%;
+  max-height: 88vh;
+  object-fit: cover;
+}
+
+.capitolo.orizzontale .testo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 30rem);
+  gap: 1rem clamp(1.5rem, 5vw, 5rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem) var(--margine) 0;
+  align-items: end;
+}
+
+.descrizione {
+  font-family: var(--f-prosa);
+  font-size: 1.1rem;
+  line-height: 1.55;
+  margin: 0 0 0.9rem;
+  max-width: 30rem;
+}
+
+.vai {
+  text-decoration-color: var(--chiaro);
+}
+
+.invito {
+  padding: clamp(4rem, 10vw, 8rem) var(--margine);
+  max-width: 46rem;
+}
+
+.invito p {
+  font-family: var(--f-prosa);
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  line-height: 1.35;
+  margin: 0 0 1rem;
+}
+
+@media (max-width: 760px) {
+  .benvenuto img {
+    width: calc(var(--altezza) * min(var(--r, 0.667), 0.8));
+    height: var(--altezza);
+    object-fit: cover;
+    object-position: var(--fx, 50%) var(--fy, 50%);
+  }
+  .presentazione {
+    grid-template-columns: 112px minmax(0, 1fr);
+    align-items: start;
+    padding-block: 3.5rem;
+  }
+  .capitolo.verticale .dentro {
+    grid-template-columns: 1fr;
+    padding-inline: 0;
+  }
+  .capitolo.verticale .foto-link {
+    order: -1;
+    padding-inline: var(--margine);
+  }
+  .capitolo.verticale img {
+    height: auto;
+    width: 100%;
+    max-height: 78vh;
+    object-fit: cover;
+  }
+  .capitolo.verticale .testo {
+    padding-inline: var(--margine);
+  }
+  .capitolo.orizzontale .testo {
+    grid-template-columns: 1fr;
+  }
+  .sotto-striscia .frase {
+    font-size: 0.98rem;
+  }
+}
+
+.frase-benvenuto {
+  margin: 0.9rem var(--margine) 0;
+  font-family: var(--f-prosa);
+  font-size: 1.05rem;
+}
+
+.presentazione .ritratto {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: var(--fx) var(--fy);
+}
+
+.invito a,
+.presentazione a {
+  font-size: 1.05rem;
+}
+
+@media (min-width: 761px) {
+  .benvenuto img {
+    height: var(--altezza);
+    width: min(calc(var(--altezza) * var(--r, 0.667)), calc(100vw - 2 * var(--margine)));
+    object-fit: cover;
+    object-position: var(--fx, 50%) var(--fy, 50%);
+  }
+}
+
+/* Tablet (761–1100 px): capitoli verticali su una colonna, copertina prima del testo. */
+@media (min-width: 761px) and (max-width: 1100px) {
+  .capitolo.verticale .dentro {
+    grid-template-columns: 1fr;
+  }
+  .capitolo.verticale .foto-link {
+    order: -1;
+  }
+  .capitolo.verticale img {
+    height: min(70vh, 760px);
+    width: auto;
+  }
+  .capitolo.orizzontale .testo {
+    grid-template-columns: 1fr;
+  }
+}

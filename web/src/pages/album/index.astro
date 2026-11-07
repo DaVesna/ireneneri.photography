@@ -4,6 +4,7 @@ import Immagine from '../../components/Immagine.astro'
 import { leggiAlbum, leggiCategorieUsate } from '../../lib/sanity.ts'
 import { anno, dataELuogo, quanteFoto } from '../../lib/testi.ts'
 import { stileTinta } from '../../lib/immagini.ts'
+import '../../styles/elenco.css'
 
 const [album, categorie] = await Promise.all([leggiAlbum(), leggiCategorieUsate()])
 const anni = [...new Set(album.map((a) => anno(a.data)))].sort((a, b) => b.localeCompare(a))

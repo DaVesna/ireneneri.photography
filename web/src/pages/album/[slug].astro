@@ -3,8 +3,9 @@ import Base from '../../layouts/Base.astro'
 import Immagine from '../../components/Immagine.astro'
 import Striscia from '../../components/Striscia.astro'
 import { leggiAlbum, leggiAlbumCompleto, type AlbumBreve } from '../../lib/sanity.ts'
-import { orizzontale, sorgente, stileTinta } from '../../lib/immagini.ts'
+import { compatta, orizzontale, precarica, stileTinta, SIZES_COPERTINA_VERTICALE } from '../../lib/immagini.ts'
 import { dataELuogo, paragrafi, testoSemplice } from '../../lib/testi.ts'
+import '../../styles/album.css'
 
 export async function getStaticPaths() {
   const tutti = await leggiAlbum()
@@ -29,31 +30,31 @@ if (!album) return Astro.redirect('/404/')
 const n = album.foto.length
 const vert = !orizzontale(album.copertina)
 const altRipiego = (i: number) => `${album.titolo}, foto ${i + 1} di ${n}`
-const datiVisore = album.foto.map((f, i) => {
-  const s = sorgente(f)
-  return {
-    src: s.src,
-    srcset: s.srcset,
-    width: s.width,
-    height: s.height,
-    alt: f.alt?.trim() || altRipiego(i),
-    didascalia: f.didascalia?.trim() || undefined,
-  }
-})
+const datiVisore = album.foto.map((f, i) => ({
+  ...compatta(f),
+  a: f.alt?.trim() || altRipiego(i),
+  ...(f.didascalia?.trim() ? { d: f.didascalia.trim() } : {}),
+}))
+// Album con una sola foto che è anche la copertina: niente carosello, la copertina apre il visore.
+const soloCopertina = n === 1 && album.foto[0]?.asset._id === album.copertina.asset._id
+const sizesCopertina = vert ? SIZES_COPERTINA_VERTICALE : '100vw'
 const descrizione = testoSemplice(album.testo) || `${album.titolo}: ${n} foto di Irene Neri.`
 ---
 
-<Base titolo={album.titolo} descrizione={descrizione} immagine={album.copertina} tinta={stileTinta(album.copertina)}>
+<Base titolo={album.titolo} descrizione={descrizione} immagine={album.copertina} tinta={stileTinta(album.copertina)}
+  precarica={precarica(album.copertina, sizesCopertina)}
+>
   <article>
     <section class:list={['apertura', vert ? 'verticale' : 'orizzontale']}>
-      <Immagine
-        img={album.copertina}
-        alt={album.titolo}
-        sizes={vert ? '(max-width: 760px) 92vw, min(calc(min(84vh, 900px) * 0.75), 50vw)' : '100vw'}
-        priorita
-        vt={`copertina-${album.slug}`}
-        class="copertina"
-      />
+      {
+        soloCopertina ? (
+          <a class="apri-copertina" href="#foto-1" aria-label="Apri la foto a tutto schermo">
+            <Immagine img={album.copertina} alt={album.titolo} sizes={sizesCopertina} priorita vt={`copertina-${album.slug}`} class="copertina" />
+          </a>
+        ) : (
+          <Immagine img={album.copertina} alt={album.titolo} sizes={sizesCopertina} priorita vt={`copertina-${album.slug}`} class="copertina" />
+        )
+      }
       <div class="intro">
         <h1 class="titolo">{album.titolo}</h1>
         <p class="dati">{dataELuogo(album.data, album.luogo)}</p>
@@ -63,7 +64,7 @@ const descrizione = testoSemplice(album.testo) || `${album.titolo}: ${n} foto di
     </section>
 
     {
-      n > 0 && (
+      n > 0 && !soloCopertina && (
         <Striscia foto={album.foto} tipo="carosello" etichetta={`Foto dell’album ${album.titolo}`} titoloAlbum={album.titolo} />
       )
     }
