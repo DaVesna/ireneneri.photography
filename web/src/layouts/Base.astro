@@ -1,0 +1,63 @@
+---
+import '@fontsource-variable/archivo/wdth.css'
+import '@fontsource-variable/literata/wght.css'
+import '../styles/globale.css'
+import Testata from '../components/Testata.astro'
+import Piede from '../components/Piede.astro'
+import { leggiImpostazioni, type Immagine } from '../lib/sanity.ts'
+import { urlRitaglio } from '../lib/immagini.ts'
+
+interface Props {
+  titolo?: string
+  descrizione?: string
+  immagine?: Immagine
+  /** Variabili CSS della tinta, applicate a tutta la pagina. */
+  tinta?: string
+  noindex?: boolean
+}
+const { titolo, descrizione, immagine, tinta, noindex = false } = Astro.props
+const impostazioni = await leggiImpostazioni()
+const nomeSito = impostazioni?.nomeSito || 'Irene Neri, fotografa'
+const titoloPagina = titolo ? `${titolo} — ${nomeSito}` : nomeSito
+const desc = (descrizione || impostazioni?.descrizione || '').slice(0, 200)
+const condivisione = immagine ?? impostazioni?.immagineCondivisione
+const ogImg = condivisione ? urlRitaglio(condivisione, 1200, 630) : undefined
+const canonico = new URL(Astro.url.pathname, Astro.site).href
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titoloPagina}</title>
+    {desc && <meta name="description" content={desc} />}
+    <link rel="canonical" href={canonico} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#1c1a18" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://cdn.sanity.io" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content={nomeSito} />
+    <meta property="og:title" content={titolo ?? nomeSito} />
+    {desc && <meta property="og:description" content={desc} />}
+    <meta property="og:url" content={canonico} />
+    {ogImg && <meta property="og:image" content={ogImg} />}
+    {ogImg && <meta property="og:image:width" content="1200" />}
+    {ogImg && <meta property="og:image:height" content="630" />}
+    {condivisione?.alt && <meta property="og:image:alt" content={condivisione.alt} />}
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body style={tinta}>
+    <a class="salta" href="#contenuto">Vai al contenuto</a>
+    <Testata />
+    <main id="contenuto" tabindex="-1">
+      <slot />
+    </main>
+    <Piede />
+    <script>
+      import '../scripts/protezione.ts'
+    </script>
+  </body>
+</html>

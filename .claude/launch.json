@@ -9,8 +9,8 @@
     },
     {
       "name": "web",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev:web"],
+      "runtimeExecutable": "C:\\Users\\dadev\\AppData\\Local\\nvm\\v26.13.0\\node.exe",
+      "runtimeArgs": ["node_modules/astro/bin/astro.mjs", "dev", "--root", "web", "--port", "4321"],
       "port": 4321
     }
   ]

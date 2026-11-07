@@ -1,0 +1,67 @@
+---
+// Fila di foto alla stessa altezza, che scorre in orizzontale (swipe, frecce, tastiera).
+// "benvenuto": foto della home. "carosello": foto di un album, ognuna apre il visore.
+import Immagine from './Immagine.astro'
+import type { Immagine as Img } from '../lib/sanity.ts'
+import { sorgente } from '../lib/immagini.ts'
+
+interface Props {
+  foto: Img[]
+  tipo: 'benvenuto' | 'carosello'
+  etichetta: string
+  titoloAlbum?: string
+}
+const { foto, tipo, etichetta, titoloAlbum = '' } = Astro.props
+const n = foto.length
+// sizes calcolato sulla proporzione di ogni foto: la striscia ha altezza fissa, quindi la
+// larghezza mostrata è altezza × proporzione, mai oltre la larghezza dello schermo.
+const altezze =
+  tipo === 'carosello'
+    ? { mobile: 'min(64vh, 115vw)', desktop: 'min(72vh, 780px)' }
+    : { mobile: 'min(58vh, 120vw)', desktop: 'min(64vh, 640px)' }
+const sizes = (img: Img) => {
+  const s = sorgente(img)
+  const r = (s.width / s.height).toFixed(3)
+  const rMobile = tipo === 'benvenuto' ? Math.min(Number(r), 0.8).toFixed(3) : r
+  return `(max-width: 760px) min(calc(${altezze.mobile} * ${rMobile}), 92vw), min(calc(${altezze.desktop} * ${r}), 92vw)`
+}
+const altRipiego = (i: number) => (titoloAlbum ? `${titoloAlbum}, foto ${i + 1} di ${n}` : 'Foto di Irene Neri')
+---
+
+<section class:list={['striscia-box', tipo]} aria-label={etichetta} data-striscia>
+  <div class:list={['striscia', tipo === 'benvenuto' && 'benvenuto']} tabindex="0" aria-label={`${etichetta}: usa le frecce per scorrere`}>
+    {
+      foto.map((img, i) =>
+        tipo === 'carosello' ? (
+          <a class="voce" href={`#foto-${i + 1}`} id={`foto-${i + 1}`} data-indice={i} aria-label={`Apri a tutto schermo la foto ${i + 1} di ${n}`}>
+            <Immagine img={img} sizes={sizes(img)} alt={altRipiego(i)} priorita={i < 2} />
+          </a>
+        ) : (
+          <div class="voce">
+            <Immagine img={img} sizes={sizes(img)} alt={altRipiego(i)} priorita={i < 2} />
+          </div>
+        ),
+      )
+    }
+  </div>
+  <div class="sotto-striscia">
+    {tipo === 'carosello' && <span class="contatore" aria-live="polite">1 / {n}</span>}
+    {
+      n > 1 && (
+        <div class="comandi" hidden>
+          <button type="button" data-dir="-1" aria-label="Foto precedenti">
+            ‹
+          </button>
+          <button type="button" data-dir="1" aria-label="Foto successive">
+            ›
+          </button>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<script>
+  import { avviaStrisce } from '../scripts/striscia.ts'
+  avviaStrisce()
+</script>

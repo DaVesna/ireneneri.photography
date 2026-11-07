@@ -37,3 +37,10 @@ Una riga di motivazione per ogni scelta non ovvia.
 | 2026-11-07 | JPEG 88 con mozjpeg e croma 4:4:4 | Qualità alta per i dettagli colorati (luci di scena); il peso resta basso (35,5 MB in tutto). |
 | 2026-11-07 | Presentazione breve basata solo sui fatti degli album | Non si inventa nulla su come lavora Irene: quella parte resta `[DA FORNIRE]` nel testo di Chi sono. |
 | 2026-11-07 | Email e Instagram precaricati come `[DA FORNIRE: …]` | Regola dei segnaposto; lo Studio segnalerà il formato non valido finché Irene non li corregge, e il sito li mostra come testo. |
+| 2026-11-07 | Node 26 installato con nvm ma non attivato dalla sessione | `nvm use` cambia il collegamento di sistema e richiede l'amministratore: lo fa Davide. Concordato con Davide. |
+| 2026-11-07 | Nessun servizio immagini di Astro (`passthrough`) | Le trasformazioni le fa la CDN di Sanity; il binding Cloudflare Images non serve. |
+| 2026-11-07 | `fit=max` e solo larghezza negli URL, nessun ritaglio lato CDN | Le foto restano alla loro proporzione; il ritaglio, dove serve, è CSS sul punto focale. |
+| 2026-11-07 | Qualità 78 con `auto=format` | AVIF/WebP a 78 restano nitidi a schermo e pesano la metà del JPEG. |
+| 2026-11-07 | Tinta da `darkVibrant`, poi `vibrant`, poi `dominant` della palette Sanity | Stessa regola del prototipo; i risultati coincidono a occhio con quelli calcolati in M3. |
+| 2026-11-07 | Apostrofi dritti trasformati in tipografici al momento della pubblicazione | Irene scriverà con la tastiera normale; il sito sistema la tipografia da solo. |
+| 2026-11-07 | `allowScripts` per esbuild e workerd | npm 11 blocca gli script d'installazione; questi due verificano i binari di piattaforma e servono a un'installazione pulita. |

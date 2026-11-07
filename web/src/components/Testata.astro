@@ -1,0 +1,26 @@
+---
+const voci = [
+  { href: '/album/', testo: 'Album' },
+  { href: '/chi-sono/', testo: 'Chi sono' },
+  { href: '/contatti/', testo: 'Contatti' },
+]
+const percorso = Astro.url.pathname.replace(/\/?$/, '/')
+const corrente = (href: string) => percorso === href || (href === '/album/' && percorso.startsWith('/album/'))
+---
+
+<header class="testata">
+  <a class="marchio" href="/">Irene Neri</a>
+  <nav aria-label="Principale">
+    <ul class="menu">
+      {
+        voci.map((v) => (
+          <li>
+            <a href={v.href} aria-current={corrente(v.href) ? 'page' : undefined}>
+              {v.testo}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>

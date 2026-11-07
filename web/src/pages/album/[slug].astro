@@ -1,0 +1,125 @@
+---
+import Base from '../../layouts/Base.astro'
+import Immagine from '../../components/Immagine.astro'
+import Striscia from '../../components/Striscia.astro'
+import { leggiAlbum, leggiAlbumCompleto, type AlbumBreve } from '../../lib/sanity.ts'
+import { orizzontale, sorgente, stileTinta } from '../../lib/immagini.ts'
+import { dataELuogo, paragrafi, testoSemplice } from '../../lib/testi.ts'
+
+export async function getStaticPaths() {
+  const tutti = await leggiAlbum()
+  return tutti.map((a, i) => ({
+    params: { slug: a.slug },
+    props: {
+      // Ordine per data, dal più recente: "successivo" è il più vecchio, in giro continuo.
+      successivo: tutti.length > 1 ? tutti[(i + 1) % tutti.length] : undefined,
+      precedente: tutti.length > 2 ? tutti[(i - 1 + tutti.length) % tutti.length] : undefined,
+    },
+  }))
+}
+
+interface Props {
+  successivo?: AlbumBreve
+  precedente?: AlbumBreve
+}
+const { successivo, precedente } = Astro.props
+const album = await leggiAlbumCompleto(Astro.params.slug!)
+if (!album) return Astro.redirect('/404/')
+
+const n = album.foto.length
+const vert = !orizzontale(album.copertina)
+const altRipiego = (i: number) => `${album.titolo}, foto ${i + 1} di ${n}`
+const datiVisore = album.foto.map((f, i) => {
+  const s = sorgente(f)
+  return {
+    src: s.src,
+    srcset: s.srcset,
+    width: s.width,
+    height: s.height,
+    alt: f.alt?.trim() || altRipiego(i),
+    didascalia: f.didascalia?.trim() || undefined,
+  }
+})
+const descrizione = testoSemplice(album.testo) || `${album.titolo}: ${n} foto di Irene Neri.`
+---
+
+<Base titolo={album.titolo} descrizione={descrizione} immagine={album.copertina} tinta={stileTinta(album.copertina)}>
+  <article>
+    <section class:list={['apertura', vert ? 'verticale' : 'orizzontale']}>
+      <Immagine
+        img={album.copertina}
+        alt={album.titolo}
+        sizes={vert ? '(max-width: 760px) 92vw, min(calc(min(84vh, 900px) * 0.75), 50vw)' : '100vw'}
+        priorita
+        vt={`copertina-${album.slug}`}
+        class="copertina"
+      />
+      <div class="intro">
+        <h1 class="titolo">{album.titolo}</h1>
+        <p class="dati">{dataELuogo(album.data, album.luogo)}</p>
+        {album.categoria && <a class="categoria" href={`/album/?categoria=${album.categoria.slug}`}>{album.categoria.titolo}</a>}
+        {album.testo?.length ? <div class="prosa" set:html={paragrafi(album.testo)} /> : null}
+      </div>
+    </section>
+
+    {
+      n > 0 && (
+        <Striscia foto={album.foto} tipo="carosello" etichetta={`Foto dell’album ${album.titolo}`} titoloAlbum={album.titolo} />
+      )
+    }
+
+    {
+      n > 1 && (
+        <details class="insieme">
+          <summary>Tutte le foto ({n})</summary>
+          <ul class="miniature">
+            {album.foto.map((f, i) => (
+              <li>
+                <a href={`#foto-${i + 1}`} aria-label={`Foto ${i + 1} di ${n}`}>
+                  <Immagine img={f} sizes="(max-width: 760px) 90px, 140px" alt="" larghezzaMassima={480} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )
+    }
+  </article>
+
+  {
+    successivo && (
+      <nav class="altri-album" aria-label="Altri album">
+        <a class="successivo" href={`/album/${successivo.slug}/`} style={stileTinta(successivo.copertina)}>
+          <span>Album successivo</span>
+          <strong>{successivo.titolo}</strong>
+        </a>
+        {precedente && precedente.slug !== successivo.slug && (
+          <a class="precedente" href={`/album/${precedente.slug}/`}>
+            Album precedente: {precedente.titolo}
+          </a>
+        )}
+      </nav>
+    )
+  }
+
+  <dialog class="visore" aria-label={`Foto dell’album ${album.titolo}`}>
+    <button class="chiudi" type="button">Chiudi</button>
+    <figure>
+      <img alt="" sizes="100vw" draggable="false" />
+      <figcaption hidden></figcaption>
+    </figure>
+    <div class="barra">
+      <span class="contatore" aria-live="polite"></span>
+      <div class="comandi">
+        <button type="button" data-v="-1" aria-label="Foto precedente">‹</button>
+        <button type="button" data-v="1" aria-label="Foto successiva">›</button>
+      </div>
+    </div>
+  </dialog>
+  <script type="application/json" id="dati-visore" set:html={JSON.stringify(datiVisore).replace(/</g, '\\u003c')} />
+</Base>
+
+<script>
+  import { avviaVisore } from '../../scripts/visore.ts'
+  avviaVisore()
+</script>

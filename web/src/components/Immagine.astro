@@ -1,0 +1,46 @@
+---
+// Foto da Sanity: srcset, sizes, dimensioni esplicite, caricamento differito e segnaposto sfocato (LQIP).
+// Proporzione naturale: nessun ritaglio. Dove serve un'inquadratura (CSS object-fit), il punto
+// focale scelto da Irene arriva come --fx/--fy.
+import type { Immagine } from '../lib/sanity.ts'
+import { sorgente } from '../lib/immagini.ts'
+
+interface Props {
+  img: Immagine
+  sizes: string
+  alt?: string
+  class?: string
+  priorita?: boolean
+  vt?: string
+  id?: string
+  larghezzaMassima?: number
+}
+const { img, sizes, alt, class: classe, priorita = false, vt, id, larghezzaMassima } = Astro.props
+const s = sorgente(img, larghezzaMassima)
+const testoAlt = (img.alt ?? alt ?? '').trim()
+const stile = [
+  `--r:${(s.width / s.height).toFixed(4)}`,
+  `--fx:${s.fx}`,
+  `--fy:${s.fy}`,
+  s.lqip ? `background-image:url(${s.lqip})` : '',
+  vt ? `view-transition-name:${vt}` : '',
+]
+  .filter(Boolean)
+  .join(';')
+---
+
+<img
+  src={s.src}
+  srcset={s.srcset}
+  sizes={sizes}
+  width={s.width}
+  height={s.height}
+  alt={testoAlt}
+  loading={priorita ? 'eager' : 'lazy'}
+  fetchpriority={priorita ? 'high' : 'auto'}
+  decoding={priorita ? 'sync' : 'async'}
+  draggable="false"
+  class:list={['foto', classe]}
+  style={stile}
+  id={id}
+/>

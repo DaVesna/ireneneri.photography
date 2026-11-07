@@ -31,7 +31,8 @@ const gam = (c) => (c <= 0.0031308 ? 12.92 * c : 1.055 * c ** (1 / 2.4) - 0.055)
 
 /** @param {string} hex @returns {[number, number, number]} [L, C, h] */
 export function hexToOklch(hex) {
-  const [r, g, b] = hexToRgb(hex).map(lin)
+  const [r0, g0, b0] = hexToRgb(hex)
+  const [r, g, b] = [lin(r0), lin(g0), lin(b0)]
   const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b)
   const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b)
   const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b)
@@ -56,7 +57,8 @@ export function oklchToHex(L, C, h) {
 
 /** Luminanza relativa WCAG. @param {string} hex */
 export function luminanza(hex) {
-  const [r, g, b] = hexToRgb(hex).map(lin)
+  const [r0, g0, b0] = hexToRgb(hex)
+  const [r, g, b] = [lin(r0), lin(g0), lin(b0)]
   return 0.2126 * r + 0.7152 * g + 0.0722 * b
 }
 

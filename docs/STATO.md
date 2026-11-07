@@ -11,7 +11,7 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 | M3 — Direzione visiva | fatta |
 | M4 — Modello dei contenuti e Studio | fatta (prova nello Studio da completare con login) |
 | M5 — Preparazione immagini e precaricamento | fatta |
-| M6 — Fondamenta del sito | da fare |
+| M6 — Fondamenta del sito | fatta |
 | M7 — Pagine | da fare |
 | M8 — Form contatti | da fare |
 | M9 — Sicurezza | da fare |
@@ -66,12 +66,23 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 - Eseguiti `--prova` e poi l'import vero: 75 immagini, 16 documenti pubblicati (4 categorie, 7 album, home, chiSono, contatti, privacy, impostazioni). Secondo lancio: 0 caricamenti, 0 documenti scritti. Nel dataset: 75 asset, 0 con EXIF o posizione, 0 bozze. Tre file scaricati dalla CDN: nessun metadato.
 - `docs/MANCANTI.md` riscritto con tutti i segnaposto del CMS.
 
+### M6 — Fondamenta del sito (2026-11-07)
+
+- Node 26.13.0 installato con `nvm install` (senza `nvm use`: la versione predefinita del sistema resta la 22 finché Davide non la cambia). I comandi del sito girano con Node 26; `.claude/launch.json` avvia il server di sviluppo con il suo eseguibile.
+- Astro 7.4 in `web/` con adapter Cloudflare 14 (`imageService: 'passthrough'`), pagine statiche per default, sitemap, `compressHTML: true`, fogli di stile e script sempre esterni (per la CSP).
+- `src/lib/sanity.ts`: unico accesso ai dati, client senza token, `perspective: 'published'`, query GROQ tipizzate, cache per la durata del build; gli album incompleti (senza slug, copertina o data) non vanno in pagina.
+- `src/lib/immagini.ts` e `Immagine.astro`: URL trasformati della CDN di Sanity (`w`, `auto=format`, `q=78`, `fit=max`), `srcset` fino a 2560 px sul lato lungo, `sizes` calcolato sulla proporzione, dimensioni esplicite, LQIP come sfondo durante il caricamento, punto focale come `--fx/--fy`.
+- Token di design come variabili CSS (`src/styles/globale.css`), font Archivo e Literata da Fontsource serviti dal sito, testata con menu, piede, link "Vai al contenuto".
+- Deterrenti sulle immagini come comportamento globale (`src/scripts/protezione.ts` + CSS): niente menu contestuale né trascinamento su foto e visore, niente menu da pressione prolungata su iOS.
+- Pagina di prova: la pagina album vera (`/album/<slug>/`) con dati reali, screenshot a 390, 768, 1440, 1920 in `screenshots/m6/`. Peso misurato: copertina a 1600 px 71 KB in AVIF (156 KB in JPEG), foto a 480 px circa 19 KB. `astro check`: 0 errori.
+- npm 11 chiede di autorizzare gli script di installazione: autorizzati esbuild e workerd (`allowScripts` nel `package.json` della radice).
+
 ## Prossimo passo
 
-M6.1 — progetto Astro in `/web` con adapter Cloudflare (richiede Node 26).
+M7 — pagine: home, elenco album, Chi sono, Contatti (impaginazione), Privacy, 404, SEO.
 
 ## Azioni richieste a Davide
 
 - Entrare nello Studio (`npm run dev:studio`, poi http://localhost:3333, accesso con Google) e provare a creare, riordinare ed eliminare un album di prova con 3 foto.
 
-- Installare e attivare Node 26 LTS (PowerShell da amministratore): `nvm install 26.13.0` poi `nvm use 26.13.0`. Astro 7 non gira sulla 22.23.2 installata.
+- Rendere Node 26 la versione predefinita (PowerShell da amministratore): `nvm use 26.13.0`. È già installata.
