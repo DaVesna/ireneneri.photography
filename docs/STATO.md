@@ -14,7 +14,7 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 | M6 — Fondamenta del sito | fatta |
 | M7 — Pagine | fatta |
 | M8 — Form contatti | fatta |
-| M9 — Sicurezza | da fare |
+| M9 — Sicurezza | fatta |
 | M10 — Responsive, accessibilità, prestazioni | da fare |
 | M11 — Consegna | da fare |
 
@@ -95,9 +95,18 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 - Test: `npm test` (12 test con `node --test`) coprono invio valido, campi non validi, limiti di lunghezza, iniezione di intestazioni, trappola, Turnstile fallito, raffica di invii, metodo/tipo/dimensione, neutralizzazione, errori del servizio email. Prove end-to-end sul server locale: invio JSON (messaggio nel log), invio senza JS con errori (422), trappola (400), GET (303), invio dal browser con il widget di prova; siteverify reale con i segreti di prova ufficiali (OK → true, KO → false).
 - Senza JavaScript la verifica Turnstile non può partire: il modulo lo dice e rimanda all'email.
 
+### M9 — Sicurezza (2026-11-07)
+
+- Header e CSP: unica fonte `web/src/lib/intestazioni.js`, servita da `web/public/_headers` (pagine statiche) e dal middleware (risposta del server); test di coerenza. Prova con `astro preview`: header presenti, 0 violazioni CSP su tutte le pagine, immagini, visore e Turnstile funzionanti.
+- Ricerca segreti: token assente da build del sito, build dello Studio, file tracciati e intera storia di git; `.env` mai committato.
+- Bozze: non leggibili senza token (provato con una bozza vera, poi eliminata).
+- CORS: solo `http://localhost:3333`; origini da aggiungere in `docs/deploy.md`.
+- `npm audit`: da 20 vulnerabilità (tutte nella CLI di Sanity) a 0, con `overrides` mirati; lockfile rigenerato; verificati Studio (schema, build, CLI), sito (check, build), test.
+- `docs/sicurezza.md` con lo stato e l'elenco di cosa fare al deploy.
+
 ## Prossimo passo
 
-M9 — sicurezza: header e CSP, ricerca segreti, bozze, CORS, `npm audit`, `docs/sicurezza.md`.
+M10 — responsive, accessibilità (axe), tastiera, reduced-motion, Lighthouse.
 
 ## Azioni richieste a Davide
 

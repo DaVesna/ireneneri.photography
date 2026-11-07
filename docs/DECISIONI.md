@@ -53,3 +53,7 @@ Una riga di motivazione per ogni scelta non ovvia.
 | 2026-11-07 | Trappola compilata → risposta 400 generica | Il bot non riceve indizi su quale controllo è scattato. |
 | 2026-11-07 | Limite 5 invii / 10 minuti per IP | Abbastanza per chi scrive davvero, troppo poco per una raffica. |
 | 2026-11-07 | Test con il runner di Node, senza Vitest | Una dipendenza in meno; Node 26 esegue TypeScript direttamente. |
+| 2026-11-07 | `style-src-attr 'unsafe-inline'`, nessun `unsafe-inline` per script e fogli di stile | Le variabili CSS per tinta, proporzioni e punto focale stanno negli attributi `style`; è il compromesso più stretto possibile. |
+| 2026-11-07 | Header in un modulo unico + `_headers` controllato da un test | Pagine statiche e risposta del server devono avere gli stessi header; il test impedisce che divergano. |
+| 2026-11-07 | `overrides` mirati invece di `npm audit fix --force` | Il fix automatico riportava Sanity a una versione vecchia; gli override correggono solo le librerie vulnerabili. |
+| 2026-11-07 | minimatch 11 forzato per la CLI di Sanity | Unico override con salto di versione principale; riguarda solo la riga di comando ed è stato verificato. |
