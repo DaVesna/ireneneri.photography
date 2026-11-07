@@ -1,0 +1,13 @@
+.astro/
+.idea/
+.sanity/
+dist/
+node_modules/
+.env
+.env.*
+!.env.example
+Thumbs.db
+desktop.ini
+*.jpg
+*.jpeg
+src/photos/
