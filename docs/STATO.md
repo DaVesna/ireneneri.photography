@@ -16,7 +16,7 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 | M8 — Form contatti | fatta |
 | M9 — Sicurezza | fatta |
 | M10 — Responsive, accessibilità, prestazioni | fatta |
-| M11 — Consegna | da fare |
+| M11 — Consegna | fatta |
 
 ## Registro
 
@@ -136,11 +136,21 @@ Interventi per arrivarci (prima: home 2,5 s, album 2,7–2,9 s): font ridotti a 
 
 **Robustezza del build.** Due build su molti sono falliti durante il pre-rendering per errori di rete momentanei (la stessa instabilità DNS vista con GitHub): le richieste a Sanity ora fanno fino a 4 tentativi e un errore non resta in cache; tre build consecutivi riusciti.
 
+### M11 — Consegna (2026-11-07)
+
+- `README.md` completo (requisiti, installazione, avvio di sito e Studio in PowerShell, script delle foto, variabili d'ambiente).
+- `docs/guida-irene.md`: accesso, album, foto, copertina e punto focale, pubblicazione, home, Chi sono, esportazione delle foto passo per passo.
+- `docs/deploy.md`: Cloudflare Workers, segreti, Turnstile, servizio email, dominio, CORS, deploy dello Studio, aggiornamento del sito (webhook firmato o rendering su richiesta).
+- `docs/MANCANTI.md` completo; `docs/REPORT.md` con promemoria sulla revoca del token.
+- Controlli finali: originale intatto, `npm audit` 0, controllo dei tipi 0 errori, 14 test superati, build di sito e Studio riusciti, nessun segreto nel build, nel repo e nella storia.
+
 ## Prossimo passo
 
-M11 — README, guida per Irene, deploy, MANCANTI, REPORT, push finale.
+Lavoro della roadmap completato. Restano le azioni elencate qui sotto e in `docs/REPORT.md`.
 
 ## Azioni richieste a Davide
+
+- Revocare il token di scrittura di Sanity usato per il precaricamento.
 
 - Entrare nello Studio (`npm run dev:studio`, poi http://localhost:3333, accesso con Google) e provare a creare, riordinare ed eliminare un album di prova con 3 foto.
 
