@@ -26,3 +26,9 @@ Una riga di motivazione per ogni scelta non ovvia.
 | 2026-11-07 | Su mobile le orizzontali della striscia di benvenuto si inquadrano in 4:5 sul punto focale | Altrimenti restano piccole in un riquadro vuoto; il ritaglio usa l'hotspot scelto da Irene. |
 | 2026-11-07 | Foto di benvenuto diverse dalle copertine degli album in evidenza; 3 album in evidenza | Evita di mostrare la stessa foto due volte nella home. |
 | 2026-11-07 | Frase di benvenuto lasciata vuota | Nel prototipo ripeteva la presentazione; è l'elemento tolto in chiusura della M3. |
+| 2026-11-07 | Studio configurato a mano, non con `sanity init` | L'init è interattivo e avrebbe creato file di esempio; la configurazione a mano resta minima e leggibile. |
+| 2026-11-07 | Documento singolo `privacy` nel CMS | La regola è che tutti i contenuti si modificano dal CMS, informativa compresa. |
+| 2026-11-07 | Campo `presentazioneBreve` in Chi sono | La home mostra ritratto e due frasi di Irene; tenerle nello stesso documento del ritratto evita doppioni. |
+| 2026-11-07 | Avviso foto grandi calcolato dal riferimento dell'asset | Sanity scrive le dimensioni nell'ID (`image-…-4000x6000-jpg`): niente richieste in più e funziona subito dopo il caricamento. |
+| 2026-11-07 | Icone importate dai sottopercorsi di `@sanity/icons` | Dalla versione 5 la radice del pacchetto non esporta più le singole icone. |
+| 2026-11-07 | Nessuna origine CORS per il sito | Il sito legge Sanity solo dal server durante il build; nel browser non parte nessuna richiesta a Sanity. |
