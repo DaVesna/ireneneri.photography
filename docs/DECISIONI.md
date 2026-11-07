@@ -32,3 +32,8 @@ Una riga di motivazione per ogni scelta non ovvia.
 | 2026-11-07 | Avviso foto grandi calcolato dal riferimento dell'asset | Sanity scrive le dimensioni nell'ID (`image-…-4000x6000-jpg`): niente richieste in più e funziona subito dopo il caricamento. |
 | 2026-11-07 | Icone importate dai sottopercorsi di `@sanity/icons` | Dalla versione 5 la radice del pacchetto non esporta più le singole icone. |
 | 2026-11-07 | Nessuna origine CORS per il sito | Il sito legge Sanity solo dal server durante il build; nel browser non parte nessuna richiesta a Sanity. |
+| 2026-11-07 | L'import non sovrascrive i documenti esistenti (salvo `--sovrascrivi`) | Rilanciarlo per sbaglio dopo che Irene ha modificato qualcosa non deve cancellare il suo lavoro. |
+| 2026-11-07 | Documenti precaricati già pubblicati | Il sito legge solo contenuti pubblicati; Irene li trova pronti e li corregge. |
+| 2026-11-07 | JPEG 88 con mozjpeg e croma 4:4:4 | Qualità alta per i dettagli colorati (luci di scena); il peso resta basso (35,5 MB in tutto). |
+| 2026-11-07 | Presentazione breve basata solo sui fatti degli album | Non si inventa nulla su come lavora Irene: quella parte resta `[DA FORNIRE]` nel testo di Chi sono. |
+| 2026-11-07 | Email e Instagram precaricati come `[DA FORNIRE: …]` | Regola dei segnaposto; lo Studio segnalerà il formato non valido finché Irene non li corregge, e il sito li mostra come testo. |

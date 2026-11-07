@@ -10,7 +10,7 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 | M2 — Ricognizione e copia delle foto | fatta |
 | M3 — Direzione visiva | fatta |
 | M4 — Modello dei contenuti e Studio | fatta (prova nello Studio da completare con login) |
-| M5 — Preparazione immagini e precaricamento | da fare |
+| M5 — Preparazione immagini e precaricamento | fatta |
 | M6 — Fondamenta del sito | da fare |
 | M7 — Pagine | da fare |
 | M8 — Form contatti | da fare |
@@ -59,9 +59,16 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 - Verifiche: `sanity schema validate` 0 errori e 0 avvisi; `sanity build` riuscito; nessun token nel build; schermata di accesso con il solo Google. Prova via API (`scripts/prova-album.mjs`): album di prova con 3 immagini creato, riordinato, eliminato senza residui; la bozza non è visibile senza token.
 - **Da completare:** la stessa prova dentro lo Studio, dopo l'accesso con Google di Davide (scelta di Davide: rimandata).
 
+### M5 — Preparazione immagini e precaricamento (2026-11-07)
+
+- `foto:prepara`: 74 foto in `src/photos/preparate/` (lato lungo 3200 px, JPEG 88, sRGB, orientamento applicato, nessun metadato) più il ritratto segnaposto. Verifica su 14 foto: nessun EXIF, GPS, XMP, IPTC, ICC. Peso totale 35,5 MB.
+- `foto:importa`: ID deterministici, `--prova` senza scritture, avanzamento a schermo, registro locale per la ripresa, documenti esistenti non toccati (salvo `--sovrascrivi`), caricamento con `preserveFilename: false` ed estrazione dei soli `lqip` e `palette`.
+- Eseguiti `--prova` e poi l'import vero: 75 immagini, 16 documenti pubblicati (4 categorie, 7 album, home, chiSono, contatti, privacy, impostazioni). Secondo lancio: 0 caricamenti, 0 documenti scritti. Nel dataset: 75 asset, 0 con EXIF o posizione, 0 bozze. Tre file scaricati dalla CDN: nessun metadato.
+- `docs/MANCANTI.md` riscritto con tutti i segnaposto del CMS.
+
 ## Prossimo passo
 
-M5.1 — script `foto:prepara`.
+M6.1 — progetto Astro in `/web` con adapter Cloudflare (richiede Node 26).
 
 ## Azioni richieste a Davide
 
