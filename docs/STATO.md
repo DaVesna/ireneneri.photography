@@ -7,7 +7,7 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 | Milestone | Stato |
 |---|---|
 | M1 — Fondamenta del repository | fatta |
-| M2 — Ricognizione e copia delle foto | da fare |
+| M2 — Ricognizione e copia delle foto | fatta |
 | M3 — Direzione visiva | da fare |
 | M4 — Modello dei contenuti e Studio | da fare |
 | M5 — Preparazione immagini e precaricamento | da fare |
@@ -29,9 +29,19 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 - `.env.example` senza valori.
 - `npm install` dalla radice funziona; `npm run typecheck` e `npm run format:check` passano.
 
+### M2 — Ricognizione e copia delle foto (2026-11-07)
+
+- `foto:inventario`: impronta iniziale in `src/photos/impronta-originale.json` (129 file), inventario in `docs/inventario-foto.md`. Opzione `--verifica` per il confronto finale.
+- 83 JPEG nell'originale: 74 foto vere (Nikon D800, con EXIF) e 9 immagini segnaposto sfocate in `events/matrimonio-anna-e-luca` e `pets/nina-e-il-prato`, escluse. 44 file di sistema macOS ignorati.
+- Piano in `docs/piano-album.md` e `scripts/dati/album.json`: 7 album, tutti Sport (Mika, Piero, Cata e Alice, Elisa, Teatro di Monfalcone, No Border Village, Boxe).
+- `foto:copia`: 74 foto in `src/photos/backup/album/<slug>/<slug>-NN.jpg`, ordine cronologico. Conteggio verificato, SHA-256 identico su 16 foto di campione. La copia grezza già presente in `backup/` (events, people, pets, sport) è lasciata com'era.
+- `foto:anteprime`: miniature 400 px e provini in `src/photos/anteprime/`.
+- Copertine, 8 foto di benvenuto, 4 album in evidenza e testi degli album scelti e annotati nel piano.
+- Controllo finale: originale intatto (129 file identici all'impronta).
+
 ## Prossimo passo
 
-M2.1 — script `foto:inventario` in sola lettura sull'originale, con impronta iniziale.
+M3.1 — screenshot dei tre siti di riferimento e `docs/direzione-visiva.md`.
 
 ## Azioni richieste a Davide
 

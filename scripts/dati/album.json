@@ -1,0 +1,145 @@
+{
+  "categorie": [
+    {
+      "slug": "sport",
+      "titolo": "Sport",
+      "cartella": "sport",
+      "ordine": 1
+    },
+    {
+      "slug": "persone",
+      "titolo": "Persone",
+      "cartella": "people",
+      "ordine": 2
+    },
+    {
+      "slug": "animali",
+      "titolo": "Animali",
+      "cartella": "pets",
+      "ordine": 3
+    },
+    {
+      "slug": "eventi",
+      "titolo": "Eventi",
+      "cartella": "events",
+      "ordine": 4
+    }
+  ],
+  "album": [
+    {
+      "slug": "mika",
+      "titolo": "Mika",
+      "categoria": "sport",
+      "cartella": "sport/WTA/Mika",
+      "copertina": "mika-08.jpg",
+      "luogo": "WTA",
+      "alt": "Mika tira un cavo con le due mani davanti al logo della palestra",
+      "testo": [
+        "Mika si allena nella palestra WTA: squat con il bilanciere, panca, esercizi ai cavi.",
+        "Le foto seguono la sessione dall'inizio alla fine, in una mezz'ora di febbraio."
+      ],
+      "data": "2026-02-07"
+    },
+    {
+      "slug": "piero",
+      "titolo": "Piero",
+      "categoria": "sport",
+      "cartella": "sport/WTA/Piero",
+      "copertina": "piero-13.jpg",
+      "luogo": "WTA",
+      "alt": "La sala pesi vista attraverso un anello da ginnastica",
+      "testo": [
+        "Piero e la palestra WTA, in due mattine di febbraio.",
+        "Prima gli spazi vuoti, con i rack in fila e gli anelli appesi. Poi il lavoro con chi si allena: stacchi da terra, mobilità, correzioni da vicino."
+      ],
+      "data": "2026-02-07"
+    },
+    {
+      "slug": "cata-e-alice",
+      "titolo": "Cata e Alice",
+      "categoria": "sport",
+      "cartella": "sport/Pole Dance/Cata e Alice",
+      "copertina": "cata-e-alice-02.jpg",
+      "alt": "Figura a testa in giù sul palo, in controluce davanti a una finestra",
+      "testo": [
+        "Pole dance in bianco e nero, davanti a una finestra che fa da unica luce.",
+        "Figure tenute, prese a testa in giù, linee lunghe di braccia e gambe."
+      ],
+      "data": "2026-02-14"
+    },
+    {
+      "slug": "elisa",
+      "titolo": "Elisa",
+      "categoria": "sport",
+      "cartella": "sport/Pole Dance/Elisa",
+      "copertina": "elisa-07.jpg",
+      "alt": "Elisa sospesa in orizzontale al palo, in una sala chiara",
+      "testo": [
+        "Una mattina in sala con Elisa, tra pole dance e luce chiara.",
+        "Una gonna rossa per le prime figure, poi body scuri e posizioni sempre più staccate da terra."
+      ],
+      "data": "2026-03-21"
+    },
+    {
+      "slug": "teatro-di-monfalcone",
+      "titolo": "Teatro di Monfalcone",
+      "categoria": "sport",
+      "cartella": "sport/Pole Dance/Teatro Monfalcone",
+      "copertina": "teatro-di-monfalcone-02.jpg",
+      "luogo": "Monfalcone",
+      "alt": "Ballerina in spaccata sul palo, con la band sul palco alle spalle",
+      "testo": [
+        "Pole dance sul palco del teatro di Monfalcone, con la band che suona alle spalle.",
+        "Assoli e un duo, sotto luci di scena basse e colorate."
+      ],
+      "data": "2026-03-22"
+    },
+    {
+      "slug": "no-border-village",
+      "titolo": "No Border Village",
+      "categoria": "sport",
+      "cartella": "sport/Pole Dance/No border Village",
+      "copertina": "no-border-village-02.jpg",
+      "alt": "Ballerina inclinata sul palo all'aperto, in un campo da basket",
+      "testo": [
+        "Esibizioni di pole dance all'aperto, su una pedana rotonda montata in un campo da basket.",
+        "Luce di fine giornata, biciclette e panche sullo sfondo, un quarto d'ora di foto."
+      ],
+      "data": "2026-05-09"
+    },
+    {
+      "slug": "boxe",
+      "titolo": "Boxe",
+      "categoria": "sport",
+      "cartella": "sport/Boxe",
+      "copertina": "boxe-01.jpg",
+      "alt": "Pugile con il caschetto che colpisce, in bianco e nero",
+      "testo": [
+        "Uno scatto da un incontro di boxe del 2013, in bianco e nero.",
+        "Un pugno appena partito, visto dal basso, con le corde del ring in primo piano."
+      ],
+      "data": "2013-07-19"
+    }
+  ],
+  "benvenuto": [
+    "teatro-di-monfalcone-02.jpg",
+    "piero-13.jpg",
+    "cata-e-alice-02.jpg",
+    "no-border-village-10.jpg",
+    "elisa-07.jpg",
+    "mika-05.jpg",
+    "boxe-01.jpg",
+    "teatro-di-monfalcone-10.jpg"
+  ],
+  "inEvidenza": ["teatro-di-monfalcone", "no-border-village", "cata-e-alice", "piero"],
+  "escluse": [
+    {
+      "cartella": "events/matrimonio-anna-e-luca",
+      "motivo": "immagini segnaposto sfocate (18 KB, senza EXIF), non foto di Irene"
+    },
+    {
+      "cartella": "pets/nina-e-il-prato",
+      "motivo": "immagini segnaposto sfocate (18 KB, senza EXIF), non foto di Irene"
+    }
+  ]
+}
