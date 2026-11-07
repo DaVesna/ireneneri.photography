@@ -12,8 +12,8 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 | M4 — Modello dei contenuti e Studio | fatta (prova nello Studio da completare con login) |
 | M5 — Preparazione immagini e precaricamento | fatta |
 | M6 — Fondamenta del sito | fatta |
-| M7 — Pagine | da fare |
-| M8 — Form contatti | da fare |
+| M7 — Pagine | fatta |
+| M8 — Form contatti | fatta |
 | M9 — Sicurezza | da fare |
 | M10 — Responsive, accessibilità, prestazioni | da fare |
 | M11 — Consegna | da fare |
@@ -77,9 +77,27 @@ Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo 
 - Pagina di prova: la pagina album vera (`/album/<slug>/`) con dati reali, screenshot a 390, 768, 1440, 1920 in `screenshots/m6/`. Peso misurato: copertina a 1600 px 71 KB in AVIF (156 KB in JPEG), foto a 480 px circa 19 KB. `astro check`: 0 errori.
 - npm 11 chiede di autorizzare gli script di installazione: autorizzati esbuild e workerd (`allowScripts` nel `package.json` della radice).
 
+### M7 — Pagine (2026-11-07)
+
+- Home: striscia delle foto di benvenuto, presentazione con ritratto, capitoli degli album in evidenza nella tinta della copertina (se Irene non ne sceglie, i tre più recenti), invito a scrivere (nuovo campo `invito` della Home, precaricato).
+- Album: elenco a righe raggruppato per anno, dal più recente; filtro per categoria e anno con lo stato nell'URL (`?categoria=…&anno=…`), visibile solo con JavaScript e solo se ha senso (oggi c'è una sola categoria, quindi compare solo l'anno); "Mostra altri" oltre i 12 album; stato vuoto con pulsante per togliere i filtri.
+- Pagina album: apertura (copertina verticale accanto al testo, orizzontale a tutta larghezza), data e luogo in frase, link alla categoria, carosello (swipe, frecce, tastiera, contatore), visore a tutto schermo (clic, frecce, Inizio/Fine, Esc, swipe, precaricamento delle vicine, didascalia), vista d'insieme a miniature, link diretto `#foto-N`, album successivo nella sua tinta e precedente.
+- Chi sono, Contatti (impaginazione e modulo), Privacy (dal CMS), 404, `robots.txt`, sitemap, titoli e descrizioni dal CMS, Open Graph con immagine ritagliata 1200×630.
+- Correzioni dopo gli screenshot: query degli album in evidenza (in GROQ `ref[]->[filtro]` dava `null`), striscia di benvenuto a 768 px (orizzontali inquadrate sul punto focale invece di galleggiare).
+- Verifiche: tutte le pagine 200 (404 dove previsto), nessun errore in console, visore provato in automatico, screenshot a 390, 768, 1440, 1920 in `screenshots/m7/`.
+
+### M8 — Form contatti (2026-11-07)
+
+- Campi: nome, email, tipo di richiesta (categorie usate + "Altro"), messaggio, consenso obbligatorio; campo trappola nascosto.
+- Unico endpoint server: `/contatti/invia/` (pagina on-demand). Con JavaScript risponde in JSON e gli errori compaiono accanto ai campi; senza JavaScript restituisce la pagina con gli errori e i valori inseriti, o la conferma.
+- Logica in moduli puri (`src/lib/contatti/`): validazione con limiti di lunghezza e divieto di caratteri di controllo in nome/email; verifica Turnstile lato server (in produzione senza segreto fallisce sempre); limite di 5 invii ogni 10 minuti per IP (contatore in memoria, binding Rate Limiting di Cloudflare al deploy); messaggi d'errore generici.
+- Email dietro l'interfaccia `InvioEmail`: oggi l'invio finto nel log; destinatario e mittente da variabili d'ambiente; Reply-To = email validata; oggetto fisso con il nome ripulito; corpo con caratteri speciali neutralizzati.
+- Test: `npm test` (12 test con `node --test`) coprono invio valido, campi non validi, limiti di lunghezza, iniezione di intestazioni, trappola, Turnstile fallito, raffica di invii, metodo/tipo/dimensione, neutralizzazione, errori del servizio email. Prove end-to-end sul server locale: invio JSON (messaggio nel log), invio senza JS con errori (422), trappola (400), GET (303), invio dal browser con il widget di prova; siteverify reale con i segreti di prova ufficiali (OK → true, KO → false).
+- Senza JavaScript la verifica Turnstile non può partire: il modulo lo dice e rimanda all'email.
+
 ## Prossimo passo
 
-M7 — pagine: home, elenco album, Chi sono, Contatti (impaginazione), Privacy, 404, SEO.
+M9 — sicurezza: header e CSP, ricerca segreti, bozze, CORS, `npm audit`, `docs/sicurezza.md`.
 
 ## Azioni richieste a Davide
 

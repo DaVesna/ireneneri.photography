@@ -44,3 +44,12 @@ Una riga di motivazione per ogni scelta non ovvia.
 | 2026-11-07 | Tinta da `darkVibrant`, poi `vibrant`, poi `dominant` della palette Sanity | Stessa regola del prototipo; i risultati coincidono a occhio con quelli calcolati in M3. |
 | 2026-11-07 | Apostrofi dritti trasformati in tipografici al momento della pubblicazione | Irene scriverà con la tastiera normale; il sito sistema la tipografia da solo. |
 | 2026-11-07 | `allowScripts` per esbuild e workerd | npm 11 blocca gli script d'installazione; questi due verificano i binari di piattaforma e servono a un'installazione pulita. |
+| 2026-11-07 | Frase d'invito della home come campo del CMS | È contenuto, non un'etichetta d'interfaccia. |
+| 2026-11-07 | Elenco album a righe, non a card | Evita le card tutte uguali; la riga prende la tinta dell'album al passaggio. |
+| 2026-11-07 | Filtri visibili solo con JavaScript e solo se c'è più di un'opzione | Senza JavaScript si vedono tutti gli album; un filtro con una sola voce non serve. |
+| 2026-11-07 | Il visore aggiorna l'indirizzo con `#foto-N` | Ogni foto ha un link condivisibile; chiudendo il visore l'indirizzo torna pulito. |
+| 2026-11-07 | Endpoint del modulo come pagina Astro on-demand | Così, senza JavaScript, il server può restituire la pagina con errori e valori inseriti. |
+| 2026-11-07 | Logica del modulo in funzioni pure con dipendenze iniettate | Testabile con `node --test` senza rete né Cloudflare; il servizio email reale si aggiunge senza toccare il resto. |
+| 2026-11-07 | Trappola compilata → risposta 400 generica | Il bot non riceve indizi su quale controllo è scattato. |
+| 2026-11-07 | Limite 5 invii / 10 minuti per IP | Abbastanza per chi scrive davvero, troppo poco per una raffica. |
+| 2026-11-07 | Test con il runner di Node, senza Vitest | Una dipendenza in meno; Node 26 esegue TypeScript direttamente. |

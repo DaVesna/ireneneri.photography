@@ -24,7 +24,9 @@
     "foto:importa": "npm run importa --workspace scripts --",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test": "npm run test --workspace web",
+    "check:web": "npm run check --workspace web"
   },
   "devDependencies": {
     "playwright": "^1.65.0",
