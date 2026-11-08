@@ -189,7 +189,11 @@ documenti.push({
   })),
 })
 
-const ritratto = await asset('ritratto-segnaposto.jpg')
+// Ritratto vero di Irene se preparato, altrimenti il segnaposto neutro.
+const conRitrattoVero = Boolean(
+  await fs.stat(path.join(PREPARATE, 'ritratto-irene.jpg')).catch(() => null),
+)
+const ritratto = await asset(conRitrattoVero ? 'ritratto-irene.jpg' : 'ritratto-segnaposto.jpg')
 documenti.push({
   _id: 'chiSono',
   _type: 'chiSono',
@@ -206,11 +210,19 @@ documenti.push({
     ],
     'c',
   ),
-  ritratto: immagine(
-    ritratto,
-    'immagineConAlt',
-    'Segnaposto grigio con la scritta: ritratto da sostituire',
-  ),
+  ritratto: {
+    ...immagine(
+      ritratto,
+      'immagineConAlt',
+      conRitrattoVero
+        ? 'Irene Neri sorride con la macchina fotografica in mano'
+        : 'Segnaposto grigio con la scritta: ritratto da sostituire',
+    ),
+    // Punto focale sul viso (la home mostra il ritratto ritagliato a cerchio).
+    ...(conRitrattoVero
+      ? { hotspot: { _type: 'sanity.imageHotspot', x: 0.5, y: 0.36, width: 0.5, height: 0.5 } }
+      : {}),
+  },
 })
 documenti.push({
   _id: 'contatti',

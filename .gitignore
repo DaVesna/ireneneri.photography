@@ -56,3 +56,8 @@ desktop.ini
 prototipo/foto/
 prototipo/font/
 prototipo/dati.js
+
+# Firma: le versioni per il sito in web/src/assets entrano in git (sono il marchio, non foto)
+!web/src/assets/*.png
+# Archivi scaricati (font, materiali)
+*.zip

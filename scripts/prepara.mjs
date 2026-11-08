@@ -9,7 +9,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import sharp from 'sharp'
 import exifr from 'exifr'
-import { RADICE_REPO } from './lib/percorsi.mjs'
+import { RADICE_REPO, LAVORO } from './lib/percorsi.mjs'
 import { leggiPiano, cartellaLavoro } from './lib/piano.mjs'
 import { formattaPeso } from './lib/file.mjs'
 
@@ -73,6 +73,16 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2000">
 </svg>`
 await sharp(Buffer.from(svg)).jpeg({ quality: 85 }).toFile(ritratto)
 totale += (await fs.stat(ritratto)).size
+
+// Ritratto vero di Irene, se presente nella copia di lavoro (backup/ritratto/irene.jpg).
+const ritrattoVero = path.join(LAVORO, 'ritratto', 'irene.jpg')
+const ritrattoPronto = path.join(PREPARATE, 'ritratto-irene.jpg')
+if (await fs.stat(ritrattoVero).catch(() => null)) {
+  await prepara(ritrattoVero, ritrattoPronto)
+  totale += (await fs.stat(ritrattoPronto)).size
+  tutte.push(ritrattoPronto)
+  console.log('ritratto di Irene preparato')
+}
 
 // Verifica su un campione: una foto ogni 6, più la prima e l'ultima.
 const campione = tutte.filter((_, i) => i % 6 === 0 || i === tutte.length - 1)
