@@ -1,4 +1,5 @@
 ---
+import firma from '../assets/firma-completa.svg?url'
 import { leggiContatti, leggiImpostazioni } from '../lib/sanity.ts'
 import { daFornire } from '../lib/testi.ts'
 
@@ -8,25 +9,33 @@ const instagram = contatti?.instagram && !daFornire(contatti.instagram) ? contat
 const email = contatti?.emailPubblica && !daFornire(contatti.emailPubblica) ? contatti.emailPubblica : null
 ---
 
-<footer class="piede">
-  <span>{testo}</span>
-  <ul>
-    {
-      instagram && (
-        <li>
-          <a href={instagram} rel="noopener">
-            Instagram
-          </a>
-        </li>
-      )
-    }
-    {
-      email && (
-        <li>
-          <a href={`mailto:${email}`}>Email</a>
-        </li>
-      )
-    }
-    <li><a href="/privacy/">Privacy</a></li>
-  </ul>
+<footer class="piede scuro">
+  <a href="/" aria-label="Irene Neri, home">
+    <img class="firma-piede" src={firma} width="1577" height="716" alt="" loading="lazy" />
+  </a>
+  <nav aria-label="Piede">
+    <ul>
+      <li><a href="/album/">Album</a></li>
+      <li><a href="/chi-sono/">Chi sono</a></li>
+      <li><a href="/contatti/">Contatti</a></li>
+      {
+        instagram && (
+          <li>
+            <a href={instagram} rel="noopener">
+              Instagram
+            </a>
+          </li>
+        )
+      }
+      {
+        email && (
+          <li>
+            <a href={`mailto:${email}`}>Email</a>
+          </li>
+        )
+      }
+      <li><a href="/privacy/">Privacy</a></li>
+    </ul>
+  </nav>
+  <p class="diritti">{testo}</p>
 </footer>

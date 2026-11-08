@@ -2,93 +2,89 @@
 import Base from '../../layouts/Base.astro'
 import Immagine from '../../components/Immagine.astro'
 import { leggiAlbum, leggiCategorieUsate } from '../../lib/sanity.ts'
-import { anno, dataELuogo, quanteFoto } from '../../lib/testi.ts'
-import { stileTinta } from '../../lib/immagini.ts'
+import { anno, dataELuogo } from '../../lib/testi.ts'
+import { LARGHEZZE_RIDOTTE, orizzontale } from '../../lib/immagini.ts'
 import '../../styles/elenco.css'
 
 const [album, categorie] = await Promise.all([leggiAlbum(), leggiCategorieUsate()])
 const anni = [...new Set(album.map((a) => anno(a.data)))].sort((a, b) => b.localeCompare(a))
-const conFiltri = categorie.length > 1 || anni.length > 1
-const perAnno = anni.map((y) => ({ anno: y, album: album.filter((a) => anno(a.data) === y) }))
+// Forma della tessera nel mosaico: la più recente grande, poi verticali alte e orizzontali larghe.
+const forma = (i: number, verticale: boolean) => (i === 0 ? 'grande' : verticale ? 'alta' : 'larga')
 ---
 
 <Base titolo="Album" descrizione={`Tutti gli album di Irene Neri: ${album.length} servizi, dal più recente.`}>
-  <div class="pagina elenco-album">
-    <h1 class="titolo">Album</h1>
-
-    {
-      conFiltri && (
-        <form class="filtri" hidden data-filtri aria-label="Filtra gli album">
-          {categorie.length > 1 && (
-            <fieldset>
-              <legend>Categoria</legend>
-              <label>
-                <input type="radio" name="categoria" value="" checked />
-                <span>Tutte</span>
-              </label>
-              {categorie.map((c) => (
+  <div class="pagina elenco">
+    <header class="elenco-testa">
+      <h1 class="titolo">Album</h1>
+      {
+        (categorie.length > 1 || anni.length > 1) && (
+          <form class="filtri" hidden data-filtri aria-label="Filtra gli album">
+            {categorie.length > 1 && (
+              <fieldset>
+                <legend class="solo-lettori">Categoria</legend>
                 <label>
-                  <input type="radio" name="categoria" value={c.slug} />
-                  <span>{c.titolo}</span>
+                  <input type="radio" name="categoria" value="" checked />
+                  <span class="etichetta">Tutti</span>
                 </label>
-              ))}
-            </fieldset>
-          )}
-          {anni.length > 1 && (
-            <fieldset>
-              <legend>Anno</legend>
-              <label>
-                <input type="radio" name="anno" value="" checked />
-                <span>Tutti</span>
-              </label>
-              {anni.map((y) => (
+                {categorie.map((c) => (
+                  <label>
+                    <input type="radio" name="categoria" value={c.slug} />
+                    <span class="etichetta">{c.titolo}</span>
+                  </label>
+                ))}
+              </fieldset>
+            )}
+            {anni.length > 1 && (
+              <fieldset>
+                <legend class="solo-lettori">Anno</legend>
                 <label>
-                  <input type="radio" name="anno" value={y} />
-                  <span>{y}</span>
+                  <input type="radio" name="anno" value="" checked />
+                  <span class="etichetta">Ogni anno</span>
                 </label>
-              ))}
-            </fieldset>
-          )}
-        </form>
-      )
-    }
+                {anni.map((y) => (
+                  <label>
+                    <input type="radio" name="anno" value={y} />
+                    <span class="etichetta">{y}</span>
+                  </label>
+                ))}
+              </fieldset>
+            )}
+          </form>
+        )
+      }
+    </header>
 
     <p class="esito" aria-live="polite" data-esito></p>
 
-    {
-      perAnno.map((g) => (
-        <section class="anno" data-anno={g.anno} aria-labelledby={`anno-${g.anno}`}>
-          <h2 id={`anno-${g.anno}`}>{g.anno}</h2>
-          <ul>
-            {g.album.map((a) => (
-              <li data-categoria={a.categoria?.slug ?? ''} data-anno={g.anno} style={stileTinta(a.copertina)}>
-                <a href={`/album/${a.slug}/`}>
-                  <Immagine
-                    img={a.copertina}
-                    alt=""
-                    sizes="(max-width: 760px) 120px, 200px"
-                    larghezzaMassima={640}
-                    vt={`copertina-${a.slug}`}
-                  />
-                  <span class="nome">{a.titolo}</span>
-                  <span class="quando">{dataELuogo(a.data, a.luogo)}</span>
-                  <span class="cat">{a.categoria?.titolo}</span>
-                  <span class="quante">{quanteFoto(a.numeroFoto)}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))
-    }
+    <ul class="mosaico">
+      {
+        album.map((a, i) => (
+          <li class:list={['tessera', 'entra', forma(i, !orizzontale(a.copertina))]} data-categoria={a.categoria?.slug ?? ''} data-anno={anno(a.data)}>
+            <a href={`/album/${a.slug}/`}>
+              <Immagine
+                img={a.copertina}
+                alt=""
+                sizes={i === 0 ? '(max-width: 760px) 100vw, 50vw' : '(max-width: 760px) 50vw, 25vw'}
+                scala={LARGHEZZE_RIDOTTE}
+                larghezzaMassima={i === 0 ? 2000 : 1200}
+                vt={`copertina-${a.slug}`}
+              />
+              <span class="tessera-testo">
+                <span class="tessera-titolo">{a.titolo}</span>
+                <span class="tessera-dati">{dataELuogo(a.data, a.luogo)}</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
 
     <div class="vuoto" hidden data-vuoto>
-      <p>Nessun album con questa combinazione di categoria e anno.</p>
-      <button type="button" data-azzera>Mostra tutti gli album</button>
+      <p class="introduzione">Nessun album con questa combinazione di categoria e anno.</p>
+      <button type="button" class="pulsante" data-azzera>Mostra tutti gli album</button>
     </div>
-    <button type="button" class="altri" hidden data-altri>Mostra altri album</button>
-
-    {album.length === 0 && <p>Gli album arriveranno presto.</p>}
+    <p class="altri-box"><button type="button" class="pulsante" hidden data-altri>Mostra altri album</button></p>
+    {album.length === 0 && <p class="introduzione">Gli album arriveranno presto.</p>}
   </div>
 </Base>
 

@@ -167,8 +167,9 @@ export const privacy = defineType({
     defineField({
       name: 'testo',
       title: 'Testo dell’informativa',
-      type: 'testoSemplice',
-      description: 'Il testo dell’informativa sul trattamento dei dati del modulo contatti.',
+      type: 'testoStrutturato',
+      description:
+        'Il testo dell’informativa. Usa "Titolo di sezione" per i titoli numerati e l’elenco puntato per le liste.',
     }),
   ],
   preview: { prepare: () => ({ title: 'Privacy' }) },

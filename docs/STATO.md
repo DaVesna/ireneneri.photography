@@ -144,9 +144,27 @@ Interventi per arrivarci (prima: home 2,5 s, album 2,7–2,9 s): font ridotti a 
 - `docs/MANCANTI.md` completo; `docs/REPORT.md` con promemoria sulla revoca del token.
 - Controlli finali: originale intatto, `npm audit` 0, controllo dei tipi 0 errori, 14 test superati, build di sito e Studio riusciti, nessun segreto nel build, nel repo e nella storia.
 
+### Rifacimento dello stile — versione 2 (2026-11-08)
+
+Davide ha scartato lo stile della versione 1 e ha indicato nuovi riferimenti (fionanoever.de, agatiandrea.com, codeeritratti.com), la firma di Irene, il font Work Sans e il ritratto vero di Irene.
+
+- Analisi dei riferimenti (anche scorrendo nel browser, perché le animazioni nascondono il contenuto agli screenshot automatici) e nuova direzione in `docs/direzione-visiva.md`; la versione 1 è archiviata in `docs/direzione-visiva-v1.md`.
+- Stile chiaro: fondo Carta, testo Inchiostro, fasce e piede Ardesia; Work Sans (Fontsource, solo latino e latino esteso).
+- Firma di Irene vettorializzata dal PNG (potrace) in due SVG: completa (apertura, piede) e solo corsivo (testata). Bianca sulle foto con un'inversione CSS.
+- Home: apertura a tutto schermo con le foto di benvenuto che si dissolvono (coppie di verticali su schermi larghi, pausa, reduced-motion rispettato, foto successive caricate solo poco prima), ritratto rotondo con presentazione, capitoli "fascia in parallasse + tre foto", fascia scura d'invito.
+- Elenco album: mosaico a misure diverse con titolo sulla foto, filtro a schede di testo.
+- Pagina album: velatura chiara presa dalla copertina, copertina a tutta larghezza con titolo, galleria a righe giustificate senza ritagli, visore invariato, fascia dell'album successivo.
+- Chi sono e Contatti ridisegnati per il fondo chiaro.
+- Movimento: entrate morbide e parallasse con animazioni CSS legate allo scorrimento, solo dove supportate, spente con reduced-motion.
+- Ritratto vero di Irene: spostato in `src/photos/backup/ritratto/irene.jpg`, preparato senza metadati, caricato e messo in Chi sono con il punto focale sul viso. Gli script `foto:prepara` e `foto:importa` ora lo gestiscono.
+- Privacy: nuovo tipo di testo con titoli ed elenchi (`testoStrutturato`) e testo fornito da Davide caricato nel CMS (13 sezioni).
+- Il sito legge Sanity senza la cache CDN, così un build fatto subito dopo una pubblicazione vede i dati nuovi.
+- Studio: accesso anche con email e password di Sanity.
+- Verifiche: `npm run qualita` tutto superato (axe 0 errori gravi, tastiera, reduced-motion, console); Lighthouse mobile con compressione: prestazioni 99–100, accessibilità, buone pratiche e SEO 100, LCP 0,8–2,1 s; 14 test superati; `npm audit` 0.
+
 ## Prossimo passo
 
-Lavoro della roadmap completato. Restano le azioni elencate qui sotto e in `docs/REPORT.md`.
+Davide rivede il nuovo stile; poi correzioni. Da sistemare nel testo della privacy: vedi `docs/MANCANTI.md`.
 
 ## Azioni richieste a Davide
 

@@ -2,7 +2,7 @@ import { album } from './album'
 import { categoria } from './categoria'
 import { chiSono, contatti, home, impostazioni, privacy } from './singoli'
 import { fotoAlbum, immagineConAlt } from './oggetti/immagini'
-import { testoSemplice } from './oggetti/testo'
+import { testoSemplice, testoStrutturato } from './oggetti/testo'
 
 export const schemaTypes = [
   home,
@@ -15,4 +15,5 @@ export const schemaTypes = [
   immagineConAlt,
   fotoAlbum,
   testoSemplice,
+  testoStrutturato,
 ]

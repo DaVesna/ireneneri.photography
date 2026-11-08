@@ -1,9 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro'
 import Immagine from '../../components/Immagine.astro'
-import Striscia from '../../components/Striscia.astro'
 import { leggiAlbum, leggiAlbumCompleto, type AlbumBreve } from '../../lib/sanity.ts'
-import { compatta, orizzontale, precarica, stileTinta, SIZES_COPERTINA_VERTICALE } from '../../lib/immagini.ts'
+import { compatta, LARGHEZZE_RIDOTTE, precarica, stileVelatura } from '../../lib/immagini.ts'
 import { dataELuogo, paragrafi, testoSemplice } from '../../lib/testi.ts'
 import '../../styles/album.css'
 
@@ -28,61 +27,70 @@ const album = await leggiAlbumCompleto(Astro.params.slug!)
 if (!album) return Astro.redirect('/404/')
 
 const n = album.foto.length
-const vert = !orizzontale(album.copertina)
 const altRipiego = (i: number) => `${album.titolo}, foto ${i + 1} di ${n}`
 const datiVisore = album.foto.map((f, i) => ({
   ...compatta(f),
   a: f.alt?.trim() || altRipiego(i),
   ...(f.didascalia?.trim() ? { d: f.didascalia.trim() } : {}),
 }))
-// Album con una sola foto che è anche la copertina: niente carosello, la copertina apre il visore.
+// Album con una sola foto che è anche la copertina: niente galleria, la copertina apre il visore.
 const soloCopertina = n === 1 && album.foto[0]?.asset._id === album.copertina.asset._id
-const sizesCopertina = vert ? SIZES_COPERTINA_VERTICALE : '100vw'
 const descrizione = testoSemplice(album.testo) || `${album.titolo}: ${n} foto di Irene Neri.`
+// Galleria a righe giustificate: ogni foto larga in proporzione alla sua forma, nessun ritaglio.
+const sizesGalleria = (r: number) =>
+  `(max-width: 760px) ${Math.min(100, Math.round(r * 55))}vw, ${Math.min(100, Math.round(r * 30))}vw`
 ---
 
-<Base titolo={album.titolo} descrizione={descrizione} immagine={album.copertina} tinta={stileTinta(album.copertina)}
-  precarica={precarica(album.copertina, sizesCopertina)}
+<Base
+  titolo={album.titolo}
+  descrizione={descrizione}
+  immagine={album.copertina}
+  tinta={stileVelatura(album.copertina)}
+  precarica={[precarica(album.copertina, '100vw')!]}
+  suFoto
 >
   <article>
-    <section class:list={['apertura', vert ? 'verticale' : 'orizzontale']}>
-      {
-        soloCopertina ? (
-          <a class="apri-copertina" href="#foto-1" aria-label="Apri la foto a tutto schermo">
-            <Immagine img={album.copertina} alt={album.titolo} sizes={sizesCopertina} priorita vt={`copertina-${album.slug}`} class="copertina" />
-          </a>
-        ) : (
-          <Immagine img={album.copertina} alt={album.titolo} sizes={sizesCopertina} priorita vt={`copertina-${album.slug}`} class="copertina" />
-        )
-      }
-      <div class="intro">
+    <header class="apertura-album parallasse">
+      <Immagine img={album.copertina} alt={album.copertina.alt ?? album.titolo} sizes="100vw" priorita vt={`copertina-${album.slug}`} />
+      <div class="apertura-testo">
         <h1 class="titolo">{album.titolo}</h1>
         <p class="dati">{dataELuogo(album.data, album.luogo)}</p>
-        {album.categoria && <a class="categoria" href={`/album/?categoria=${album.categoria.slug}`}>{album.categoria.titolo}</a>}
-        {album.testo?.length ? <div class="prosa" set:html={paragrafi(album.testo)} /> : null}
       </div>
-    </section>
+      {
+        soloCopertina && (
+          <a class="apri-copertina" href="#foto-1" id="foto-1">
+            <span class="solo-lettori">Apri la foto a tutto schermo</span>
+          </a>
+        )
+      }
+    </header>
+
+    <div class="album-intro">
+      {
+        album.categoria && (
+          <a class="etichetta" href={`/album/?categoria=${album.categoria.slug}`}>
+            {album.categoria.titolo}
+          </a>
+        )
+      }
+      {album.testo?.length ? <div class="prosa introduzione" set:html={paragrafi(album.testo)} /> : null}
+      {n > 1 && <p class="dati">{n} foto. Aprine una per vederla a tutto schermo.</p>}
+    </div>
 
     {
-      n > 0 && !soloCopertina && (
-        <Striscia foto={album.foto} tipo="carosello" etichetta={`Foto dell’album ${album.titolo}`} titoloAlbum={album.titolo} />
-      )
-    }
-
-    {
-      n > 1 && (
-        <details class="insieme">
-          <summary>Tutte le foto ({n})</summary>
-          <ul class="miniature">
-            {album.foto.map((f, i) => (
-              <li>
-                <a href={`#foto-${i + 1}`} aria-label={`Foto ${i + 1} di ${n}`}>
-                  <Immagine img={f} sizes="(max-width: 760px) 90px, 140px" alt="" larghezzaMassima={480} />
+      !soloCopertina && n > 0 && (
+        <ul class="galleria" aria-label={`Foto dell’album ${album.titolo}`}>
+          {album.foto.map((f, i) => {
+            const r = f.asset.larghezza / f.asset.altezza
+            return (
+              <li class="entra" style={`--r:${r.toFixed(4)}`}>
+                <a href={`#foto-${i + 1}`} id={`foto-${i + 1}`} aria-label={`Apri a tutto schermo la foto ${i + 1} di ${n}`}>
+                  <Immagine img={f} alt={altRipiego(i)} sizes={sizesGalleria(r)} scala={LARGHEZZE_RIDOTTE} priorita={false} />
                 </a>
               </li>
-            ))}
-          </ul>
-        </details>
+            )
+          })}
+        </ul>
       )
     }
   </article>
@@ -90,14 +98,17 @@ const descrizione = testoSemplice(album.testo) || `${album.titolo}: ${n} foto di
   {
     successivo && (
       <nav class="altri-album" aria-label="Altri album">
-        <a class="successivo" href={`/album/${successivo.slug}/`} style={stileTinta(successivo.copertina)}>
-          <span>Album successivo</span>
-          <strong>{successivo.titolo}</strong>
+        <a class="successivo parallasse" href={`/album/${successivo.slug}/`}>
+          <Immagine img={successivo.copertina} alt="" sizes="100vw" larghezzaMassima={2000} />
+          <span class="successivo-testo">
+            <span class="etichetta">Album successivo</span>
+            <span class="titolo-medio">{successivo.titolo}</span>
+          </span>
         </a>
         {precedente && precedente.slug !== successivo.slug && (
-          <a class="precedente" href={`/album/${precedente.slug}/`}>
-            Album precedente: {precedente.titolo}
-          </a>
+          <p class="precedente">
+            <a href={`/album/${precedente.slug}/`}>Album precedente: {precedente.titolo}</a>
+          </p>
         )}
       </nav>
     )

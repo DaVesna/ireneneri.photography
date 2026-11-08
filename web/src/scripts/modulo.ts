@@ -68,7 +68,7 @@ export function avviaModulo() {
         grazie.setAttribute('role', 'status')
         grazie.tabIndex = -1
         grazie.innerHTML =
-          '<p class="voce">Grazie, il messaggio è arrivato.</p><p>Ti risponderò all’indirizzo email che hai indicato.</p>'
+          '<p class="introduzione">Grazie, il messaggio è arrivato.</p><p>Ti risponderò all’indirizzo email che hai indicato.</p>'
         form.replaceWith(grazie)
         grazie.focus()
         return

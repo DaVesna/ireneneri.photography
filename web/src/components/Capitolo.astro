@@ -1,55 +1,45 @@
 ---
-// Un album in evidenza nella home: fascia nella tinta della copertina.
-// Copertina verticale: alta su un lato, testo sull'altro. Orizzontale: a tutta larghezza, testo sotto.
+// Un album in evidenza nella home: fascia larga con la copertina in parallasse, titolo e pulsante;
+// sotto, tre foto dell'album che entrano mentre si scorre.
 import Immagine from './Immagine.astro'
 import type { AlbumBreve } from '../lib/sanity.ts'
-import { orizzontale, stileTinta } from '../lib/immagini.ts'
-import { dataELuogo, quanteFoto, testoSemplice } from '../lib/testi.ts'
-import '../styles/home.css'
+import { LARGHEZZE_RIDOTTE } from '../lib/immagini.ts'
+import { dataELuogo, quanteFoto } from '../lib/testi.ts'
 
 interface Props {
   album: AlbumBreve
 }
 const { album } = Astro.props
-const vert = !orizzontale(album.copertina)
 const href = `/album/${album.slug}/`
-// Nella home basta la prima frase del testo.
-const frase = testoSemplice(album.testo)
-  .replace(/(\p{L})'(?=\p{L})/gu, '$1’')
-  .match(/^.*?[.?!…](\s|$)/u)?.[0]
-  ?.trim()
+const anteprime = album.anteprime ?? []
 ---
 
-<section class:list={['capitolo', vert ? 'verticale' : 'orizzontale']} style={stileTinta(album.copertina)} aria-labelledby={`cap-${album.slug}`}>
-  <div class="dentro">
-    {
-      !vert && (
-        <a class="foto-link" href={href} tabindex="-1" aria-hidden="true">
-          <Immagine img={album.copertina} alt="" sizes="100vw" vt={`copertina-${album.slug}`} />
-        </a>
-      )
-    }
-    <div class="testo">
-      <div>
-        <h2 class="titolo" id={`cap-${album.slug}`}><a href={href}>{album.titolo}</a></h2>
-        <p class="dati">{dataELuogo(album.data, album.luogo)}</p>
-      </div>
-      <div>
-        {frase && <p class="descrizione">{frase}</p>}
-        <a class="vai" href={href}>Guarda l’album, {quanteFoto(album.numeroFoto)}</a>
-      </div>
-    </div>
-    {
-      vert && (
-        <a class="foto-link" href={href} tabindex="-1" aria-hidden="true">
-          <Immagine
-            img={album.copertina}
-            alt=""
-            sizes="(max-width: 760px) 92vw, min(calc(min(86vh, 920px) * 0.75), 50vw)"
-            vt={`copertina-${album.slug}`}
-          />
-        </a>
-      )
-    }
-  </div>
+<section class="capitolo" aria-labelledby={`cap-${album.slug}`}>
+  <a class="fascia parallasse" href={href}>
+    <Immagine img={album.copertina} alt="" sizes="100vw" vt={`copertina-${album.slug}`} />
+    <span class="fascia-testo">
+      <span class="titolo-medio" id={`cap-${album.slug}`}>{album.titolo}</span>
+      <span class="dati">{dataELuogo(album.data, album.luogo)}</span>
+      <span class="pulsante chiaro">Guarda l’album</span>
+    </span>
+  </a>
+  {
+    anteprime.length > 0 && (
+      <ul class="fila">
+        {anteprime.map((f) => (
+          <li class="entra">
+            <a href={href} tabindex="-1" aria-hidden="true">
+              <Immagine img={f} alt="" sizes="(max-width: 760px) 70vw, 31vw" scala={LARGHEZZE_RIDOTTE} larghezzaMassima={1600} />
+            </a>
+          </li>
+        ))}
+        <li class="fila-link entra">
+          <a href={href}>
+            {quanteFoto(album.numeroFoto)}
+            <span class="solo-lettori"> nell’album {album.titolo}</span>
+          </a>
+        </li>
+      </ul>
+    )
+  }
 </section>

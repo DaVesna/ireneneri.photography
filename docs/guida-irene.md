@@ -102,8 +102,8 @@ Il punto focale si può impostare allo stesso modo anche sulle foto della home.
 
 Clicca **Home** a sinistra.
 
-- **Foto di benvenuto**: le foto in fila in cima alla home, da 3 a 10. Si caricano e si ordinano come quelle degli album (trascinandole). Ogni foto ha bisogno di un testo alternativo. Consiglio: non usare le copertine degli album in evidenza, che compaiono già più sotto.
-- **Frase sotto le foto** (facoltativa): una riga breve.
+- **Foto di benvenuto**: le foto che si alternano a tutto schermo in apertura della home, da 3 a 10. Sugli schermi larghi due foto verticali vicine vengono mostrate affiancate: conviene quindi alternare orizzontali e coppie di verticali. Si caricano e si ordinano come quelle degli album (trascinandole). Ogni foto ha bisogno di un testo alternativo. Consiglio: non usare le copertine degli album in evidenza, che compaiono già più sotto.
+- **Frase sotto le foto** (facoltativa): una riga breve, che compare sotto la tua firma al centro dell'apertura.
 - **Album in evidenza**: gli album mostrati in grande nella home, al massimo 6. Premi **Aggiungi elemento**, scegli l'album; trascina per cambiare l'ordine.
 - **Invito a scrivere**: la frase in fondo alla home, prima del link ai contatti.
 
@@ -127,7 +127,7 @@ Poi **Pubblica**.
 ## 9. Le altre pagine
 
 - **Contatti**: testo sopra il modulo, la tua email pubblica e il link a Instagram (l'indirizzo completo, che inizia con `https://`). Ora contengono `[DA FORNIRE: …]`: lo Studio li segna in rosso finché non li sostituisci. I messaggi del modulo arrivano a un indirizzo impostato da Davide, non a quello scritto qui.
-- **Privacy**: il testo dell'informativa (da preparare con Davide).
+- **Privacy**: il testo dell'informativa. Per i titoli delle sezioni scegli "Titolo di sezione" dal menu degli stili; per le liste usa l'elenco puntato.
 - **Impostazioni del sito**: nome del sito, descrizione per Google, foto per la condivisione su WhatsApp e social (meglio orizzontale), testo in fondo alle pagine.
 - **Categorie**: le voci del filtro nella pagina degli album. La "Posizione nel filtro" decide l'ordine (1 = prima). Una categoria senza album non compare sul sito.
 

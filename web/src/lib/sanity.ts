@@ -10,7 +10,8 @@ const client = createClient({
   projectId: PROJECT_ID,
   dataset: DATASET,
   apiVersion: '2026-11-01',
-  useCdn: true,
+  // Lettura diretta (non dalla cache CDN): il build deve vedere subito ciò che Irene ha appena pubblicato.
+  useCdn: false,
   perspective: 'published',
   // Nessun token, mai: le bozze restano invisibili al sito.
 })
@@ -58,6 +59,8 @@ export type AlbumBreve = {
   copertina: Immagine
   testo?: PortableTextBlock[]
   numeroFoto: number
+  /** Solo per gli album in evidenza: tre foto oltre alla copertina. */
+  anteprime?: Immagine[]
 }
 
 export type Album = AlbumBreve & { foto: Immagine[] }
@@ -161,7 +164,10 @@ export const leggiHome = async (): Promise<Home> => {
       "fotoBenvenuto": fotoBenvenuto[defined(asset)]${IMMAGINE},
       fraseBenvenuto,
       invito,
-      "albumInEvidenza": albumInEvidenza[@->_type == "album" && defined(@->slug.current) && defined(@->copertina.asset) && defined(@->data)]->${ALBUM_BREVE}
+      "albumInEvidenza": albumInEvidenza[@->_type == "album" && defined(@->slug.current) && defined(@->copertina.asset) && defined(@->data)]->{
+        ...${ALBUM_BREVE},
+        "anteprime": foto[defined(asset) && asset._ref != ^.copertina.asset._ref][0...3]${IMMAGINE}
+      }
     }`,
   )
   return {

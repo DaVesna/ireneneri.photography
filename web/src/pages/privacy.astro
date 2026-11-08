@@ -8,7 +8,7 @@ const titolo = p?.titolo || 'Informativa privacy'
 ---
 
 <Base titolo={titolo} descrizione="Come vengono trattati i dati inviati con il modulo contatti.">
-  <div class="pagina">
+  <div class="pagina pagina-testo">
     <h1 class="titolo">{titolo}</h1>
     <div class="prosa" set:html={paragrafi(p?.testo) || '<p>[DA FORNIRE: informativa privacy]</p>'} />
   </div>

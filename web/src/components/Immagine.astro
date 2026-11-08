@@ -15,8 +15,11 @@ interface Props {
   id?: string
   larghezzaMassima?: number
   scala?: readonly number[]
+  /** Diapositiva non ancora visibile: il file vero si carica da script poco prima di mostrarla. */
+  differita?: boolean
+  loading?: 'lazy' | 'eager'
 }
-const { img, sizes, alt, class: classe, priorita = false, vt, id, larghezzaMassima, scala } = Astro.props
+const { img, sizes, alt, class: classe, priorita = false, vt, id, larghezzaMassima, scala, differita = false, loading } = Astro.props
 const s = sorgente(img, larghezzaMassima, scala)
 const testoAlt = (img.alt ?? alt ?? '').trim()
 const stile = [
@@ -31,13 +34,15 @@ const stile = [
 ---
 
 <img
-  src={s.src}
-  srcset={s.srcset}
+  src={differita ? s.lqip : s.src}
+  srcset={differita ? undefined : s.srcset}
+  data-src={differita ? s.src : undefined}
+  data-srcset={differita ? s.srcset : undefined}
   sizes={sizes}
   width={s.width}
   height={s.height}
   alt={testoAlt}
-  loading={priorita ? 'eager' : 'lazy'}
+  loading={loading ?? (priorita ? 'eager' : 'lazy')}
   fetchpriority={priorita ? 'high' : 'auto'}
   decoding={priorita ? 'sync' : 'async'}
   draggable="false"

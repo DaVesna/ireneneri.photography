@@ -92,20 +92,31 @@ console.log('\nTastiera')
   const visti = []
   for (let i = 0; i < 6; i++) {
     await page.keyboard.press('Tab')
-    visti.push((await page.evaluate(() => document.activeElement?.textContent?.trim())) ?? '')
+    visti.push(
+      (await page.evaluate(() => {
+        const el = document.activeElement
+        return (el?.getAttribute('aria-label') || el?.textContent || '').trim()
+      })) ?? '',
+    )
   }
-  ;['Irene Neri', 'Album', 'Chi sono', 'Contatti'].every((v) => visti.includes(v))
+  ;['Irene Neri', 'Album', 'Chi sono', 'Contatti'].every((v) => visti.some((x) => x.startsWith(v)))
     ? ok('menu raggiungibile con Tab')
     : segnala(`menu: ${visti.join(' | ')}`)
 
-  // Carosello e visore
+  // Apertura della home: pulsante di pausa raggiungibile e azionabile da tastiera
+  await page.goto(BASE + '/', { waitUntil: 'load' })
+  await page.focus('[data-pausa]')
+  await page.keyboard.press('Enter')
+  const statoPausa = await page.$eval(
+    '[data-pausa]',
+    (e) => /** @type {HTMLElement} */ (e).dataset.stato,
+  )
+  statoPausa === 'fermo'
+    ? ok('apertura: Invio sul pulsante ferma le foto')
+    : segnala(`apertura: stato ${statoPausa}`)
+
+  // Galleria e visore
   await page.goto(BASE + '/album/piero/', { waitUntil: 'load' })
-  await page.focus('.carosello .striscia')
-  const x0 = await page.$eval('.carosello .striscia', (e) => e.scrollLeft)
-  await page.keyboard.press('ArrowRight')
-  await page.waitForTimeout(700)
-  const x1 = await page.$eval('.carosello .striscia', (e) => e.scrollLeft)
-  x1 > x0 ? ok('carosello: freccia destra scorre') : segnala('carosello: la freccia non scorre')
   await page.focus('#foto-2')
   await page.keyboard.press('Enter')
   await page.waitForTimeout(300)
@@ -170,13 +181,18 @@ console.log('\nprefers-reduced-motion')
   transizioni === 0
     ? ok('nessuna transizione o animazione attiva')
     : segnala(`${transizioni} elementi con transizioni attive`)
-  await page.goto(BASE + '/album/piero/', { waitUntil: 'load' })
-  await page.click('.carosello [data-dir="1"]')
-  await page.waitForTimeout(60)
-  const x = await page.$eval('.carosello .striscia', (e) => e.scrollLeft)
-  x > 0
-    ? ok('scorrimento del carosello immediato, senza animazione')
-    : segnala('scorrimento non immediato')
+  await page.goto(BASE + '/', { waitUntil: 'load' })
+  await page.waitForTimeout(7000)
+  const apertura = await page.evaluate(() => ({
+    attiva: [...document.querySelectorAll('.solo-largo .diapo')].findIndex((d) =>
+      d.classList.contains('attiva'),
+    ),
+    pulsante: /** @type {HTMLElement | null} */ (document.querySelector('[data-pausa]'))?.dataset
+      .stato,
+  }))
+  apertura.attiva === 0 && apertura.pulsante === 'avanti'
+    ? ok('apertura: nessuno scorrimento automatico, il pulsante fa avanzare a mano')
+    : segnala(`apertura con reduced-motion: ${JSON.stringify(apertura)}`)
   await ctx.close()
 }
 

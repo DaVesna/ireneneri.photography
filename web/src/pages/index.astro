@@ -1,48 +1,55 @@
 ---
 import Base from '../layouts/Base.astro'
-import Striscia from '../components/Striscia.astro'
+import Apertura from '../components/Apertura.astro'
 import Capitolo from '../components/Capitolo.astro'
 import Immagine from '../components/Immagine.astro'
 import { leggiAlbum, leggiChiSono, leggiHome } from '../lib/sanity.ts'
-import { LARGHEZZE_STRISCIA, precarica, sizesStriscia } from '../lib/immagini.ts'
+import { precarica } from '../lib/immagini.ts'
+import { diapositiveLarghe, MEDIA_LARGO, MEDIA_STRETTO, sizesDiapositiva } from '../lib/apertura.ts'
 import '../styles/home.css'
 
 const [home, chiSono, tutti] = await Promise.all([leggiHome(), leggiChiSono(), leggiAlbum()])
 // Se Irene non ha scelto album in evidenza, si mostrano i tre più recenti.
 const capitoli = home.albumInEvidenza.length ? home.albumInEvidenza : tutti.slice(0, 3)
-const prima = home.fotoBenvenuto[0]
+
+// Precarica la prima diapositiva giusta per la larghezza dello schermo.
+const primaLarga = diapositiveLarghe(home.fotoBenvenuto)[0] ?? []
+const primaStretta = home.fotoBenvenuto[0]
+const daPrecaricare = [
+  ...primaLarga.map((f) => ({ ...precarica(f, sizesDiapositiva(primaLarga, true))!, media: MEDIA_LARGO })),
+  ...(primaStretta ? [{ ...precarica(primaStretta, '100vw')!, media: MEDIA_STRETTO }] : []),
+]
 ---
 
-<Base precarica={prima && precarica(prima, sizesStriscia(prima, 'benvenuto'), LARGHEZZE_STRISCIA)}>
+<Base precarica={daPrecaricare} suFoto conMarchio={false}>
   <h1 class="solo-lettori">Irene Neri, fotografa</h1>
 
-  {
-    home.fotoBenvenuto.length > 0 && (
-      <Striscia foto={home.fotoBenvenuto} tipo="benvenuto" etichetta="Foto di benvenuto" />
-    )
-  }
-  {home.fraseBenvenuto && <p class="frase-benvenuto">{home.fraseBenvenuto}</p>}
+  {home.fotoBenvenuto.length > 0 && <Apertura foto={home.fotoBenvenuto} frase={home.fraseBenvenuto} />}
 
   {
     (chiSono?.presentazioneBreve || chiSono?.ritratto) && (
       <section class="presentazione" aria-label="Chi sono">
-        {chiSono?.ritratto ? (
-          <Immagine img={chiSono.ritratto} alt="Ritratto di Irene Neri" sizes="(max-width: 760px) 112px, 260px" larghezzaMassima={800} class="ritratto" />
-        ) : (
-          <div />
+        {chiSono?.ritratto && (
+          <Immagine img={chiSono.ritratto} alt="Ritratto di Irene Neri" sizes="240px" larghezzaMassima={800} class="ritratto-tondo entra" />
         )}
-        <div>
-          {chiSono?.presentazioneBreve && <p class="voce">{chiSono.presentazioneBreve}</p>}
-          <a href="/chi-sono/">Chi sono</a>
-        </div>
+        {chiSono?.presentazioneBreve && <p class="introduzione entra">{chiSono.presentazioneBreve}</p>}
+        <a class="pulsante entra" href="/chi-sono/">
+          Chi sono
+        </a>
       </section>
     )
   }
 
-  {capitoli.map((album) => <Capitolo album={album} />)}
+  <div class="capitoli">
+    {capitoli.map((album) => <Capitolo album={album} />)}
+  </div>
 
-  <section class="invito" aria-label="Contatti">
-    {home.invito && <p>{home.invito}</p>}
-    <a href="/contatti/">Contatti</a>
+  <p class="tutti-album">
+    <a class="pulsante" href="/album/">Tutti gli album</a>
+  </p>
+
+  <section class="invito scuro" aria-label="Contatti">
+    {home.invito && <p class="introduzione">{home.invito}</p>}
+    <a class="pulsante chiaro" href="/contatti/">Scrivimi</a>
   </section>
 </Base>

@@ -1,31 +1,28 @@
-/* Stili comuni a tutte le pagine: token di design (docs/direzione-visiva.md), base, testata, piede, prosa. */
+/* Stili comuni a tutte le pagine. Direzione visiva v2: docs/direzione-visiva.md */
 
 :root {
-  --carbone: #1c1a18;
-  --grafite: #2a2724;
-  --gesso: #ece8e2;
-  --cenere: #a8a199;
+  --carta: #f3f2ee;
+  --inchiostro: #1f1e1c;
+  --grafite: #5c5853;
+  --ardesia: #3b3936;
+  --notte: #161514;
+  --chiaro-su-scuro: #f3f2ee;
+  --grigio-su-scuro: #c9c6bf;
 
-  --fondo: var(--carbone);
-  --testo: var(--gesso);
-  --secondario: var(--cenere);
-  --chiaro: #cfc8bf;
+  --fondo: var(--carta);
+  --fondo-2: #e9e7e1;
+  --testo: var(--inchiostro);
+  --secondario: var(--grafite);
+  --riga: 1px solid color-mix(in oklab, var(--testo) 16%, transparent);
 
-  --f-titolo: 'Archivo Variable', system-ui, sans-serif;
-  --f-prosa: 'Literata Variable', Georgia, serif;
-  --margine: clamp(1rem, 4vw, 3.5rem);
-  --riga: 1px solid color-mix(in oklab, var(--testo) 18%, transparent);
-  color-scheme: dark;
+  --f: 'Work Sans', system-ui, sans-serif;
+  --margine: clamp(1.1rem, 4.5vw, 4rem);
+  --colonna: 40rem;
+  color-scheme: light;
 }
 
 @view-transition {
   navigation: auto;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  @view-transition {
-    navigation: none;
-  }
 }
 
 *,
@@ -33,20 +30,21 @@
 *::after {
   box-sizing: border-box;
 }
-
 html {
   -webkit-text-size-adjust: 100%;
 }
-
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
   margin: 0;
   background: var(--fondo);
   color: var(--testo);
-  font-family: var(--f-titolo);
-  font-size: 1rem;
-  line-height: 1.45;
+  font-family: var(--f);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.7;
 }
-
 img {
   display: block;
   max-width: 100%;
@@ -55,130 +53,48 @@ img {
   -webkit-touch-callout: none;
   user-select: none;
 }
-
 a {
   color: inherit;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.22em;
 }
-
 a:hover {
   text-decoration-thickness: 2px;
 }
-
 :focus-visible {
-  outline: 2px solid var(--testo);
+  outline: 2px solid currentColor;
   outline-offset: 3px;
 }
-
 button {
   font: inherit;
   color: inherit;
 }
-
-.testata {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.1rem var(--margine);
+[hidden] {
+  display: none !important;
 }
-
-.marchio {
-  font-stretch: 68%;
-  font-weight: 650;
-  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
-  letter-spacing: -0.01em;
-  text-decoration: none;
-}
-
-.menu {
-  display: flex;
-  gap: clamp(0.9rem, 2.5vw, 2.25rem);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 0.98rem;
-}
-
-.menu a {
-  text-decoration: none;
-}
-
-.menu a[aria-current='page'],
-.menu a:hover {
-  text-decoration: underline;
-}
-
-.voce {
-  font-family: var(--f-prosa);
-  font-size: clamp(1.1rem, 1.9vw, 1.45rem);
-  line-height: 1.5;
-  font-weight: 380;
-  margin: 0 0 1rem;
-}
-
-.titolo {
-  margin: 0;
-  font-stretch: 68%;
-  font-weight: 650;
-  font-size: clamp(2.5rem, 6.5vw, 5.75rem);
-  line-height: 0.95;
-  letter-spacing: -0.015em;
-}
-
-.titolo a {
-  text-decoration: none;
-}
-
-.dati {
-  margin: 0.6rem 0 0;
-  color: var(--secondario);
-}
-
-.piede {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 2rem;
-  justify-content: space-between;
-  padding: 1.5rem var(--margine) 2rem;
-  border-top: var(--riga);
-  color: var(--secondario);
-  font-size: 0.92rem;
-}
-
-.piede ul {
-  display: flex;
-  gap: 1.25rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 .foto {
   background-size: cover;
   background-position: center;
 }
-
 .salta {
   position: absolute;
   left: var(--margine);
   top: -3rem;
-  z-index: 10;
+  z-index: 50;
   padding: 0.5rem 0.9rem;
-  background: var(--testo);
-  color: var(--fondo);
+  background: var(--inchiostro);
+  color: var(--carta);
   text-decoration: none;
 }
-
 .salta:focus {
   top: 0.5rem;
 }
-
+main {
+  flex: 1;
+}
 main:focus {
   outline: none;
 }
-
 .solo-lettori {
   position: absolute;
   width: 1px;
@@ -188,45 +104,268 @@ main:focus {
   white-space: nowrap;
 }
 
-.pagina {
-  padding: clamp(1.5rem, 5vw, 4rem) var(--margine) clamp(4rem, 9vw, 7rem);
+/* ---------- testata ---------- */
+.testata {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem var(--margine);
+}
+.testata.su-foto {
+  position: absolute;
+  inset: 0 0 auto;
+  color: #fff;
+}
+.marchio {
+  display: block;
+  line-height: 0;
+}
+.marchio img {
+  width: clamp(120px, 14vw, 170px);
+  height: auto;
+}
+.su-foto .marchio img {
+  filter: invert(1) drop-shadow(0 1px 6px rgb(0 0 0 / 0.35));
+}
+.testata nav {
+  margin-left: auto;
+}
+.menu {
+  display: flex;
+  gap: clamp(0.9rem, 2.6vw, 2.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu a,
+.etichetta {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.menu a {
+  padding-block: 0.4rem;
+  border-bottom: 1px solid transparent;
+}
+.menu a[aria-current='page'],
+.menu a:hover {
+  border-bottom-color: currentColor;
+}
+.su-foto .menu a {
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.4);
 }
 
-.pagina > .titolo {
-  margin-bottom: clamp(1.5rem, 4vw, 3rem);
+/* ---------- testi ---------- */
+.titolo {
+  margin: 0;
+  font-weight: 300;
+  font-size: clamp(2.4rem, 6vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
 }
-
-.prosa {
-  font-family: var(--f-prosa);
-  font-size: 1.125rem;
+.titolo-medio {
+  margin: 0;
+  font-weight: 300;
+  font-size: clamp(1.9rem, 4vw, 3.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.introduzione {
+  font-weight: 300;
+  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
   line-height: 1.6;
-  font-weight: 380;
-  max-width: 34em;
 }
-
+.prosa {
+  max-width: var(--colonna);
+}
 .prosa p {
-  margin: 0 0 0.9em;
+  margin: 0 0 1em;
 }
-
+.dati {
+  margin: 0;
+  color: var(--secondario);
+}
 .segnaposto {
   color: var(--secondario);
 }
+.pagina {
+  padding: clamp(2rem, 6vw, 5rem) var(--margine) clamp(4rem, 9vw, 7rem);
+}
 
-@media (max-width: 760px) {
-  .prosa {
-    font-size: 1.0625rem;
+/* ---------- pulsanti ---------- */
+.pulsante {
+  display: inline-block;
+  padding: 0.85rem 1.6rem;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  background: transparent;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+.pulsante:hover {
+  background: var(--testo);
+  color: var(--fondo);
+}
+.pulsante.pieno {
+  background: var(--ardesia);
+  border-color: var(--ardesia);
+  color: var(--chiaro-su-scuro);
+}
+.pulsante.pieno:hover {
+  background: var(--inchiostro);
+}
+.pulsante.chiaro {
+  color: #fff;
+}
+.pulsante.chiaro:hover {
+  background: #fff;
+  color: var(--inchiostro);
+}
+
+/* ---------- fascia scura e piede ---------- */
+.scuro {
+  background: var(--ardesia);
+  color: var(--chiaro-su-scuro);
+  --testo: var(--chiaro-su-scuro);
+  --fondo: var(--ardesia);
+  --secondario: var(--grigio-su-scuro);
+}
+.invito {
+  padding: clamp(4rem, 10vw, 7rem) var(--margine);
+  text-align: center;
+}
+.invito p {
+  max-width: 32rem;
+  margin: 0 auto 2rem;
+}
+.piede {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: end;
+  gap: 2rem;
+  padding: 2.5rem var(--margine) 2rem;
+  border-top: 1px solid rgb(255 255 255 / 0.14);
+  font-size: 0.95rem;
+}
+.piede .firma-piede {
+  width: 190px;
+  filter: invert(1);
+  opacity: 0.92;
+}
+.piede nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.6rem 2rem;
+}
+.piede ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.piede a {
+  text-decoration: none;
+}
+.piede a:hover {
+  text-decoration: underline;
+}
+.piede .diritti {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--secondario);
+  font-size: 0.85rem;
+}
+
+/* ---------- movimento: entrate morbide e parallasse (solo dove supportato) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .entra {
+      animation: entra linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 75%;
+    }
+    .entra:nth-child(2) {
+      animation-range: entry 15% entry 85%;
+    }
+    .entra:nth-child(3) {
+      animation-range: entry 25% entry 95%;
+    }
+    .parallasse > img,
+    .parallasse > a > img {
+      animation: parallasse linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+@keyframes entra {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes parallasse {
+  from {
+    transform: translateY(-6%) scale(1.14);
+  }
+  to {
+    transform: translateY(6%) scale(1.14);
   }
 }
 
+/* ---------- 404 ---------- */
+.non-trovata {
+  min-height: 60vh;
+}
 .vie {
-  list-style: none;
-  padding: 0;
   display: flex;
-  gap: 1.5rem;
-  font-size: 1.05rem;
+  gap: 1rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
 }
 
+@media (max-width: 760px) {
+  .menu a,
+  .etichetta {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+  }
+  .menu {
+    gap: 0.85rem;
+  }
+  .piede {
+    grid-template-columns: 1fr;
+  }
+  .piede nav {
+    justify-content: flex-start;
+  }
+}
+
+/* Chi chiede meno movimento: niente transizioni, animazioni, View Transition. */
 @media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
   *,
   *::before,
   *::after {
@@ -235,4 +374,35 @@ main:focus {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Pagine di solo testo (privacy) e 404: colonna di lettura centrata. */
+.pagina-testo,
+.non-trovata {
+  max-width: calc(var(--colonna) + 2 * var(--margine));
+  margin: 0 auto;
+}
+.pagina-testo .titolo,
+.non-trovata .titolo {
+  margin-bottom: 1.5rem;
+}
+
+/* Titoli ed elenchi dentro i testi lunghi (informativa privacy). */
+.prosa h2 {
+  margin: 2.5em 0 0.6em;
+  font-weight: 400;
+  font-size: 1.35rem;
+  line-height: 1.3;
+}
+.prosa h3 {
+  margin: 1.8em 0 0.4em;
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+.prosa ul {
+  margin: 0 0 1em;
+  padding-left: 1.2em;
+}
+.prosa li {
+  margin-bottom: 0.3em;
 }

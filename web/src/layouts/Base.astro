@@ -1,7 +1,6 @@
 ---
 import '../styles/font.css'
-import archivoUrl from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url'
-import literataUrl from '@fontsource-variable/literata/files/literata-latin-wght-normal.woff2?url'
+import fontUrl from '@fontsource-variable/work-sans/files/work-sans-latin-wght-normal.woff2?url'
 import '../styles/globale.css'
 import Testata from '../components/Testata.astro'
 import Piede from '../components/Piede.astro'
@@ -18,9 +17,13 @@ interface Props {
   /** Carica lo script di Cloudflare Turnstile (solo pagine con il modulo contatti). */
   turnstile?: boolean
   /** Foto principale della pagina, da precaricare (la più grande della prima schermata). */
-  precarica?: { srcset: string; sizes: string; src: string }
+  precarica?: { srcset: string; sizes: string; src: string; media?: string }[]
+  /** La pagina si apre con una foto a tutta larghezza: la testata ci sta sopra, in bianco. */
+  suFoto?: boolean
+  /** Mostra la firma nella testata (in home no: la firma grande è già nell'apertura). */
+  conMarchio?: boolean
 }
-const { titolo, descrizione, immagine, tinta, noindex = false, turnstile = false, precarica } = Astro.props
+const { titolo, descrizione, immagine, tinta, noindex = false, turnstile = false, precarica = [], suFoto = false, conMarchio = true } = Astro.props
 const impostazioni = await leggiImpostazioni()
 const nomeSito = impostazioni?.nomeSito || 'Irene Neri, fotografa'
 const titoloPagina = titolo ? `${titolo} — ${nomeSito}` : nomeSito
@@ -39,12 +42,11 @@ const canonico = new URL(Astro.url.pathname, Astro.site).href
     {desc && <meta name="description" content={desc} />}
     <link rel="canonical" href={canonico} />
     {noindex && <meta name="robots" content="noindex" />}
-    <meta name="theme-color" content="#1c1a18" />
+    <meta name="theme-color" content="#f3f2ee" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://cdn.sanity.io" />
-    <link rel="preload" href={archivoUrl} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={literataUrl} as="font" type="font/woff2" crossorigin />
-    {precarica && <link rel="preload" as="image" href={precarica.src} imagesrcset={precarica.srcset} imagesizes={precarica.sizes} fetchpriority="high" />}
+    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
+    {precarica.map((p) => <link rel="preload" as="image" href={p.src} imagesrcset={p.srcset} imagesizes={p.sizes} media={p.media} fetchpriority="high" />)}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:site_name" content={nomeSito} />
@@ -60,7 +62,7 @@ const canonico = new URL(Astro.url.pathname, Astro.site).href
   </head>
   <body style={tinta}>
     <a class="salta" href="#contenuto">Vai al contenuto</a>
-    <Testata />
+    <Testata suFoto={suFoto} conMarchio={conMarchio} />
     <main id="contenuto" tabindex="-1">
       <slot />
     </main>

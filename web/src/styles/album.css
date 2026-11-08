@@ -1,114 +1,157 @@
-/* Pagina album: apertura, carosello, miniature, album successivo, visore. */
+/* Pagina album: copertina a tutta larghezza, testo, galleria a righe giustificate, visore. */
 
-.apertura {
+/* ---------- apertura ---------- */
+.apertura-album {
+  position: relative;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: clamp(1.5rem, 5vw, 5rem);
   align-items: end;
-  padding: 0.5rem var(--margine) clamp(3rem, 7vw, 5rem);
+  height: min(88svh, 980px);
+  min-height: 460px;
+  overflow: hidden;
+  background: var(--notte);
+  color: #fff;
 }
-
-.apertura img {
-  height: min(84vh, 900px);
-  width: auto;
+.apertura-album > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--fx) var(--fy);
 }
-
-.apertura .titolo {
-  font-size: clamp(2.75rem, 7.5vw, 6.5rem);
+.apertura-album::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgb(0 0 0 / 0.45), transparent 24%),
+    linear-gradient(to top, rgb(0 0 0 / 0.55), transparent 50%);
+  pointer-events: none;
 }
-
-.apertura .categoria {
-  display: inline-block;
-  margin-top: 0.25rem;
-  color: var(--secondario);
+.apertura-testo {
+  position: relative;
+  z-index: 1;
+  padding: var(--margine);
+  padding-bottom: clamp(2rem, 5vw, 4rem);
+  text-shadow: 0 1px 14px rgb(0 0 0 / 0.35);
 }
-
-.apertura .prosa {
-  margin-top: 1.75rem;
-  font-family: var(--f-prosa);
-  font-size: 1.125rem;
-  line-height: 1.6;
-  max-width: 34rem;
+.apertura-testo .dati {
+  margin-top: 0.75rem;
+  color: rgb(255 255 255 / 0.88);
 }
-
-.apertura .prosa p {
-  margin: 0 0 0.9em;
-}
-
-.carosello .striscia {
-  --altezza: clamp(320px, 72vh, 780px);
-}
-
-.carosello .sotto-striscia {
-  justify-content: space-between;
-}
-
-.carosello button.foto {
-  padding: 0;
-  border: 0;
-  background: none;
+.apri-copertina {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   cursor: zoom-in;
 }
-
-.insieme {
-  padding: 2.5rem var(--margine) 0;
+.apri-copertina:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -6px;
 }
 
-.insieme summary {
-  cursor: pointer;
-  width: max-content;
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-  list-style: none;
+/* ---------- introduzione ---------- */
+.album-intro {
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  max-width: calc(var(--colonna) + 2 * var(--margine));
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 5rem) var(--margine) clamp(2rem, 4vw, 3rem);
+  text-align: center;
+}
+.album-intro .etichetta {
+  color: var(--secondario);
+}
+.album-intro .prosa p:last-child {
+  margin-bottom: 0;
 }
 
-.insieme summary::-webkit-details-marker {
-  display: none;
-}
-
-.miniature {
+/* ---------- galleria a righe giustificate (nessun ritaglio) ---------- */
+.galleria {
+  --altezza-riga: clamp(220px, 28vw, 380px);
   display: flex;
   flex-wrap: wrap;
-  gap: 0.375rem;
-  margin-top: 1.25rem;
+  gap: clamp(6px, 0.8vw, 12px);
+  margin: 0;
+  padding: 0 var(--margine);
+  list-style: none;
 }
-
-.miniature a {
+.galleria li {
+  flex-grow: calc(var(--r) * 100);
+  flex-basis: calc(var(--r) * var(--altezza-riga));
+}
+.galleria::after {
+  content: '';
+  flex-grow: 1000000;
+}
+.galleria a {
   display: block;
-  height: clamp(84px, 12vw, 140px);
+  overflow: hidden;
+  cursor: zoom-in;
+  background: var(--fondo-2);
+}
+.galleria img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.6s ease;
+}
+.galleria a:hover img {
+  transform: scale(1.03);
 }
 
-.miniature img {
-  height: 100%;
-  width: auto;
-}
-
-.successivo {
-  display: block;
+/* ---------- album successivo ---------- */
+.altri-album {
   margin-top: clamp(4rem, 9vw, 7rem);
-  padding: clamp(2.5rem, 6vw, 4.5rem) var(--margine);
+}
+.successivo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: min(60vh, 560px);
+  min-height: 320px;
+  overflow: hidden;
+  color: #fff;
   text-decoration: none;
+  background: var(--notte);
 }
-
-.successivo span {
-  display: block;
+.successivo > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--fx) var(--fy);
+}
+.successivo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 0.4);
+  transition: background-color 0.4s ease;
+}
+.successivo:hover::after {
+  background: rgb(0 0 0 / 0.5);
+}
+.successivo-testo {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  padding: var(--margine);
+  text-align: center;
+  text-shadow: 0 1px 12px rgb(0 0 0 / 0.4);
+}
+.precedente {
+  margin: 1.5rem var(--margine) 3rem;
+  text-align: center;
+}
+.precedente a {
   color: var(--secondario);
-  margin-bottom: 0.4rem;
 }
 
-.successivo strong {
-  font-stretch: 68%;
-  font-weight: 650;
-  font-size: clamp(2rem, 5vw, 4rem);
-  line-height: 1;
-}
-
-.successivo:hover strong {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.15em;
-}
-
+/* ---------- visore ---------- */
 .visore {
   width: 100vw;
   height: 100dvh;
@@ -117,29 +160,38 @@
   margin: 0;
   padding: 0;
   border: 0;
-  background: color-mix(in oklab, var(--fondo) 92%, black);
-  color: var(--testo);
+  background: var(--notte);
+  color: #f3f2ee;
 }
-
+.visore[open] {
+  display: block;
+}
 .visore::backdrop {
-  background: transparent;
+  background: var(--notte);
 }
-
 .visore figure {
-  margin: 0;
-  height: 100%;
   display: grid;
-  place-items: center;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  height: 100%;
+  margin: 0;
   padding: 3.5rem 0.5rem 4.5rem;
 }
-
-.visore img {
+.visore figure img {
+  align-self: center;
+  justify-self: center;
   max-width: 100%;
   max-height: 100%;
   width: auto;
   height: auto;
+  object-fit: contain;
 }
-
+.visore figcaption {
+  text-align: center;
+  color: #c9c6bf;
+  font-size: 0.95rem;
+  padding-inline: var(--margine);
+}
 .visore .barra {
   position: absolute;
   inset: auto 0 0;
@@ -148,160 +200,53 @@
   align-items: center;
   padding: 0.75rem var(--margine) 1rem;
 }
-
+.visore .contatore {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+.visore .comandi {
+  display: flex;
+  gap: 0.4rem;
+}
+.visore .comandi button {
+  width: 2.9rem;
+  height: 2.9rem;
+  border: 1px solid rgb(255 255 255 / 0.4);
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.visore .comandi button:hover {
+  background: rgb(255 255 255 / 0.12);
+}
 .visore .chiudi {
   position: absolute;
   top: 0.75rem;
   right: var(--margine);
-  background: none;
-  border: 0;
   padding: 0.5rem;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
 }
-
-@media (max-width: 760px) {
-  .apertura {
-    grid-template-columns: 1fr;
-    padding-top: 0;
-  }
-  .apertura img {
-    height: auto;
-    width: 100%;
-    max-height: 80vh;
-    object-fit: cover;
-  }
-  .carosello .striscia {
-    --altezza: min(64vh, calc((100vw - 2 * var(--margine)) * 1.25));
-  }
-  .carosello .sotto-striscia {
-    justify-content: space-between;
-  }
-}
-
-.apertura.orizzontale {
-  grid-template-columns: 1fr;
-  padding-inline: 0;
-  padding-top: 0;
-}
-
-.apertura.orizzontale .copertina {
-  width: 100%;
-  height: auto;
-  max-height: 86vh;
-  object-fit: cover;
-  object-position: var(--fx) var(--fy);
-}
-
-.apertura.orizzontale .intro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 34rem);
-  gap: 0.75rem clamp(1.5rem, 5vw, 5rem);
-  padding-inline: var(--margine);
-  align-items: start;
-}
-
-.apertura.orizzontale .intro .prosa {
-  grid-column: 2;
-  grid-row: 1 / span 3;
-  margin-top: 0.4rem;
-}
-
-.apertura .intro .prosa {
-  margin-top: 1.75rem;
-}
-
-.carosello a.voce {
-  display: block;
-  cursor: zoom-in;
-}
-
-.miniature {
-  list-style: none;
-  padding: 0;
-}
-
-.miniature li {
-  display: block;
-}
-
-.altri-album {
-  margin-top: clamp(4rem, 9vw, 7rem);
-}
-
-.altri-album .successivo {
-  margin-top: 0;
-  background: var(--fondo);
-  color: var(--testo);
-}
-
-.altri-album .precedente {
-  display: inline-block;
-  margin: 1.25rem var(--margine) 0;
-  color: var(--secondario);
-}
-
-.visore figure {
-  grid-template-rows: minmax(0, 1fr) auto;
-  gap: 0.75rem;
-}
-
-.visore figure img {
-  align-self: center;
-  justify-self: center;
-  object-fit: contain;
-}
-
-.visore figcaption {
-  text-align: center;
-  color: var(--secondario);
-  font-size: 0.95rem;
-  padding-inline: var(--margine);
-}
-
-.visore[open] {
-  display: block;
-}
-
-.visore .chiudi:focus-visible,
 .visore button:focus-visible {
-  outline-color: var(--testo);
+  outline-color: #fff;
 }
 
 @media (max-width: 760px) {
-  .apertura.orizzontale .intro {
-    grid-template-columns: 1fr;
+  .apertura-album {
+    height: 78svh;
+    min-height: 420px;
   }
-  .apertura.orizzontale .intro .prosa {
-    grid-column: auto;
-    grid-row: auto;
+  .galleria {
+    --altezza-riga: 150px;
+    padding: 0 0.5rem;
   }
-  .apertura.orizzontale .copertina {
-    max-height: 70vh;
-  }
-}
-
-/* Tablet (761–1100 px): una colonna, copertina verticale alta al massimo il 70% dello schermo. */
-@media (min-width: 761px) and (max-width: 1100px) {
-  .apertura.verticale {
-    grid-template-columns: 1fr;
-  }
-  .apertura.verticale .copertina {
-    height: min(70vh, 760px);
-    width: auto;
-    justify-self: start;
-  }
-  .apertura.orizzontale .intro {
-    grid-template-columns: 1fr;
-  }
-  .apertura.orizzontale .intro .prosa {
-    grid-column: auto;
-    grid-row: auto;
-  }
-}
-
-.apri-copertina {
-  display: block;
-  cursor: zoom-in;
 }

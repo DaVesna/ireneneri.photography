@@ -1,4 +1,12 @@
 ---
+import firmaCorsivo from '../assets/firma-corsivo.svg?url'
+
+interface Props {
+  /** Testata sopra una foto a tutta larghezza: testo e firma in bianco. */
+  suFoto?: boolean
+  conMarchio?: boolean
+}
+const { suFoto = false, conMarchio = true } = Astro.props
 const voci = [
   { href: '/album/', testo: 'Album' },
   { href: '/chi-sono/', testo: 'Chi sono' },
@@ -8,8 +16,18 @@ const percorso = Astro.url.pathname.replace(/\/?$/, '/')
 const corrente = (href: string) => percorso === href || (href === '/album/' && percorso.startsWith('/album/'))
 ---
 
-<header class="testata">
-  <a class="marchio" href="/">Irene Neri</a>
+<header class:list={['testata', suFoto && 'su-foto']}>
+  {
+    conMarchio ? (
+      <a class="marchio" href="/" aria-label="Irene Neri, home">
+        <img src={firmaCorsivo} width="1557" height="456" alt="" />
+      </a>
+    ) : (
+      <a class="solo-lettori" href="/">
+        Irene Neri, home
+      </a>
+    )
+  }
   <nav aria-label="Principale">
     <ul class="menu">
       {

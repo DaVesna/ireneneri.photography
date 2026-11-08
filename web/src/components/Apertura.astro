@@ -1,0 +1,50 @@
+---
+// Apertura della home: foto di benvenuto a tutto schermo che si dissolvono una nell'altra, con la
+// firma di Irene al centro. Senza JavaScript (o con reduced-motion) resta ferma la prima foto.
+import Immagine from './Immagine.astro'
+import firma from '../assets/firma-completa.svg?url'
+import type { Immagine as Img } from '../lib/sanity.ts'
+import { diapositiveLarghe, diapositiveStrette, sizesDiapositiva, type Diapositiva } from '../lib/apertura.ts'
+
+interface Props {
+  foto: Img[]
+  frase?: string | undefined
+}
+const { foto, frase } = Astro.props
+const insiemi: { classe: string; largo: boolean; diapositive: Diapositiva[] }[] = [
+  { classe: 'solo-largo', largo: true, diapositive: diapositiveLarghe(foto) },
+  { classe: 'solo-stretto', largo: false, diapositive: diapositiveStrette(foto) },
+]
+---
+
+<section class="apertura-home" aria-label="Foto di benvenuto" data-apertura>
+  {
+    insiemi.map((ins) => (
+      <div class:list={['diaporama', ins.classe]} data-diaporama>
+        {ins.diapositive.map((d, i) => (
+          <div class:list={['diapo', i === 0 && 'attiva', d.length === 2 && 'coppia']} aria-hidden={i === 0 ? undefined : 'true'}>
+            {d.map((img) => (
+              <Immagine img={img} sizes={sizesDiapositiva(d, ins.largo)} alt={img.alt ?? 'Foto di Irene Neri'} loading="lazy" differita={i > 0} />
+            ))}
+          </div>
+        ))}
+      </div>
+    ))
+  }
+  <div class="firma-grande">
+    <img src={firma} width="1577" height="716" alt="Irene Neri, fotografa: sport, pet, portrait photography" />
+    {frase && <p class="frase">{frase}</p>}
+  </div>
+  {
+    foto.length > 1 && (
+      <button class="pausa" type="button" data-pausa aria-pressed="false" hidden>
+        <span class="solo-lettori">Ferma lo scorrimento delle foto</span>
+      </button>
+    )
+  }
+</section>
+
+<script>
+  import { avviaApertura } from '../scripts/apertura.ts'
+  avviaApertura()
+</script>

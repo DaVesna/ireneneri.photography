@@ -8,10 +8,9 @@ Ogni dato segnaposto, dove si trova e chi lo deve fornire. Nel CMS i segnaposto 
 |---|---|---|
 | Email pubblica di Irene | Contatti → Email da mostrare sul sito (`[DA FORNIRE: email pubblica di Irene]`) | Irene |
 | Indirizzo del profilo Instagram | Contatti → Profilo Instagram (`[DA FORNIRE: indirizzo del profilo Instagram]`) | Irene |
-| Ritratto di Irene (ora un'immagine grigia "Ritratto da sostituire") | Chi sono → Ritratto | Irene |
 | Due o tre frasi su come lavora, da quanto fotografa, in quale zona | Chi sono → Testo, secondo paragrafo (`[DA FORNIRE: …]`) | Irene |
 | Conferma o riscrittura del resto di Chi sono e della presentazione breve (testo provvisorio basato solo sugli album) | Chi sono → Presentazione breve, Testo | Irene |
-| Informativa privacy del modulo contatti | Privacy → Testo (`[DA FORNIRE: informativa privacy]`) | Davide con Irene (testo legale) |
+| Informativa privacy: testo caricato (8 novembre 2026), ma da correggere in tre punti — vedi la sezione sotto | Privacy → Testo | Davide con Irene |
 | Conferma dei titoli e dei testi brevi dei 7 album (scritti da provini e date EXIF) | Album → ogni album | Irene |
 | Luogo degli album Cata e Alice, Elisa, No Border Village, Boxe (lasciato vuoto: non risulta dalle cartelle) | Album → Luogo | Irene |
 | Nome completo della palestra per Mika e Piero (ora "WTA", come la cartella) | Album Mika e Piero → Luogo | Irene |
@@ -22,7 +21,7 @@ Ogni dato segnaposto, dove si trova e chi lo deve fornire. Nel CMS i segnaposto 
 
 | Dato | Dove serve | Chi lo fornisce |
 |---|---|---|
-| Dominio definitivo (oggi si assume `ireneneri.photography`) | `SITO_URL` al build (sitemap, link canonici), Turnstile, CORS, Email Routing | Davide |
+| Dominio definitivo (oggi si assume `ireneneri.photography`; la privacy indica `ireneneri.photography.net`) | `SITO_URL` al build (sitemap, link canonici), Turnstile, CORS, Email Routing | Davide |
 | Indirizzo dello Studio pubblicato | fondo di `docs/guida-irene.md` (`[DA FORNIRE: indirizzo dello Studio dopo il deploy]`) | Davide, dopo `sanity deploy` |
 | Indirizzo che riceve i messaggi del modulo e mittente | segreti `CONTATTI_DESTINATARIO`, `CONTATTI_MITTENTE` | Irene / Davide |
 | Chiavi Turnstile vere | `PUBLIC_TURNSTILE_SITE_KEY` (build), segreto `TURNSTILE_SECRET_KEY` | Davide |
@@ -31,3 +30,19 @@ Ogni dato segnaposto, dove si trova e chi lo deve fornire. Nel CMS i segnaposto 
 | Foto vere per Persone, Animali, Eventi (le cartelle contengono solo immagini segnaposto o sono vuote) | nuovi album dallo Studio | Irene |
 | Elisa: originali ad alta risoluzione delle foto n. 1, 2, 3, 5, 10 (ora 1000–1500 px, morbide a tutto schermo) | album Elisa (sostituire le foto) | Irene |
 | Verifica in due passaggi sull'account Google di Irene | prima dell'invito nello Studio | Irene |
+
+## Da correggere nel testo della privacy
+
+Il testo fornito l'8 novembre 2026 è stato caricato così com'è. Tre punti non corrispondono al sito:
+
+1. **Sezione 3** dice che il sito "non prevede … moduli per la raccolta diretta di dati personali", ma la pagina Contatti ha un modulo (nome, email, tipo di richiesta, messaggio) protetto da Cloudflare Turnstile, e la casella del consenso rimanda proprio a questa informativa. Serve una sezione sul modulo (dati raccolti, finalità, base giuridica, conservazione, Turnstile), oppure si toglie il modulo e si lascia solo l'email.
+2. **Sezione 5** descrive Cloudflare Web Analytics, che oggi nel sito non è attivo. Se va attivato: abilitarlo dal pannello Cloudflare e aggiungere `https://static.cloudflareinsights.com` a `script-src` e `https://cloudflareinsights.com` a `connect-src` nella CSP (`web/src/lib/intestazioni.js` e `web/public/_headers`). Altrimenti va tolta la sezione.
+3. **Sezione 2** indica il sito come `ireneneri.photography.net`, mentre finora si è ipotizzato `ireneneri.photography`: confermare il dominio e allinearlo ovunque (`SITO_URL`, CORS, Turnstile).
+
+Inoltre l'email pubblica indicata nella privacy (ireneneri.photography@gmail.com) può andare anche in Contatti → Email da mostrare sul sito, dove oggi c'è il segnaposto.
+
+## Materiali
+
+| Dato | Dove serve | Chi lo fornisce |
+|---|---|---|
+| Firma in formato vettoriale originale (SVG, PDF o AI) | sostituire `web/src/assets/firma-completa.svg` e `firma-corsivo.svg`, oggi ricavati dal PNG | Irene |

@@ -64,3 +64,14 @@ Una riga di motivazione per ogni scelta non ovvia.
 | 2026-11-07 | Tra 761 e 1100 px apertura e capitoli su una colonna | Sui tablet in verticale la copertina verticale lasciava al testo una colonna troppo stretta. |
 | 2026-11-07 | Richieste a Sanity con 4 tentativi | Un errore di rete momentaneo non deve far fallire il build. |
 | 2026-11-08 | Accesso allo Studio anche con email + password di Sanity | Davide ha l'account Sanity con email e password; restano esclusi gli altri metodi (GitHub). |
+| 2026-11-08 | Stile v2 chiaro (Carta/Inchiostro/Ardesia) al posto del fondo scuro | Scelta di Davide sui nuovi riferimenti; la firma nera di Irene sta naturalmente su fondo chiaro. |
+| 2026-11-08 | Work Sans da Fontsource invece dei TTF dello zip | Stesso carattere (licenza OFL verificata nello zip), già in woff2 e diviso per alfabeti. |
+| 2026-11-08 | Firma vettorializzata con potrace | Il PNG era largo 374 px: sgranato nell'apertura (Lighthouse lo segnalava). L'SVG è fedele e nitido a ogni dimensione; resta preferibile l'originale vettoriale di Irene. |
+| 2026-11-08 | Entrate morbide e parallasse, in deroga a "un solo movimento" | Davide ha scelto come riferimento un sito animato chiedendo di prenderne spunto; tutte della stessa famiglia, lente, una volta, spente con reduced-motion. |
+| 2026-11-08 | Animazioni legate allo scorrimento in CSS (`animation-timeline: view()`) | Nessun JavaScript e nessun contenuto nascosto dove il browser non le supporta. |
+| 2026-11-08 | Apertura: coppie di foto verticali su schermi larghi | Una verticale da sola a tutto schermo largo perderebbe gran parte della foto. |
+| 2026-11-08 | Galleria a righe giustificate al posto del carosello | Tutte le foto visibili alla loro proporzione, senza ritagli, in stile mosaico. |
+| 2026-11-08 | Velatura chiara dalla copertina al posto della tinta scura | Mantiene "ogni album ha il suo tono" dentro lo stile chiaro. |
+| 2026-11-08 | Tipo `testoStrutturato` (titoli ed elenchi) solo per la privacy | Il testo legale ha sezioni ed elenchi; gli altri testi restano semplici per Irene. |
+| 2026-11-08 | Lettura di Sanity senza CDN | Dopo una pubblicazione la cache CDN può restituire per qualche istante i dati vecchi: il build deve vedere i nuovi. |
+| 2026-11-08 | Ritratto in `src/photos/backup/ritratto/` | È una foto: va nella copia di lavoro esclusa da git, non nell'originale in sola lettura né nel repository. |

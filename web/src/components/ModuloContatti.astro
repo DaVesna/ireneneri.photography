@@ -57,11 +57,11 @@ const err = (campo: keyof Errori) => errori[campo]
     <p class="errore" id="err-consenso">{err('consenso')}</p>
   </div>
 
-  <div class="cf-turnstile" data-sitekey={CHIAVE_SITO_TURNSTILE} data-language="it" data-theme="dark"></div>
+  <div class="cf-turnstile" data-sitekey={CHIAVE_SITO_TURNSTILE} data-language="it" data-theme="light"></div>
   <p class="errore" id="err-verifica">{err('verifica')}</p>
   <noscript><p class="nota">Per inviare il modulo serve JavaScript attivo (per la verifica anti-spam). In alternativa puoi scrivere all’indirizzo email qui accanto.</p></noscript>
 
-  <button type="submit" class="invia">Invia il messaggio</button>
+  <button type="submit" class="pulsante pieno invia">Invia il messaggio</button>
 </form>
 
 <script>

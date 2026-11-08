@@ -95,3 +95,16 @@ export function tintaDaColore(colore) {
   const secondario = contrasto(CENERE, fondo) >= 4.5 ? CENERE : '#cdc8c1'
   return { fondo, chiaro, testo: GESSO, secondario, contrastoTesto: contrasto(GESSO, fondo) }
 }
+
+/**
+ * Velatura chiara per lo sfondo delle pagine album (versione 2 del design): il tono della
+ * copertina, appena accennato. Il testo Inchiostro resta sopra 13:1.
+ * @param {string | null | undefined} colore
+ * @returns {{ fondo: string, fondo2: string }}
+ */
+export function velaturaDaColore(colore) {
+  if (!colore) return { fondo: '#f3f2ee', fondo2: '#e9e7e1' }
+  const [, C, h] = hexToOklch(colore)
+  const croma = Math.min(C * 0.2, 0.012)
+  return { fondo: oklchToHex(0.958, croma, h), fondo2: oklchToHex(0.918, croma * 1.3, h) }
+}

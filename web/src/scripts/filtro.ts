@@ -5,8 +5,7 @@ const PER_PAGINA = 12
 
 export function avviaFiltro() {
   const form = document.querySelector<HTMLFormElement>('[data-filtri]')
-  const voci = [...document.querySelectorAll<HTMLLIElement>('.elenco-album li[data-anno]')]
-  const gruppi = [...document.querySelectorAll<HTMLElement>('.elenco-album section.anno')]
+  const voci = [...document.querySelectorAll<HTMLLIElement>('.mosaico li[data-anno]')]
   const vuoto = document.querySelector<HTMLElement>('[data-vuoto]')
   const altri = document.querySelector<HTMLButtonElement>('[data-altri]')
   const esito = document.querySelector<HTMLElement>('[data-esito]')
@@ -37,7 +36,6 @@ export function avviaFiltro() {
     )
     voci.forEach((v) => (v.hidden = true))
     visibili.slice(0, limite).forEach((v) => (v.hidden = false))
-    gruppi.forEach((g) => (g.hidden = !g.querySelector('li:not([hidden])')))
     if (vuoto) vuoto.hidden = visibili.length > 0
     if (altri) altri.hidden = visibili.length <= limite
     if (esito && annuncia) {

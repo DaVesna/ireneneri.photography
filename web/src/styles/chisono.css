@@ -1,37 +1,38 @@
-/* Pagina Chi sono. */
+/* Chi sono: ritratto e testo affiancati, una colonna su mobile. */
 
 .chi-sono {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: clamp(1.5rem, 5vw, 5rem);
-  align-items: start;
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
 }
-
 .ritratto-grande {
   width: 100%;
   height: auto;
-  max-height: 88vh;
+  max-height: 86vh;
   object-fit: cover;
   object-position: var(--fx) var(--fy);
 }
-
 .testo-chi .titolo {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
-
+.testo-chi .prosa {
+  font-size: 1.125rem;
+}
 .foto-aggiuntive {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(240px, 45%), 1fr));
   gap: 0.5rem;
-  list-style: none;
-  padding: 0;
   margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
 }
 
 @media (max-width: 760px) {
-  .chi-sono,
-  .contatti {
+  .chi-sono {
     grid-template-columns: 1fr;
   }
 }
