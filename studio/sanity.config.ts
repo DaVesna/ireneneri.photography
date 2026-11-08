@@ -40,10 +40,11 @@ export default defineConfig({
       creationContext.type === 'global' ? voci.filter((v) => !singoli.has(v.templateId)) : voci,
   },
 
-  // Accesso solo con Google (account con verifica in due passaggi). La pagina di scelta resta,
-  // così il nome del metodo è sempre visibile. Possono entrare solo i membri invitati nel progetto.
+  // Metodi di accesso limitati a quelli usati davvero: Google (Irene, con verifica in due passaggi)
+  // ed email + password di Sanity (Davide). GitHub e gli altri restano esclusi.
+  // Possono entrare solo i membri invitati nel progetto su sanity.io/manage.
   auth: {
     redirectOnSingle: false,
-    providers: (predefiniti) => predefiniti.filter((p) => p.name === 'google'),
+    providers: (predefiniti) => predefiniti.filter((p) => ['google', 'sanity'].includes(p.name)),
   },
 })

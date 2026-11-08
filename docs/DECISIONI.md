@@ -63,3 +63,4 @@ Una riga di motivazione per ogni scelta non ovvia.
 | 2026-11-07 | Album con una sola foto uguale alla copertina: niente carosello | Evita la stessa foto ripetuta; la copertina apre il visore. |
 | 2026-11-07 | Tra 761 e 1100 px apertura e capitoli su una colonna | Sui tablet in verticale la copertina verticale lasciava al testo una colonna troppo stretta. |
 | 2026-11-07 | Richieste a Sanity con 4 tentativi | Un errore di rete momentaneo non deve far fallire il build. |
+| 2026-11-08 | Accesso allo Studio anche con email + password di Sanity | Davide ha l'account Sanity con email e password; restano esclusi gli altri metodi (GitHub). |

@@ -10,7 +10,7 @@ Stato verificato il 2026-11-07 (M9). Per ogni punto: cosa è fatto, come è stat
 | Segreti nel build, nel repo, nella storia | nessuno | ricerca del token esatto e di schemi generici: 0 risultati |
 | Bozze leggibili senza token | no | bozza di prova creata e cercata senza token in tutte le prospettive: 0 risultati |
 | CORS di Sanity | solo `http://localhost:3333` | `sanity cors list` |
-| Accesso allo Studio | solo Google, solo membri invitati | schermata di accesso con il solo Google |
+| Accesso allo Studio | Google ed email + password di Sanity, solo membri invitati | schermata di accesso con i due soli metodi |
 | Modulo contatti | protetto | 12 test automatici + prove end-to-end (vedi M8 in `STATO.md`) |
 | `npm audit` | 0 vulnerabilità | `npm audit` alla radice (copre tutti i workspace) |
 
@@ -74,7 +74,7 @@ Nessuna riga in uscita = nessun segreto.
 ## Studio e accessi
 
 - Nessun login fatto in casa: l'accesso passa dall'autenticazione di Sanity.
-- Metodi di login limitati a Google (`auth.providers` in `studio/sanity.config.ts`). È un filtro dell'interfaccia: la protezione vera è che possono entrare solo i membri invitati nel progetto su sanity.io/manage.
+- Metodi di login limitati a quelli usati davvero: Google (Irene) ed email + password di Sanity (Davide), con `auth.providers` in `studio/sanity.config.ts`; GitHub escluso. Per l'account con email e password usare una password lunga e unica. È un filtro dell'interfaccia: la protezione vera è che possono entrare solo i membri invitati nel progetto su sanity.io/manage.
 - **Per Davide:** il piano gratuito ha solo i ruoli Amministratore e Visualizzatore. Irene, per poter pubblicare, sarà **Amministratrice**: la verifica in due passaggi sul suo account Google è **obbligatoria** prima di invitarla.
 - Vision (strumento per interrogare i dati) è attivo solo in sviluppo.
 - Il sito pubblico non ha pagine di amministrazione; lo Studio è un'app separata.
