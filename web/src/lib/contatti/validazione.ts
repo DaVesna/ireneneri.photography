@@ -61,7 +61,7 @@ export function valida(
     errori.messaggio = `Il messaggio può avere al massimo ${LIMITI.messaggio} caratteri.`
 
   if (!campi.consenso)
-    errori.consenso = 'Per inviare il messaggio serve il consenso al trattamento dei dati.'
+    errori.consenso = 'Per inviare il messaggio conferma di aver letto l’informativa privacy.'
 
   return { ok: Object.keys(errori).length === 0, campi, errori }
 }

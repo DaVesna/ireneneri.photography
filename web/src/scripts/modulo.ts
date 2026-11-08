@@ -41,7 +41,7 @@ export function avviaModulo() {
     if (!v('tipo')) e.tipo = 'Scegli il tipo di richiesta.'
     if (!v('messaggio')) e.messaggio = 'Scrivi il messaggio.'
     if (!(form.elements.namedItem('consenso') as HTMLInputElement | null)?.checked)
-      e.consenso = 'Per inviare il messaggio serve il consenso al trattamento dei dati.'
+      e.consenso = 'Per inviare il messaggio conferma di aver letto l’informativa privacy.'
     return e
   }
 

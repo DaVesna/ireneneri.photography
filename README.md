@@ -96,6 +96,7 @@ Il modello senza valori è `.env.example`. **Nessun file con valori entra in git
 | `CONTATTI_DESTINATARIO`, `CONTATTI_MITTENTE` | `web/.dev.vars` in locale, Cloudflare al deploy | chi riceve i messaggi del modulo e il mittente dell'email |
 | `PUBLIC_TURNSTILE_SITE_KEY` | ambiente del build | chiave pubblica Turnstile (vuota = chiave di prova) |
 | `SITO_URL` | ambiente del build | dominio per sitemap e link canonici (vuota = `https://ireneneri.photography`) |
+| `PUBLIC_CF_WEB_ANALYTICS_TOKEN` | ambiente del build | token di Cloudflare Web Analytics; vuota = nessuno script di statistiche |
 
 In locale il modulo contatti non invia email: scrive il messaggio nel log del server di sviluppo.
 

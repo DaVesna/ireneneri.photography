@@ -162,9 +162,15 @@ Davide ha scartato lo stile della versione 1 e ha indicato nuovi riferimenti (fi
 - Studio: accesso anche con email e password di Sanity.
 - Verifiche: `npm run qualita` tutto superato (axe 0 errori gravi, tastiera, reduced-motion, console); Lighthouse mobile con compressione: prestazioni 99–100, accessibilità, buone pratiche e SEO 100, LCP 0,8–2,1 s; 14 test superati; `npm audit` 0.
 
+### Privacy allineata al sito (2026-11-08)
+
+- Proposta in `docs/privacy-proposta.md`; Davide ha scelto la variante A (Cloudflare Web Analytics attivo).
+- Nello Studio: sezione 3 (niente più "nessun modulo"), sezione 6 (paragrafo su Turnstile), sezione 10 (modulo di contatto ed email). Riga del dominio invariata, da confermare.
+- Sito: CSP con lo script delle statistiche e l'invio a `cloudflareinsights.com`; script inserito solo con `PUBLIC_CF_WEB_ANALYTICS_TOKEN` al build; casella del modulo diventata "Ho letto l'informativa privacy".
+
 ## Prossimo passo
 
-Davide rivede il nuovo stile; poi correzioni. Da sistemare nel testo della privacy: vedi `docs/MANCANTI.md`.
+Davide rivede il nuovo stile; dominio definitivo da confermare.
 
 ## Azioni richieste a Davide
 

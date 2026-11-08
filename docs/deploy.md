@@ -67,6 +67,23 @@ Opzioni:
 
 Consigliato: Cloudflare Email Routing. Passi: attivare Email Routing sul dominio, verificare l'indirizzo di Irene, aggiungere a `wrangler.jsonc` il binding `"send_email": [{ "name": "EMAIL", "destination_address": "<indirizzo di Irene>" }]`, scrivere l'implementazione `InvioEmail` che compone il messaggio MIME e chiama `env.EMAIL.send(...)`. Il mittente (`CONTATTI_MITTENTE`) deve essere un indirizzo del dominio.
 
+## 2bis. Statistiche — Cloudflare Web Analytics
+
+L'informativa privacy (sezione 5) dichiara l'uso di Cloudflare Web Analytics, statistiche senza cookie. Il sito è già pronto: la CSP autorizza lo script `https://static.cloudflareinsights.com/beacon.min.js` e l'invio a `https://cloudflareinsights.com`; lo script viene inserito nelle pagine solo se al build è impostato il token.
+
+1. Dashboard Cloudflare → **Web Analytics** → **Aggiungi un sito** → nome host del sito.
+2. Se il dominio è gestito da Cloudflare, in **Gestisci sito** scegliere **Abilita con installazione dello snippet JS** (non l'iniezione automatica, per non avere lo script due volte).
+3. Copiare il token dallo snippet (`data-cf-beacon='{"token": "…"}'`) e impostarlo al build:
+
+   ```powershell
+   $env:PUBLIC_CF_WEB_ANALYTICS_TOKEN = "<token>"
+   npm run build:web
+   ```
+
+4. Dopo il deploy, aprire una pagina e controllare nella console del browser che non ci siano errori di CSP; i dati compaiono nel pannello dopo qualche minuto.
+
+Il token non è un segreto (compare nella pagina), ma non serve metterlo nel repository.
+
 ## 3. Dominio, CORS, Studio
 
 ### Dominio

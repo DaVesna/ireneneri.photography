@@ -21,11 +21,11 @@ Unica fonte: `web/src/lib/intestazioni.js`. Le pagine statiche li ricevono da `w
 ```
 Content-Security-Policy:
   default-src 'self'
-  script-src 'self' https://challenges.cloudflare.com
+  script-src 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com/beacon.min.js
   style-src 'self'; style-src-elem 'self'; style-src-attr 'unsafe-inline'
   img-src 'self' https://cdn.sanity.io data:
   font-src 'self'
-  connect-src 'self' https://challenges.cloudflare.com
+  connect-src 'self' https://challenges.cloudflare.com https://cloudflareinsights.com
   frame-src https://challenges.cloudflare.com
   frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
   manifest-src 'self'; upgrade-insecure-requests
@@ -41,6 +41,7 @@ Scelte:
 
 - **Nessuno script in linea.** Astro è configurato per emettere script e fogli di stile sempre come file (`assetsInlineLimit: 0`, `inlineStylesheets: 'never'`). Controllo sul build: 0 `<script>` eseguibili in linea, 0 `<style>`, 0 attributi `on…`. Gli unici `<script>` senza `src` sono blocchi `type="application/json"` (dati del visore), che il browser non esegue.
 - **`style-src-attr 'unsafe-inline'`**: serve per gli attributi `style` con le variabili CSS (tinta dell'album, proporzioni, punto focale, anteprima LQIP). Consente solo attributi su elementi già presenti, non fogli di stile né `<style>`; i valori sono calcolati dal sito, non scritti da utenti.
+- **Statistiche Cloudflare**: autorizzato solo il file `beacon.min.js` (non tutto il dominio) e l'invio dei dati a `cloudflareinsights.com`. Lo script si carica solo se al build è impostato `PUBLIC_CF_WEB_ANALYTICS_TOKEN`.
 - **`data:` nelle immagini**: le anteprime sfocate (LQIP) di Sanity sono URI `data:`.
 - **`frame-ancestors 'none'` e `X-Frame-Options: DENY`**: il sito non si può incorporare in altre pagine.
 

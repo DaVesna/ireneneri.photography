@@ -10,7 +10,7 @@ Ogni dato segnaposto, dove si trova e chi lo deve fornire. Nel CMS i segnaposto 
 | Indirizzo del profilo Instagram | Contatti → Profilo Instagram (`[DA FORNIRE: indirizzo del profilo Instagram]`) | Irene |
 | Due o tre frasi su come lavora, da quanto fotografa, in quale zona | Chi sono → Testo, secondo paragrafo (`[DA FORNIRE: …]`) | Irene |
 | Conferma o riscrittura del resto di Chi sono e della presentazione breve (testo provvisorio basato solo sugli album) | Chi sono → Presentazione breve, Testo | Irene |
-| Informativa privacy: testo caricato (8 novembre 2026), ma da correggere in tre punti — vedi la sezione sotto | Privacy → Testo | Davide con Irene |
+| Informativa privacy: allineata al sito (8 novembre 2026); resta da confermare il dominio nella sezione 2 | Privacy → Testo | Davide |
 | Conferma dei titoli e dei testi brevi dei 7 album (scritti da provini e date EXIF) | Album → ogni album | Irene |
 | Luogo degli album Cata e Alice, Elisa, No Border Village, Boxe (lasciato vuoto: non risulta dalle cartelle) | Album → Luogo | Irene |
 | Nome completo della palestra per Mika e Piero (ora "WTA", come la cartella) | Album Mika e Piero → Luogo | Irene |
@@ -31,15 +31,13 @@ Ogni dato segnaposto, dove si trova e chi lo deve fornire. Nel CMS i segnaposto 
 | Elisa: originali ad alta risoluzione delle foto n. 1, 2, 3, 5, 10 (ora 1000–1500 px, morbide a tutto schermo) | album Elisa (sostituire le foto) | Irene |
 | Verifica in due passaggi sull'account Google di Irene | prima dell'invito nello Studio | Irene |
 
-## Da correggere nel testo della privacy
+## Privacy
 
-Il testo fornito l'8 novembre 2026 è stato caricato così com'è. Tre punti non corrispondono al sito:
+Le modifiche proposte in `docs/privacy-proposta.md` sono state applicate l'8 novembre 2026 (variante A: Cloudflare Web Analytics attivo). Restano:
 
-1. **Sezione 3** dice che il sito "non prevede … moduli per la raccolta diretta di dati personali", ma la pagina Contatti ha un modulo (nome, email, tipo di richiesta, messaggio) protetto da Cloudflare Turnstile, e la casella del consenso rimanda proprio a questa informativa. Serve una sezione sul modulo (dati raccolti, finalità, base giuridica, conservazione, Turnstile), oppure si toglie il modulo e si lascia solo l'email.
-2. **Sezione 5** descrive Cloudflare Web Analytics, che oggi nel sito non è attivo. Se va attivato: abilitarlo dal pannello Cloudflare e aggiungere `https://static.cloudflareinsights.com` a `script-src` e `https://cloudflareinsights.com` a `connect-src` nella CSP (`web/src/lib/intestazioni.js` e `web/public/_headers`). Altrimenti va tolta la sezione.
-3. **Sezione 2** indica il sito come `ireneneri.photography.net`, mentre finora si è ipotizzato `ireneneri.photography`: confermare il dominio e allinearlo ovunque (`SITO_URL`, CORS, Turnstile).
-
-Inoltre l'email pubblica indicata nella privacy (ireneneri.photography@gmail.com) può andare anche in Contatti → Email da mostrare sul sito, dove oggi c'è il segnaposto.
+1. **Dominio** nella sezione 2: oggi `ireneneri.photography.net`; confermarlo e allinearlo con `SITO_URL`, CORS e Turnstile.
+2. **Token di Cloudflare Web Analytics** da impostare al build (`docs/deploy.md`, sezione 2bis): finché manca, le statistiche dichiarate in sezione 5 non vengono raccolte.
+3. Facoltativo: l'email della privacy (ireneneri.photography@gmail.com) anche in Contatti → Email da mostrare sul sito.
 
 ## Materiali
 

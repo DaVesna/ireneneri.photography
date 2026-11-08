@@ -75,3 +75,6 @@ Una riga di motivazione per ogni scelta non ovvia.
 | 2026-11-08 | Tipo `testoStrutturato` (titoli ed elenchi) solo per la privacy | Il testo legale ha sezioni ed elenchi; gli altri testi restano semplici per Irene. |
 | 2026-11-08 | Lettura di Sanity senza CDN | Dopo una pubblicazione la cache CDN può restituire per qualche istante i dati vecchi: il build deve vedere i nuovi. |
 | 2026-11-08 | Ritratto in `src/photos/backup/ritratto/` | È una foto: va nella copia di lavoro esclusa da git, non nell'originale in sola lettura né nel repository. |
+| 2026-11-08 | Cloudflare Web Analytics con snippet manuale e token al build | Più prevedibile dell'iniezione automatica; senza token nessuno script. Scelta di Davide (variante A). |
+| 2026-11-08 | CSP: autorizzato solo `beacon.min.js`, non tutto il dominio delle statistiche | È l'unico file che serve; la CSP resta il più stretta possibile. |
+| 2026-11-08 | Casella del modulo come presa visione dell'informativa, non consenso | La base giuridica dichiarata per le richieste di contatto è il legittimo interesse o le misure precontrattuali, non il consenso. |

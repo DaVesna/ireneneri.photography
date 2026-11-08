@@ -31,6 +31,8 @@ const desc = (descrizione || impostazioni?.descrizione || '').slice(0, 200)
 const condivisione = immagine ?? impostazioni?.immagineCondivisione
 const ogImg = condivisione ? urlRitaglio(condivisione, 1200, 630) : undefined
 const canonico = new URL(Astro.url.pathname, Astro.site).href
+// Cloudflare Web Analytics: lo script si carica solo se al build è impostato il token del sito.
+const tokenStatistiche: string = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN || ''
 ---
 
 <!doctype html>
@@ -70,5 +72,15 @@ const canonico = new URL(Astro.url.pathname, Astro.site).href
     <script>
       import '../scripts/protezione.ts'
     </script>
+    {
+      tokenStatistiche && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: tokenStatistiche })}
+        />
+      )
+    }
   </body>
 </html>

@@ -53,7 +53,7 @@ const err = (campo: keyof Errori) => errori[campo]
 
   <div class="campo consenso">
     <input id="consenso" name="consenso" type="checkbox" value="si" required checked={valori.consenso} aria-invalid={err('consenso') ? 'true' : undefined} aria-describedby="err-consenso" />
-    <label for="consenso">Ho letto l’<a href="/privacy/">informativa privacy</a> e acconsento al trattamento dei dati per ricevere una risposta.</label>
+    <label for="consenso">Ho letto l’<a href="/privacy/">informativa privacy</a>.</label>
     <p class="errore" id="err-consenso">{err('consenso')}</p>
   </div>
 

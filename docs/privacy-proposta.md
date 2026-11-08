@@ -1,6 +1,6 @@
 # Privacy — proposta di modifiche
 
-Proposta dell'8 novembre 2026 sul testo caricato nel CMS lo stesso giorno. **Non è ancora applicata**: il testo nello Studio è quello originale. Le modifiche servono ad allineare l'informativa a come funziona davvero il sito.
+Proposta dell'8 novembre 2026 sul testo caricato nel CMS lo stesso giorno. **Applicata l'8 novembre 2026** con la variante A (statistiche attive): sezioni 3, 6 e 10 aggiornate nello Studio, casella del modulo cambiata in "Ho letto l'informativa privacy", CSP pronta per Cloudflare Web Analytics. Resta da confermare il dominio della sezione 2.
 
 > Nota: sono proposte di un non giurista, basate su come è costruito il sito. Per un testo legale definitivo conviene una rilettura da parte di un professionista.
 
