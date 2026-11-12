@@ -1,5 +1,7 @@
 # Piano degli album
 
+> Questo è il piano del primo caricamento (7 novembre 2026). Da allora il CMS è la fonte di verità: per esempio "Cata e Alice" è stato rinominato "Catarina e Alice" e le foto di benvenuto sono cambiate nello Studio.
+
 Fonte per gli script: `scripts/dati/album.json`. Copia di lavoro: `src/photos/backup/album/<slug>/`, con `elenco.json` che lega ogni nome nuovo al file originale.
 
 ## Regole

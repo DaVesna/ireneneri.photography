@@ -59,7 +59,8 @@ cd web; npx astro preview --port 4322; cd ..
 | `npm run typecheck` | controllo dei tipi di sito, Studio e script |
 | `npm run format` | formatta il codice con Prettier |
 | `npm run qualita` | accessibilità (axe), tastiera, reduced-motion, console sul sito avviato con `astro preview` sulla porta 4322 |
-| `npm run lighthouse` | Lighthouse mobile su home e una pagina album (stesso server sulla porta 4322) |
+| `npm run anteprima:compressa` | serve `web/dist/client` con compressione gzip sulla porta 4323, come farà Cloudflare (per misure realistiche) |
+| `npm run lighthouse` | Lighthouse mobile su home e una pagina album; per default porta 4322, per misure realistiche `npm run lighthouse -- http://localhost:4323` |
 
 ## Script delle foto
 
@@ -101,6 +102,8 @@ Il modello senza valori è `.env.example`. **Nessun file con valori entra in git
 In locale il modulo contatti non invia email: scrive il messaggio nel log del server di sviluppo.
 
 ## Documentazione
+
+- `docs/STATO.md`, sezione "Riprendere il lavoro" — **da leggere per primo** quando si riprende il progetto
 
 - `docs/guida-irene.md` — guida all'uso dello Studio per Irene
 - `docs/deploy.md` — come pubblicare sito e Studio (istruzioni, nessun deploy eseguito)

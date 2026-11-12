@@ -1,6 +1,56 @@
 # Stato dei lavori
 
-Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere questo file e `ROADMAP.md` prima di continuare.
+Aggiornato dopo ogni sotto-step. Se la sessione riparte da capo, leggere prima la sezione "Riprendere il lavoro" qui sotto, poi `CLAUDE.md` e, se serve, il registro più in basso.
+
+## Riprendere il lavoro (aggiornato il 12 novembre 2026)
+
+### Dove siamo
+
+- **Roadmap M1–M11 completata** il 7 novembre 2026. L'8 novembre Davide ha scartato lo stile della prima versione: il sito è stato **ridisegnato (versione 2)** su nuovi riferimenti, con la firma di Irene, Work Sans e il suo ritratto vero. Direzione visiva attuale: `docs/direzione-visiva.md` (la v1 è in `docs/direzione-visiva-v1.md`).
+- **Privacy** fornita da Davide, caricata nel CMS e allineata al sito (variante A: Cloudflare Web Analytics attivo, da accendere al deploy con il token).
+- **Codice**: tutto sul branch `sito-v1`, allineato con GitHub, in revisione nella [pull request #1](https://github.com/DaVesna/ireneneri.photography/pull/1) verso `main`. Nessun deploy fatto.
+- **Node 26.13.0** è ora la versione predefinita sul PC di Davide.
+
+### Contenuti nel CMS (fotografia del 12 novembre 2026)
+
+- 7 album, tutti Sport: No Border Village, Teatro di Monfalcone, Elisa, Catarina e Alice (rinominato da "Cata e Alice" nello Studio), Mika, Piero, Boxe.
+- Categorie: Sport, Persone, Animali, Eventi (solo Sport ha album; la firma di Irene dice "sport, pet, portrait": valutare se rinominare le categorie).
+- Home: 4 foto di benvenuto, 3 album in evidenza (Teatro di Monfalcone, Catarina e Alice, No Border Village), frase d'invito.
+- Chi sono: ritratto vero di Irene; testo ancora provvisorio con un `[DA FORNIRE]`.
+- Contatti: email e Instagram ancora `[DA FORNIRE]` (l'email ireneneri.photography@gmail.com compare già nella privacy).
+- Privacy: testo completo (13 sezioni); dominio della sezione 2 da confermare.
+
+### Prossimi passi, in ordine
+
+1. **Davide rivede lo stile v2** (`npm run dev:web` oppure build + anteprima, vedi sotto) e indica le correzioni.
+2. **Dominio**: non ancora comprato. Quando c'è, allineare in un colpo solo privacy (sezione 2), `SITO_URL`, CORS di Sanity, widget Turnstile, Web Analytics (elenco in `docs/MANCANTI.md`). Consigliato Cloudflare Registrar.
+3. **Contenuti di Irene**: tutto ciò che è in `docs/MANCANTI.md` (email, Instagram, testo di Chi sono, luoghi degli album, foto per Persone/Animali/Eventi, originali ad alta risoluzione di Elisa, firma vettoriale originale).
+4. **Deploy** seguendo `docs/deploy.md`: Cloudflare Workers, segreti, Turnstile vero, servizio email (consigliato Email Routing), Web Analytics, Studio pubblicato, invito di Irene come Amministratrice con verifica in due passaggi, aggiornamento automatico del sito con webhook firmato.
+5. **Revocare il token di scrittura di Sanity** dopo l'ultimo import.
+
+### Avviare e controllare (PowerShell, dalla radice)
+
+```powershell
+npm install
+npm run dev:web        # sito in sviluppo: http://localhost:4321
+npm run dev:studio     # Studio: http://localhost:3333 (Google oppure email e password di Sanity)
+npm test               # 14 test (modulo contatti, header di sicurezza)
+npm run typecheck
+npm run build:web
+cd web; npx astro preview --port 4322; cd ..   # sito come in produzione, con CSP
+npm run qualita        # axe, tastiera, reduced-motion, console (contro la porta 4322)
+npm run anteprima:compressa                     # build servito con gzip sulla porta 4323
+npm run lighthouse -- http://localhost:4323     # misure come in produzione
+```
+
+### Note pratiche per chi riprende
+
+- **Foto**: originali in sola lettura in `src/photos/original`; copia di lavoro in `src/photos/backup` (album ordinati in `backup/album/`, ritratto in `backup/ritratto/irene.jpg`); versioni da caricare in `src/photos/preparate/`. Niente di `src/photos/` entra in git. L'impronta dell'originale si verifica con `npm run foto:inventario -- --verifica`.
+- **Firma**: sorgente `firma_senza_contatti.png` nella radice (ignorato da git); versioni per il sito, vettorializzate, in `web/src/assets/firma-completa.svg` e `firma-corsivo.svg`.
+- **Font**: Work Sans da `@fontsource-variable/work-sans`; lo zip `work_sans.zip` nella radice è solo la fonte della licenza (ignorato da git).
+- **Rete instabile su questo PC**: errori DNS momentanei su GitHub, Sanity e npm. Push e build vanno semplicemente ripetuti; le richieste a Sanity del sito hanno già 4 tentativi.
+- **Git Bash** converte un argomento `/` in un percorso di Windows: per `npm run lighthouse` con percorsi espliciti usare PowerShell o anteporre `MSYS_NO_PATHCONV=1`.
+- **Script di aggiornamento dei contenuti** (privacy, ritratto) sono stati eseguiti una volta con il token: il CMS è la fonte di verità, `foto:importa` non sovrascrive i documenti esistenti.
 
 ## Milestone
 
@@ -168,14 +218,9 @@ Davide ha scartato lo stile della versione 1 e ha indicato nuovi riferimenti (fi
 - Nello Studio: sezione 3 (niente più "nessun modulo"), sezione 6 (paragrafo su Turnstile), sezione 10 (modulo di contatto ed email). Riga del dominio invariata, da confermare.
 - Sito: CSP con lo script delle statistiche e l'invio a `cloudflareinsights.com`; script inserito solo con `PUBLIC_CF_WEB_ANALYTICS_TOKEN` al build; casella del modulo diventata "Ho letto l'informativa privacy".
 
-## Prossimo passo
-
-Davide rivede il nuovo stile; dominio definitivo da confermare.
-
 ## Azioni richieste a Davide
 
-- Revocare il token di scrittura di Sanity usato per il precaricamento.
-
-- Entrare nello Studio (`npm run dev:studio`, poi http://localhost:3333, accesso con Google) e provare a creare, riordinare ed eliminare un album di prova con 3 foto.
-
-- Rendere Node 26 la versione predefinita (PowerShell da amministratore): `nvm use 26.13.0`. È già installata.
+- Rivedere lo stile v2 e indicare le correzioni.
+- Comprare il dominio (poi allineamento, vedi "Prossimi passi").
+- Entrare nello Studio (`npm run dev:studio`, http://localhost:3333, con email e password di Sanity o con Google) e provare a creare, riordinare ed eliminare un album di prova con 3 foto: è l'unica verifica della M4 rimasta da fare a mano.
+- Revocare il token di scrittura di Sanity quando non servono più import.

@@ -2,15 +2,30 @@
 
 Queste regole valgono per ogni sessione di lavoro su questo repository. Il piano operativo, diviso in milestone, è in `ROADMAP.md`. Lo stato di avanzamento è in `docs/STATO.md`.
 
+**Se riprendi il lavoro in una nuova sessione:** la roadmap è già completata e il sito è stato ridisegnato. Leggi prima `docs/STATO.md`, sezione "Riprendere il lavoro" (situazione, prossimi passi, comandi, note pratiche), poi la sezione "Decisioni prese dopo la roadmap" qui sotto, che in caso di contrasto prevale sulle regole originali.
+
 ## Dati di sessione (li compila Davide prima di partire)
 
-- Repository remoto: `https://github.com/DaVesna/ireneneri.photography.git`
+- Repository remoto: `https://github.com/DaVesna/ireneneri.photography.git` (branch di lavoro `sito-v1`, pull request #1 verso `main`)
 - Cartella foto originali (SOLA LETTURA): `C:\Users\dadev\Documents\Progetti\Irene\ireneneri.photography\src\photos\original`
 - Cartella di lavoro per la copia delle foto: `C:\Users\dadev\Documents\Progetti\Irene\ireneneri.photography\src\photos\backup`
 - Sanity project ID: `10o0605j`, dataset: `production`
 - Token Sanity in scrittura: solo nel file `.env` nella root, mai qui
+- Ritratto di Irene: `src/photos/backup/ritratto/irene.jpg`; firma di Irene: `firma_senza_contatti.png` nella radice (le versioni per il sito sono SVG in `web/src/assets/`)
+- Dominio: non ancora comprato (la privacy indica `ireneneri.photography.net`, da confermare)
 
 Se uno di questi dati manca quando serve, fermati e chiedilo. Non inventarlo.
+
+## Decisioni prese dopo la roadmap (8 novembre 2026)
+
+Scelte di Davide che aggiornano le regole più sotto. Motivazioni in `docs/DECISIONI.md`.
+
+- **Direzione visiva v2** (`docs/direzione-visiva.md`): fondo chiaro (Carta `#f3f2ee`, Inchiostro, Ardesia), Work Sans, firma di Irene come marchio. Nuovi riferimenti: fionanoever.de (modello principale), agatiandrea.com (composizione; le sue animazioni sono troppo invadenti), codeeritratti.com (clima vivace; il suo font è bocciato). I riferimenti della sezione "Direzione visiva" più sotto valevano per la v1, scartata.
+- **Movimento**: ammessi apertura animata della home, entrate morbide e parallasse, tutti della stessa famiglia, lenti, una volta sola, spenti con `prefers-reduced-motion`. Mai entrate da direzioni diverse.
+- **Firma di Irene**: è il marchio vero, quindi il divieto di "corsivi a mano" non la riguarda; resta l'unico elemento corsivo del sito.
+- **Accesso allo Studio**: Google (Irene, con verifica in due passaggi) ed email e password di Sanity (Davide). Nessun altro metodo.
+- **Privacy**: testo di Davide nel CMS (tipo `testoStrutturato`, con titoli ed elenchi); il sito prevede Cloudflare Web Analytics, attivo solo con il token al build. Per questo la CSP ammette, oltre a Turnstile, il solo file `https://static.cloudflareinsights.com/beacon.min.js` e l'invio a `https://cloudflareinsights.com`.
+- **Node 26 LTS** (`.nvmrc`), predefinito sul PC di Davide.
 
 ## Il progetto in breve
 
@@ -54,7 +69,7 @@ Tutti i contenuti si modificano dal CMS. Nel codice restano solo le etichette d'
 
 I tentativi precedenti sono stati scartati perché asettici: sfondi bianchi, effetto galleria. Serve un sito che faccia venire voglia di guardare le foto, caldo e familiare ma professionale.
 
-Riferimenti scelti da Davide. Prima di progettare, fanne screenshot con Playwright (desktop e mobile):
+Riferimenti scelti da Davide per la prima versione (superati dalla v2: vedi "Decisioni prese dopo la roadmap"). Prima di progettare, fanne screenshot con Playwright (desktop e mobile):
 
 - https://www.zielecki.com/ per la presenza personale del fotografo, le foto immersive a tutta larghezza, la voce in prima persona
 - https://www.pedrontheworld.com/ per la home come sequenza di progetti grandi, ognuno un capitolo
@@ -69,7 +84,7 @@ Regole:
 - Evita le scelte "di default" che fanno sembrare un sito generato: fondo crema con serif e accento terracotta; nero con un solo colore acido; etichette in maiuscolo spaziato sopra ogni titolo; metadati separati da puntini (A · B · C); freccia → in coda ai link; numerazioni 01/02/03 su cose che non sono sequenze; animazione d'entrata su ogni sezione; card tutte uguali con la stessa ombra.
 - Niente decorazioni finto-artigianali (corsivi a mano, carta strappata, cornici) che competono con le foto.
 - Tipografia scelta apposta per questo sito: una o due famiglie ben distinte, font ospitati in locale (non da Google Fonts via CDN, per il GDPR).
-- Una sola cosa coraggiosa per pagina, il resto quieto. Un solo momento di movimento orchestrato; rispetta `prefers-reduced-motion`.
+- Una sola cosa coraggiosa per pagina, il resto quieto. Un solo momento di movimento orchestrato; rispetta `prefers-reduced-motion`. (Deroga approvata da Davide per la v2: vedi "Decisioni prese dopo la roadmap".)
 - Le foto non si deformano e non si ritagliano a caso: usa il punto focale (hotspot) impostato nel CMS.
 
 ## Testi
@@ -93,7 +108,7 @@ Regole:
 
 Il sito sarà pubblico e l'accesso al CMS deve essere solido.
 
-- Nessun sistema di login fatto in casa. L'accesso allo Studio passa dall'autenticazione di Sanity. Limita i metodi di login dello Studio a quelli effettivamente usati da Irene e Davide (default: Google, con verifica in due passaggi attiva sull'account).
+- Nessun sistema di login fatto in casa. L'accesso allo Studio passa dall'autenticazione di Sanity. Limita i metodi di login dello Studio a quelli effettivamente usati da Irene e Davide (oggi: Google per Irene, con verifica in due passaggi attiva sull'account, ed email e password di Sanity per Davide).
 - Il sito pubblico non ha pagine di amministrazione. Lo Studio è un'app separata.
 - Il dataset è pubblico in lettura (piano gratuito): nel CMS non va nessun dato che non debba essere pubblico. L'indirizzo che riceve i messaggi del form sta in una variabile d'ambiente, non nel CMS.
 - Token e segreti solo in `.env` (escluso da git), con un `.env.example` senza valori. Nessun token nel codice del sito pubblico o nel bundle client: verificalo con una ricerca nel build prima di ogni push.

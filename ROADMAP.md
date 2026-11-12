@@ -187,3 +187,12 @@ Tutto il resto lo decidi tu e lo annoti in `docs/DECISIONI.md`.
 7. Push finale del branch `sito-v1`.
 
 **Fatto quando:** Davide può clonare il repo, seguire il README e vedere sito e Studio funzionanti con i contenuti precaricati.
+
+---
+
+## Dopo la roadmap
+
+La roadmap M1–M11 è stata completata il 7 novembre 2026. Lo stato aggiornato, i prossimi passi e le istruzioni per riprendere sono in `docs/STATO.md`, sezione "Riprendere il lavoro".
+
+- **8 novembre 2026 — stile v2 e privacy (fatto).** Lo stile della M3 è stato scartato e rifatto su nuovi riferimenti (`docs/direzione-visiva.md`); privacy di Davide caricata e allineata al sito (`docs/privacy-proposta.md`).
+- **Prossimi passi (da fare):** revisione dello stile v2 da parte di Davide; acquisto del dominio e allineamento di privacy, `SITO_URL`, CORS, Turnstile e Web Analytics; contenuti mancanti di Irene (`docs/MANCANTI.md`); deploy seguendo `docs/deploy.md`; revoca del token di scrittura.
